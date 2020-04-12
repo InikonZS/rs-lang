@@ -1,13 +1,6 @@
-class Fg {
-  constructor() {
-    this.x = 3;
-  }
+const App = require('./app.js');
 
-  ads(y) {
-    const d = y + 3 + this.x;
-    return d;
-  }
-}
-const df = new Fg();
+const mainNode = document.querySelector('#app-main');
+const app = new App(mainNode);
 
-module.exports(df);
+// module.exports();
