@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint ./src",
-    "fix": "npx eslint ./src --fix"
+    "fix": "npx eslint ./src --fix",
+    "prod": "npx webpack --mode production",
+    "dev": "npx webpack --mode development"
   },
   "author": "Inikon",
   "license": "ISC",

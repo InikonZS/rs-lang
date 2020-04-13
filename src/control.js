@@ -13,12 +13,23 @@ class Control {
     this.node.remove();
   }
 
+  clear() {
+    this.node.innerHTML = '';
+  }
+
   // style and content functions
   render(className, textContent) {
     this.node.className = className;
     this.node.textContent = textContent;
   }
 
+  hide() {
+    this.node.style = 'display:none';
+  }
+
+  show() {
+    this.node.style = '';
+  }
   // own props functions
 }
 
