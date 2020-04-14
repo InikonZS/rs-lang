@@ -55,10 +55,25 @@ class Card extends Button {
     this.sideA.cardMenu.hide();
   }
 
+  setTrainMode (){
+    this.sideB.show();
+    this.sideA.name.show();
+    this.sideA.cardMenu.show();
+    this.rotate(0);
+  }
+
   setCategoryMode (){
     this.sideB.hide();
     this.sideA.name.node.textContent = this.baseRecord.category;
     this.sideA.cardMenu.hide();
+  }
+
+  setMode(mode){
+    if (mode){
+      this.setPlayMode();
+    } else {
+      this.setTrainMode();
+    }
   }
 
   disable(){

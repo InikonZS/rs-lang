@@ -32,11 +32,16 @@ class Menu extends Button{
       that.burg.click();
     });
 
+    this.currentCards = [];
+
     let drawCards = (targetNode, base, click)=> {
       this.currentBase = base;
       targetNode.innerHTML="";
+      this.currentCards = [];
       base.words.forEach((it)=>{
-        new Card(targetNode, it, click);
+        let el = new Card(targetNode, it, click);
+        el.setMode(app.mode);
+        that.currentCards.push(el);
       });  
     }
 
@@ -57,6 +62,7 @@ class Menu extends Button{
     this.main = new Button (parentNode, 'menu_button', 'main', function(){
       resetActive();
       this.setClass('menu_button menu_button_active');
+      that.currentMenuButton = this;
 
       that.burg.click();
       targetNode.innerHTML="";
@@ -67,12 +73,14 @@ class Menu extends Button{
         that.categories[i].setClass('menu_button menu_button_active');
         drawCards(targetNode, base.selectCategory(it.category));
         }).setCategoryMode(); 
+        //that.currentCards.push(el);
       });
     });
 
     this.categories = [];
     base.getCategories().forEach((it) => {
       let el = new Button (parentNode, 'menu_button', it, function(){
+        that.currentMenuButton = this;
         resetActive();
         this.setClass('menu_button menu_button_active');
         that.burg.click();
@@ -82,6 +90,7 @@ class Menu extends Button{
     });
 
     this.random = new Button (parentNode, 'menu_button', 'random', function(){
+      that.currentMenuButton = this;
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
@@ -89,16 +98,19 @@ class Menu extends Button{
     });
 
     this.diffucult = new Button (parentNode, 'menu_button', 'difficult', function(){
+      that.currentMenuButton = this;
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
-      targetNode.innerHTML="";
-      base.getRandomized().getFirstN(2).words.forEach((jt)=>{
-        new Card(targetNode, jt) 
-      });
+      drawCards(targetNode, base.getRandomized().getFirstN(8));
+      //targetNode.innerHTML="";
+      //base.getRandomized().getFirstN(2).words.forEach((jt)=>{
+      //  new Card(targetNode, jt) 
+      //});
     });
 
     this.statistic = new Button (parentNode, 'menu_button', 'statistic', function(){
+      //that.currentMenuButton = this;
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
@@ -109,6 +121,12 @@ class Menu extends Button{
     //  });
     });
 
+  }
+
+  redraw(mode){
+    this.currentCards.forEach((it)=>{
+      it.setMode(mode);
+    });
   }
 }
 
