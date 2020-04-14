@@ -23,8 +23,29 @@ class App {
 
     //let menuOutput = new Control(menuNode, 'div', '', '');
     this.menu= new Menu(this, menuNode, baseOutput.node, base);
-    this.menu.burg.click();
-    this.menu.main.click();
+    
+    switch (window.location.hash){
+      case '#main':
+        this.menu.burg.click();
+        this.menu.main.click();
+        break;
+      case '#random':
+        this.menu.burg.click();
+        this.menu.random.click();
+        break;
+      case '#difficult':
+        this.menu.burg.click();
+        this.menu.diffucult.click();
+        break;
+      case '#statistic':
+        this.menu.burg.click();
+        this.menu.statistic.click();
+        break;
+      default : 
+        this.menu.burg.click();
+        this.menu.main.click();
+    }
+    
  
     let start = new Button (this.mainContol, 'menu_button', 'Start Play', ()=>{
       console.log(this.menu.currentBase);

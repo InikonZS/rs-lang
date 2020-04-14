@@ -63,24 +63,26 @@ class Menu extends Button{
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.currentMenuButton = this;
-
+      window.location.hash = "";
       that.burg.click();
       targetNode.innerHTML="";
       that.currentBase = base.getAnyFromCategory();
       that.currentBase.words.forEach((it, i)=>{
         let el = new Card(targetNode, it,()=>{
-        resetActive();
-        that.categories[i].setClass('menu_button menu_button_active');
-        drawCards(targetNode, base.selectCategory(it.category));
+          window.location.hash = i;
+          resetActive();
+          that.categories[i].setClass('menu_button menu_button_active');
+          drawCards(targetNode, base.selectCategory(it.category));
         }).setCategoryMode(); 
         //that.currentCards.push(el);
       });
     });
 
     this.categories = [];
-    base.getCategories().forEach((it) => {
+    base.getCategories().forEach((it, i) => {
       let el = new Button (parentNode, 'menu_button', it, function(){
         that.currentMenuButton = this;
+        window.location.hash = i;
         resetActive();
         this.setClass('menu_button menu_button_active');
         that.burg.click();
@@ -91,6 +93,7 @@ class Menu extends Button{
 
     this.random = new Button (parentNode, 'menu_button', 'random', function(){
       that.currentMenuButton = this;
+      window.location.hash = "random";
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
@@ -99,6 +102,7 @@ class Menu extends Button{
 
     this.diffucult = new Button (parentNode, 'menu_button', 'difficult', function(){
       that.currentMenuButton = this;
+      window.location.hash = "difficult";
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
@@ -111,6 +115,7 @@ class Menu extends Button{
 
     this.statistic = new Button (parentNode, 'menu_button', 'statistic', function(){
       //that.currentMenuButton = this;
+      window.location.hash = "statistic";
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
