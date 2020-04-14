@@ -6,15 +6,19 @@ const Menu = require('./menu.js');
 const cards = require('./cards.js');
 
 class App {
-  constructor(parentNode) {
+  constructor(parentNode, menuNode) {
     const base = new Base();
     base.addFromBaseData(cards);
 
     
 
-    let baseOutput = new Control(parentNode, 'div', '', '');
-    this.menu= new Menu(parentNode, baseOutput.node, base);
+    let baseOutput = new Control(parentNode, 'div', 'dash_wrapper', '');
+
+    //let menuOutput = new Control(menuNode, 'div', '', '');
+    this.menu= new Menu(menuNode, baseOutput.node, base);
+    this.menu.burg.click();
     this.menu.main.click();
+ 
     let start = new Button (parentNode, '', 'Start Play', ()=>{
       console.log(this.menu.currentBase);
       baseOutput.clear();

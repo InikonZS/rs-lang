@@ -23,6 +23,10 @@ class Control {
     this.node.textContent = textContent;
   }
 
+  setClass(className) {
+    this.node.className = className;
+  }
+
   hide() {
     this.node.style = 'display:none';
   }

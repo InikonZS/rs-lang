@@ -27,7 +27,7 @@ module.exports = (env, options) => {
     },
     plugins: [
       new CopyWebpackPlugin([
-        { from: `src/index.css`, to: `common.css` },
+        { from: `src/style.css`, to: `common.css` },
         { from: `src/index.html`, to: `index.html` },
         { from: `src/assets`, to: `assets` }
       ]),
