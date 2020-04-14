@@ -2,6 +2,7 @@ const Base = require('./base.js');
 const Button = require('./button.js');
 const Control = require('./control.js');
 const Card = require('./card.js');
+const Statistic = require('./statistic.js');
 
 
 class Menu extends Button{
@@ -98,9 +99,10 @@ class Menu extends Button{
       this.setClass('menu_button menu_button_active');
       that.burg.click();
       targetNode.innerHTML="";
-      base.words.forEach((jt)=>{
-        new Card(targetNode, jt) 
-      });
+      new Statistic(targetNode, base);
+    //  base.words.forEach((jt)=>{
+    //    new Card(targetNode, jt) 
+    //  });
     });
 
   }
