@@ -6,7 +6,8 @@ const Card = require('./card.js');
 class Game{
   constructor(app, parentNode, seqBase){
     this.base = seqBase.getRandomized();
-
+    this.finished = false;
+    
     this.finishBack = new Button(parentNode, 'dash_modal', '', function(){
       app.menu.main.click();
       app.menu.burg.click();
@@ -22,6 +23,8 @@ class Game{
     });
     this.gameScoreNode = app.gameScore;
     this.gameScoreNode.innerHTML='';
+
+    //this.globalError = app.error;
 
     this.failure = new Control(parentNode, 'audio','','');
     this.failure.node.src='assets/audio/'+'failure.mp3';
@@ -96,21 +99,27 @@ class Game{
 
   finish(){
     console.log('fin');
-    if (this.mistakeCount){
-      let wordList = this.incorrectWords.words.map((it)=>it.word).join(', ');
-      this.finishWindow.node.textContent = `You have ${this.mistakeCount} errors in words: ${wordList}`;
-      this.failure.node.play();
+    if (!this.base.words.length){
+      if (this.mistakeCount){
+        let wordList = this.incorrectWords.words.map((it)=>it.word).join(', ');
+        this.finishWindow.node.textContent = `You have ${this.mistakeCount} errors in words: ${wordList}`;
+        this.failure.node.play();
+      } else {
+        this.finishWindow.node.textContent = "You are win";
+        this.success.node.play();
+      }
+      this.finishBack.show();
     } else {
-      this.finishWindow.node.textContent = "You are win";
-      this.success.node.play();
+      //this.error.node.play();
     }
+    this.finished = true;
     this.gameContolNode.innerHTML='';
     this.gameScoreNode.innerHTML='';
-    this.finishBack.show();
+    
 
-    let res = {};
-    res.cancel = !!this.base.words.length;
-    return res;
+    //let res = {};
+    //res.cancel = !!this.base.words.length;
+    //return res;
     
   }
 }

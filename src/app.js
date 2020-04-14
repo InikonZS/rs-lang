@@ -14,18 +14,23 @@ class App {
     this.gameContol = document.querySelector('#game-control');
     this.gameScore = document.querySelector('#game-score');
 
+    this.error = new Control(parentNode, 'audio','','');
+    this.error.node.src='assets/audio/'+'error.mp3';
+    
     let baseOutput = new Control(parentNode, 'div', 'dash_wrapper', '');
 
     //let menuOutput = new Control(menuNode, 'div', '', '');
-    this.menu= new Menu(menuNode, baseOutput.node, base);
+    this.menu= new Menu(this, menuNode, baseOutput.node, base);
     this.menu.burg.click();
     this.menu.main.click();
  
     let start = new Button (parentNode, '', 'Start Play', ()=>{
       console.log(this.menu.currentBase);
       baseOutput.clear();
-      new Game (this, baseOutput.node, this.menu.currentBase);
+      this.game = new Game (this, baseOutput.node, this.menu.currentBase);
     });
+
+   
     //this.button = new Button(parentNode, '', 'Click here', (() => {
     //  baseOutput.clear();
     //  new Game(baseOutput.node, base.getAnyFromCategory());

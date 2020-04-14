@@ -6,7 +6,7 @@ const Statistic = require('./statistic.js');
 
 
 class Menu extends Button{
-  constructor (parentNode_, targetNode, base){
+  constructor (app, parentNode_, targetNode, base){
     let parent = super(parentNode_,'basic_block menu_burger');
     let parentNode = parent.node;
 
@@ -41,6 +41,10 @@ class Menu extends Button{
     }
 
     let resetActive = ()=>{
+      if (app.game && !app.game.finished) {
+        app.game.finish();
+        app.error.node.play();
+      }
       let c = 'menu_button';
       this.main.setClass(c);
       this.random.setClass(c); 
