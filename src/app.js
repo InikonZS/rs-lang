@@ -11,6 +11,8 @@ class App {
     base.addFromBaseData(cards);
 
     
+    this.gameContol = document.querySelector('#game-control');
+    this.gameScore = document.querySelector('#game-score');
 
     let baseOutput = new Control(parentNode, 'div', 'dash_wrapper', '');
 
@@ -22,7 +24,7 @@ class App {
     let start = new Button (parentNode, '', 'Start Play', ()=>{
       console.log(this.menu.currentBase);
       baseOutput.clear();
-      new Game (baseOutput.node, this.menu.currentBase);
+      new Game (this, baseOutput.node, this.menu.currentBase);
     });
     //this.button = new Button(parentNode, '', 'Click here', (() => {
     //  baseOutput.clear();

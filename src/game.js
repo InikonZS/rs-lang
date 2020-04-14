@@ -4,14 +4,24 @@ const Control = require('./control.js');
 const Card = require('./card.js');
 
 class Game{
-  constructor(parentNode, seqBase){
+  constructor(app, parentNode, seqBase){
     this.base = seqBase.getRandomized();
 
     this.finishBack = new Button(parentNode, 'dash_modal', '', function(){
+      app.menu.main.click();
+      app.menu.burg.click();
       this.hide();
     });
     this.finishBack.hide();
     this.finishWindow = new Control(this.finishBack.node, 'div', 'dash_modal_window', '',);
+
+    this.gameContolNode = app.gameContol;
+    this.gameContolNode.innerHTML='';
+    this.repeatButton = new Button(this.gameContolNode, 'menu_button', 'repeat word',()=>{
+      this.sounds[this.base.words.length-1].node.play();  
+    });
+    this.gameScoreNode = app.gameScore;
+    this.gameScoreNode.innerHTML='';
 
     this.failure = new Control(parentNode, 'audio','','');
     this.failure.node.src='assets/audio/'+'failure.mp3';
@@ -55,8 +65,9 @@ class Game{
         this.base.words.pop();
         cur.statUp++;
         this.seqScore.push(true);
-        console.log('ok');
+       // console.log('ok');
         res = true;
+        new Control(this.gameScoreNode, 'div', 'star_item star_item_ok');
         this.correct.node.onended = ()=>{
           if (this.base.words.length){
             this.sounds[this.base.words.length-1].node.play();
@@ -68,7 +79,8 @@ class Game{
         this.mistakeCount++;
         cur.statDown++;
         this.seqScore.push(false);
-        console.log('no');
+        //console.log('no');
+        new Control(this.gameScoreNode, 'div', 'star_item star_item_err');
         this.error.node.play();
 
       }
@@ -92,7 +104,8 @@ class Game{
       this.finishWindow.node.textContent = "You are win";
       this.success.node.play();
     }
-    
+    this.gameContolNode.innerHTML='';
+    this.gameScoreNode.innerHTML='';
     this.finishBack.show();
 
     let res = {};
