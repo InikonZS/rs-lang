@@ -109,7 +109,7 @@ class Menu extends Button {
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
-      drawCards(targetNode, base.getRandomized().getFirstN(2));
+      drawCards(targetNode, base.getRandomized().getFirstN(8));
     });
 
     this.diffucult = new Button(parentNode, 'menu_button', 'difficult', function () {
@@ -120,7 +120,7 @@ class Menu extends Button {
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
-      drawCards(targetNode, base.getRandomized().getFirstN(8));
+      drawCards(targetNode, base.getFiltered((it)=>it.getPercent()>0).getSorted((a, b)=>b.getPercent() - a.getPercent()).getFirstN(8));
       // targetNode.innerHTML="";
       // base.getRandomized().getFirstN(2).words.forEach((jt)=>{
       //  new Card(targetNode, jt)

@@ -38,6 +38,11 @@ class Statistic extends Control {
         that.drawSorted((a, b) => b.statDown - a.statDown);
       });
 
+      bf = new Control(tr.node, 'td');
+      tr.percent = new Button(bf.node, '', 'percent', () => {
+        that.drawSorted((a, b) => b.getPercent() - a.getPercent());
+      });
+
       baseWords.forEach((it) => {
         const tr = new Control(that.node, 'tr');
         tr.category = new Control(tr.node, 'td', '', it.category);
@@ -45,6 +50,7 @@ class Statistic extends Control {
         tr.translation = new Control(tr.node, 'td', '', it.translation);
         tr.statUp = new Control(tr.node, 'td', '', it.statUp.toString());
         tr.statDown = new Control(tr.node, 'td', '', it.statDown.toString());
+        tr.percent = new Control(tr.node, 'td', '', it.getPercent().toString());
         that.rows.push(tr);
       });
     };
@@ -62,6 +68,7 @@ class Statistic extends Control {
       it.translation.render('', baseWords[i].translation);
       it.statUp.render('', baseWords[i].statUp);
       it.statDown.render('', baseWords[i].statDown);
+      it.percent.render('', baseWords[i].getPercent());
     });
   }
 }

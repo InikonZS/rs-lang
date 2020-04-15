@@ -19,6 +19,7 @@ class Base {
           baseData[i][j].image,
           baseData[i][j].audioSrc,
         );
+        loadFromStorage(rec);
         this.words.push(rec);
       }
     }
@@ -44,9 +45,24 @@ class Base {
     return res;
   }
 
+  getSorted(comparator) {
+    const res = new Base();
+    res.words = this.words.concat([]);
+    res.words.sort(comparator);
+    return res;
+  }
+
+  getFiltered(comparator) {
+    const res = new Base();
+    res.words = this.words.concat([]);
+    res.words = res.words.filter(comparator);
+    return res;
+  }
+
   getFirstN(n) {
     const res = new Base();
-    for (let i = 0; i < n; i++) {
+    let m = Math.min(n, this.words.length);
+    for (let i = 0; i < m; i++) {
       res.words.push(this.words[i]);
     }
     return res;
@@ -73,6 +89,10 @@ class Base {
     res = res.filter((it, i, arr) => (it != arr[i - 1]) && it);
     return res;
   }
+
+  saveChanges(rec){
+    saveToStorage(rec);
+  }
 }
 
 
@@ -88,7 +108,36 @@ function makeRecord(category, word, translation, imageSrc, audioSrc) {
   obj.audioSrc = audioSrcV;
   obj.statUp = 0;
   obj.statDown = 0;
+  obj.getPercent = () => {
+    let res = 0;
+    if ((obj.statDown+obj.statUp)!==0){
+      let rel = obj.statUp / (obj.statDown+obj.statUp);
+      res = Math.trunc(rel*1000)/10;
+    }
+    return res;
+  }
   return obj;
+}
+
+function makeStorageRecord(statUp, statDown){
+  const obj = {};
+  obj.statUp = statUp;
+  obj.statDown = statDown;
+  return obj;
+}
+
+function saveToStorage(rec){
+  let item = JSON.stringify(makeStorageRecord(rec.statUp, rec.statDown));
+  localStorage.setItem(rec.hash, item);
+}
+
+function loadFromStorage(rec){
+  let ls = localStorage.getItem(rec.hash)
+  if (ls!==null){
+    let item = JSON.parse(ls);
+    rec.statUp = item.statUp;
+    rec.statDown = item.statDown;
+  }
 }
 
 module.exports = Base;

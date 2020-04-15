@@ -67,6 +67,7 @@ class Game {
         this.correctWords.pushUnuq(cur);
         this.base.words.pop();
         cur.statUp++;
+        this.base.saveChanges(cur);
         this.seqScore.push(true);
         // console.log('ok');
         res = true;
@@ -81,6 +82,7 @@ class Game {
         this.incorrectWords.pushUnuq(cur);
         this.mistakeCount++;
         cur.statDown++;
+        this.base.saveChanges(cur);
         this.seqScore.push(false);
         // console.log('no');
         new Control(this.gameScoreNode, 'div', 'star_item star_item_err');

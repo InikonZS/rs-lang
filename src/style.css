@@ -68,7 +68,15 @@ a:visited{
     position: relative;
 
 }
-
+table{
+    width:100%;
+    word-break: break-word;    
+}
+table, tr, td{
+    padding:5px;
+    border-bottom: 1px dotted black;
+    border-collapse: collapse;
+}
 .menu_wrapper{
     display: flex;
     flex-direction: column;
