@@ -3,8 +3,8 @@ class Base {
     this.words = [];
   }
 
-  pushUnuq(rec){
-    if (!this.contains(rec)){
+  pushUnuq(rec) {
+    if (!this.contains(rec)) {
       this.words.push(rec);
     }
   }
@@ -54,10 +54,10 @@ class Base {
 
   getAnyFromCategory() {
     const res = new Base();
-    let cat = this.getCategories();
-    cat.forEach((it)=>{
+    const cat = this.getCategories();
+    cat.forEach((it) => {
       res.words.push(this.selectCategory(it).getRandomized().getFirstN(1).words[0]);
-    })
+    });
     return res;
   }
 

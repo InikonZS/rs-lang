@@ -5,12 +5,12 @@ class Button extends Control {
     super(parentNode, 'div', className, textContent);
     this.state = false;
     this.disabled = false;
- /*   if (click) {
+    /*   if (click) {
       this.click = click;
       this.node.addEventListener('click', (e) => {
         this.click();
       });
-    }*/
+    } */
     this.setClick(click);
   }
 
@@ -18,18 +18,18 @@ class Button extends Control {
     this.state = !this.state;
   }
 
-  setClick (click){
+  setClick(click) {
     if (click) {
       this.click = click;
       this.node.addEventListener('click', (e) => {
-        if (!this.disabled){
+        if (!this.disabled) {
           this.click();
         }
       });
-    }  
+    }
   }
 
-  disable (){
+  disable() {
     this.disabled = true;
   }
 }

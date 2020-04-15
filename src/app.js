@@ -7,7 +7,7 @@ const cards = require('./cards.js');
 
 class App {
   constructor(parentNode, menuNode) {
-    let that = this;
+    const that = this;
     this.mode = 0;
     const base = new Base();
     base.addFromBaseData(cards);
@@ -15,16 +15,19 @@ class App {
     this.mainContol = document.querySelector('#main-control');
     this.gameContol = document.querySelector('#game-control');
     this.gameScore = document.querySelector('#game-score');
-
-    this.error = new Control(parentNode, 'audio','','');
-    this.error.node.src='assets/audio/'+'error.mp3';
-
-    let baseOutput = new Control(parentNode, 'div', 'dash_wrapper', '');
-
-    //let menuOutput = new Control(menuNode, 'div', '', '');
-    this.menu= new Menu(this, menuNode, baseOutput.node, base);
+    this.categoryName = document.querySelector('#category');
+    this.categoryDesc = document.querySelector('#category-description');
     
-    switch (window.location.hash){
+
+    this.error = new Control(parentNode, 'audio', '', '');
+    this.error.node.src = 'assets/audio/' + 'error.mp3';
+
+    const baseOutput = new Control(parentNode, 'div', 'dash_wrapper', '');
+
+    // let menuOutput = new Control(menuNode, 'div', '', '');
+    this.menu = new Menu(this, menuNode, baseOutput.node, base);
+
+    switch (window.location.hash) {
       case '#main':
         this.menu.burg.click();
         this.menu.main.click();
@@ -41,19 +44,19 @@ class App {
         this.menu.burg.click();
         this.menu.statistic.click();
         break;
-      default : 
+      default:
         this.menu.burg.click();
         this.menu.main.click();
     }
-    
- 
-    let start = new Button (this.mainContol, 'menu_button', 'Start Play', ()=>{
+
+
+    this.startButton = new Button(this.mainContol, 'menu_button', 'Start Play', () => {
       console.log(this.menu.currentBase);
       baseOutput.clear();
-      this.game = new Game (this, baseOutput.node, this.menu.currentBase);
+      this.game = new Game(this, baseOutput.node, this.menu.currentBase);
     });
 
-    let modeButton = new Button (this.mainContol, 'menu_button', 'to Game mode', function(){
+    this.modeButton = new Button(this.mainContol, 'menu_button', 'to Game mode', function () {
       this.changeState();
       that.mode = this.state;
       if (that.mode) {
@@ -64,13 +67,11 @@ class App {
       that.menu.redraw(that.mode);
     });
 
-   
-    //this.button = new Button(parentNode, '', 'Click here', (() => {
+
+    // this.button = new Button(parentNode, '', 'Click here', (() => {
     //  baseOutput.clear();
     //  new Game(baseOutput.node, base.getAnyFromCategory());
-    //}));
-
-    
+    // }));
   }
 }
 
