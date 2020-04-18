@@ -95,9 +95,15 @@
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 var Control = __webpack_require__(/*! ./control.js */ "./src/control.js");
 
 var Button = __webpack_require__(/*! ./button.js */ "./src/button.js");
+
+var ButtonEx = __webpack_require__(/*! ./buttonEx.js */ "./src/buttonEx.js");
 
 var Base = __webpack_require__(/*! ./base.js */ "./src/base.js");
 
@@ -107,73 +113,102 @@ var Menu = __webpack_require__(/*! ./menu.js */ "./src/menu.js");
 
 var cards = __webpack_require__(/*! ./cards.js */ "./src/cards.js");
 
-var App = function App(parentNode, menuNode) {
-  var _this = this;
+var App = /*#__PURE__*/function () {
+  function App(parentNode, menuNode) {
+    var _this = this;
 
-  _classCallCheck(this, App);
+    _classCallCheck(this, App);
 
-  var that = this;
-  this.mode = 0;
-  var base = new Base();
-  base.addFromBaseData(cards);
-  this.mainContol = document.querySelector('#main-control');
-  this.gameContol = document.querySelector('#game-control');
-  this.gameScore = document.querySelector('#game-score');
-  this.categoryName = document.querySelector('#category');
-  this.categoryDesc = document.querySelector('#category-description');
-  this.error = new Control(parentNode, 'audio', '', '');
-  this.error.node.src = 'assets/audio/' + 'error.mp3';
-  var baseOutput = new Control(parentNode, 'div', 'dash_wrapper', ''); // let menuOutput = new Control(menuNode, 'div', '', '');
+    var that = this;
+    this.mode = 0;
+    var base = new Base();
+    base.addFromBaseData(cards);
+    this.mainContol = document.querySelector('#main-control');
+    this.gameContol = document.querySelector('#game-control');
+    this.gameScore = document.querySelector('#game-score');
+    this.categoryName = document.querySelector('#category');
+    this.categoryDesc = document.querySelector('#category-description');
+    this.error = new Control(parentNode, 'audio', '', '');
+    this.error.node.src = 'assets/audio/' + 'error.mp3';
+    var baseOutput = new Control(parentNode, 'div', 'dash_wrapper', ''); // let menuOutput = new Control(menuNode, 'div', '', '');
 
-  this.menu = new Menu(this, menuNode, baseOutput.node, base);
+    this.menu = new Menu(this, menuNode, baseOutput.node, base);
+    this.startButton = new ButtonEx(this.mainContol, 'start_button', 'Start Play', false, function () {
+      console.log(_this.menu.currentBase);
+      baseOutput.clear();
+      _this.game = new Game(_this, baseOutput.node, _this.menu.currentBase);
+    });
+    this.resetButton = new ButtonEx(this.mainContol, 'start_button', 'reset', false, function () {
+      window.localStorage.clear();
+      _this.base = new Base();
+      _this.base = _this.base.addFromBaseData(cards);
 
-  switch (window.location.hash) {
-    case '#main':
-      this.menu.burg.click();
-      this.menu.main.click();
-      break;
+      _this.menu.burg.click();
 
-    case '#random':
-      this.menu.burg.click();
-      this.menu.random.click();
-      break;
+      _this.menu.statistic.click();
+    });
+    this.difficultButton = new ButtonEx(this.mainContol, 'start_button', 'repeat difficult words', false, function () {
+      _this.menu.burg.click();
 
-    case '#difficult':
-      this.menu.burg.click();
-      this.menu.diffucult.click();
-      break;
+      _this.menu.diffucult.click();
+    });
+    this.modeButton = new ButtonEx(this.mainContol, 'start_button', 'to Game mode', true, function () {
+      // this.changeState();
+      that.mode = this.state;
 
-    case '#statistic':
-      this.menu.burg.click();
-      this.menu.statistic.click();
-      break;
+      if (that.mode) {
+        this.render('menu_button', 'to train mode');
+      } else {
+        this.render('menu_button', 'to Game mode');
+      }
 
-    default:
-      this.menu.burg.click();
-      this.menu.main.click();
+      if (that.game && !that.game.finished) {
+        that.game.finish();
+        that.error.node.play();
+      }
+
+      that.menu.redraw(that.mode);
+    });
+    this.hashProc(window.location.hash);
+
+    window.onpopstate = function () {
+      _this.hashProc(window.location.hash);
+    };
   }
 
-  this.startButton = new Button(this.mainContol, 'menu_button', 'Start Play', function () {
-    console.log(_this.menu.currentBase);
-    baseOutput.clear();
-    _this.game = new Game(_this, baseOutput.node, _this.menu.currentBase);
-  });
-  this.modeButton = new Button(this.mainContol, 'menu_button', 'to Game mode', function () {
-    this.changeState();
-    that.mode = this.state;
+  _createClass(App, [{
+    key: "hashProc",
+    value: function hashProc(hash) {
+      switch (hash) {
+        case '#main':
+          this.menu.burg.click();
+          this.menu.main.click();
+          break;
 
-    if (that.mode) {
-      this.render('menu_button', 'to train mode');
-    } else {
-      this.render('menu_button', 'to Game mode');
+        case '#random':
+          this.menu.burg.click();
+          this.menu.random.click();
+          break;
+
+        case '#difficult':
+          this.menu.burg.click();
+          this.menu.diffucult.click();
+          break;
+
+        case '#statistic':
+          this.menu.burg.click();
+          this.menu.statistic.click();
+          break;
+
+        default:
+          this.menu.burg.click();
+          this.menu.main.click();
+      }
     }
+  }]);
 
-    that.menu.redraw(that.mode);
-  }); // this.button = new Button(parentNode, '', 'Click here', (() => {
-  //  baseOutput.clear();
-  //  new Game(baseOutput.node, base.getAnyFromCategory());
-  // }));
-};
+  return App;
+}();
 
 module.exports = App;
 
@@ -457,6 +492,139 @@ module.exports = Button;
 
 /***/ }),
 
+/***/ "./src/buttonEx.js":
+/*!*************************!*\
+  !*** ./src/buttonEx.js ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var Button = __webpack_require__(/*! ./button.js */ "./src/button.js");
+
+var Control = __webpack_require__(/*! ./control.js */ "./src/control.js");
+
+var ButtonEx = /*#__PURE__*/function (_Control) {
+  _inherits(ButtonEx, _Control);
+
+  var _super = _createSuper(ButtonEx);
+
+  function ButtonEx(parentNode, className, textContent, togle, click) {
+    var _this;
+
+    _classCallCheck(this, ButtonEx);
+
+    _this = _super.call(this, parentNode, 'div', className, textContent);
+    _this.state = false;
+    _this.disabled = false;
+    _this.checkClicked = false;
+    _this.togle = togle;
+    _this.basicClass = className;
+
+    _this.setClick(click);
+
+    return _this;
+  }
+
+  _createClass(ButtonEx, [{
+    key: "setClick",
+    value: function setClick(click) {
+      var _this2 = this;
+
+      if (click) {
+        this.click = click;
+        this.node.addEventListener('mousedown', function (e) {
+          e.preventDefault();
+
+          if (!_this2.disabled && e.buttons == 1) {
+            _this2.checkClicked = true;
+
+            _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__down');
+          }
+        });
+        this.node.addEventListener('mouseout', function (e) {
+          if (!_this2.disabled) {
+            _this2.checkClicked = false;
+
+            if (_this2.state) {
+              _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__toggled');
+            } else {
+              _this2.setClass(_this2.basicClass);
+            }
+          }
+        });
+        this.node.addEventListener('mouseover', function (e) {
+          if (!_this2.disabled) {
+            if (!_this2.state) {
+              _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__hover');
+            } else {
+              _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__dover');
+            }
+          }
+        });
+        this.node.addEventListener('mouseup', function (e) {
+          e.preventDefault();
+
+          if (!_this2.disabled) {
+            if (_this2.checkClicked) {
+              _this2.changeState();
+
+              _this2.click();
+            }
+
+            _this2.checkClicked = false;
+
+            if (!_this2.state) {
+              _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__hover');
+            } else {
+              _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__dover');
+            }
+          }
+        });
+      }
+    }
+  }, {
+    key: "disable",
+    value: function disable() {
+      this.disabled = true;
+    }
+  }, {
+    key: "changeState",
+    value: function changeState() {
+      if (this.togle) {
+        this.state = !this.state;
+      }
+    }
+  }]);
+
+  return ButtonEx;
+}(Control);
+
+module.exports = ButtonEx;
+
+/***/ }),
+
 /***/ "./src/card.js":
 /*!*********************!*\
   !*** ./src/card.js ***!
@@ -506,6 +674,7 @@ var Card = /*#__PURE__*/function (_Button) {
 
     _this = _super.call(this, parentNode, 'dash_item', '', click);
     _this.baseRecord = baseRecord;
+    _this.mode;
     var imgURL = "assets/".concat(_this.baseRecord.imageSrc);
     _this.aud = new Control(_this.node, 'audio', '', '');
     _this.aud.node.src = "assets/".concat(_this.baseRecord.audioSrc);
@@ -553,6 +722,7 @@ var Card = /*#__PURE__*/function (_Button) {
       this.sideB.hide();
       this.sideA.name.hide();
       this.sideA.cardMenu.hide();
+      this.mode = 'play';
     }
   }, {
     key: "setTrainMode",
@@ -561,6 +731,7 @@ var Card = /*#__PURE__*/function (_Button) {
       this.sideA.name.show();
       this.sideA.cardMenu.show();
       this.rotate(0);
+      this.mode = 'train';
     }
   }, {
     key: "setCategoryMode",
@@ -568,14 +739,17 @@ var Card = /*#__PURE__*/function (_Button) {
       this.sideB.hide();
       this.sideA.name.node.textContent = this.baseRecord.category;
       this.sideA.cardMenu.hide();
+      this.mode = 'category';
     }
   }, {
     key: "setMode",
     value: function setMode(mode) {
-      if (mode) {
-        this.setPlayMode();
-      } else {
-        this.setTrainMode();
+      if (this.mode != 'category') {
+        if (mode) {
+          this.setPlayMode();
+        } else {
+          this.setTrainMode();
+        }
       }
     }
   }, {
@@ -978,7 +1152,7 @@ var Control = /*#__PURE__*/function () {
   }, {
     key: "hide",
     value: function hide() {
-      this.node.style = 'display:none';
+      this.node.style = 'display:none'; //this.node.style = 'transform: translateX(-2000px)';
     }
   }, {
     key: "show",
@@ -1023,50 +1197,56 @@ var Game = /*#__PURE__*/function () {
     _classCallCheck(this, Game);
 
     this.base = seqBase.getRandomized();
-    this.finished = false;
-    this.finishBack = new Button(parentNode, 'dash_modal', '', function () {
-      app.menu.main.click();
-      app.menu.burg.click();
-      this.hide();
-    });
-    this.finishBack.hide();
-    this.finishWindow = new Control(this.finishBack.node, 'div', 'dash_modal_window', '');
-    this.gameContolNode = app.gameContol;
-    this.gameContolNode.innerHTML = '';
-    this.repeatButton = new Button(this.gameContolNode, 'menu_button', 'repeat word', function () {
-      _this.sounds[_this.base.words.length - 1].node.play();
-    });
-    this.gameScoreNode = app.gameScore;
-    this.gameScoreNode.innerHTML = ''; // this.globalError = app.error;
 
-    this.failure = new Control(parentNode, 'audio', '', '');
-    this.failure.node.src = 'assets/audio/' + 'failure.mp3';
-    this.error = new Control(parentNode, 'audio', '', '');
-    this.error.node.src = 'assets/audio/' + 'error.mp3';
-    this.correct = new Control(parentNode, 'audio', '', '');
-    this.correct.node.src = 'assets/audio/' + 'correct.mp3';
-    this.success = new Control(parentNode, 'audio', '', '');
-    this.success.node.src = 'assets/audio/' + 'success.mp3';
-    this.sounds = [];
-    this.base.words.forEach(function (it) {
-      var aud = new Control(parentNode, 'audio', '', '');
-      aud.node.src = "assets/".concat(it.audioSrc);
+    if (seqBase.words.length != 0) {
+      this.finished = false;
+      this.finishBack = new Button(parentNode, 'dash_modal', '', function () {
+        app.menu.main.click();
+        app.menu.burg.click();
+        this.hide();
+      });
+      this.finishBack.hide();
+      this.finishWindow = new Control(this.finishBack.node, 'div', 'dash_modal_window', '');
+      this.gameContolNode = app.gameContol;
+      this.gameContolNode.innerHTML = '';
+      this.repeatButton = new Button(this.gameContolNode, 'menu_button', 'repeat word', function () {
+        _this.sounds[_this.base.words.length - 1].node.play();
+      });
+      this.gameScoreNode = app.gameScore;
+      this.gameScoreNode.innerHTML = ''; // this.globalError = app.error;
 
-      _this.sounds.push(aud);
-    });
-    this.seqScore = [];
-    this.mistakeCount = 0;
-    this.incorrectWords = new Base();
-    this.correctWords = new Base();
-    this.base.getRandomized().words.forEach(function (it) {
-      var that = _this;
-      var el = new Card(parentNode, it, function () {
-        if (that.step(it)) {
-          this.disable();
-        }
-      }).setPlayMode();
-    });
-    this.sounds[this.base.words.length - 1].node.play();
+      this.failure = new Control(parentNode, 'audio', '', '');
+      this.failure.node.src = 'assets/audio/' + 'failure.mp3';
+      this.error = new Control(parentNode, 'audio', '', '');
+      this.error.node.src = 'assets/audio/' + 'error.mp3';
+      this.correct = new Control(parentNode, 'audio', '', '');
+      this.correct.node.src = 'assets/audio/' + 'correct.mp3';
+      this.success = new Control(parentNode, 'audio', '', '');
+      this.success.node.src = 'assets/audio/' + 'success.mp3';
+      this.sounds = [];
+      this.base.words.forEach(function (it) {
+        var aud = new Control(parentNode, 'audio', '', '');
+        aud.node.src = "assets/".concat(it.audioSrc);
+
+        _this.sounds.push(aud);
+      });
+      this.seqScore = [];
+      this.mistakeCount = 0;
+      this.incorrectWords = new Base();
+      this.correctWords = new Base();
+      this.base.getRandomized().words.forEach(function (it) {
+        var that = _this;
+        var el = new Card(parentNode, it, function () {
+          if (that.step(it)) {
+            this.disable();
+          }
+        }).setPlayMode();
+      });
+      this.sounds[this.base.words.length - 1].node.play();
+    } else {
+      parentNode.textContent = 'Cannot start game, category is empty. Try to select another category';
+      this.finished = true;
+    }
   }
 
   _createClass(Game, [{
@@ -1220,6 +1400,7 @@ var Menu = /*#__PURE__*/function (_Button) {
 
     var that = _assertThisInitialized(_this);
 
+    _this.app = app;
     _this.burg = new Button(parentNode_, 'burger', '', function () {
       if (this.state) {
         that.hide();
@@ -1240,15 +1421,30 @@ var Menu = /*#__PURE__*/function (_Button) {
     });
     _this.currentCards = [];
 
-    var drawCards = function drawCards(targetNode, base, click) {
+    var drawCards = function drawCards(targetNode, base, clicker) {
       _this.currentBase = base;
       targetNode.innerHTML = '';
       _this.currentCards = [];
-      base.words.forEach(function (it) {
-        var el = new Card(targetNode, it, click);
-        el.setMode(app.mode);
-        that.currentCards.push(el);
-      });
+      console.log(base.words.length);
+
+      if (base.words.length) {
+        base.words.forEach(function (it, i) {
+          var el;
+
+          if (clicker) {
+            el = new Card(targetNode, it, clicker(i));
+            el.setCategoryMode();
+          } else {
+            el = new Card(targetNode, it);
+            el.setMode(app.mode);
+          }
+
+          that.currentCards.push(el);
+        });
+      } else {
+        app.startButton.hide();
+        targetNode.textContent = 'Nothing found. Try another category.';
+      }
     };
 
     var resetActive = function resetActive() {
@@ -1269,34 +1465,47 @@ var Menu = /*#__PURE__*/function (_Button) {
 
       _this.categories.forEach(function (it) {
         it.setClass(c);
-      }); // app.startButton.show();
-      //app.modeButton.show();
+      });
 
+      app.resetButton.hide();
+      app.difficultButton.hide();
+
+      if (app.mode) {
+        app.startButton.show();
+      } else {
+        app.startButton.hide();
+      }
+
+      app.modeButton.show();
     };
 
-    _this.main = new Button(parentNode, 'menu_button', 'main', function () {
+    _this.main = new Button(parentNode, 'menu_button', 'main');
+    /*let bk= function () {
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.currentMenuButton = this;
       window.location.hash = '';
       app.categoryName.textContent = "Main page";
-      app.categoryDesc.textContent = "Select any category"; //app.startButton.hide();
-      //app.modeButton.show();
-
+      app.categoryDesc.textContent = "Select any category";
+      app.startButton.hide();
+      app.modeButton.show();
       that.burg.click();
       targetNode.innerHTML = '';
       that.currentBase = base.getAnyFromCategory();
-      that.currentBase.words.forEach(function (it, i) {
-        var el = new Card(targetNode, it, function () {
+      that.currentBase.words.forEach((it, i) => {
+        const el = new Card(targetNode, it, () => {
           window.location.hash = i;
-          app.categoryName.textContent = "Category: " + that.categories[i].node.textContent;
+          app.categoryName.textContent = "Category: "+that.categories[i].node.textContent;
           app.categoryDesc.textContent = "Click start play button to test youself";
           resetActive();
           that.categories[i].setClass('menu_button menu_button_active');
           drawCards(targetNode, base.selectCategory(it.category));
-        }).setCategoryMode(); // that.currentCards.push(el);
+        }).setCategoryMode();
+        // that.currentCards.push(el);
       });
-    });
+    }//);
+    */
+
     _this.categories = [];
     base.getCategories().forEach(function (it, i) {
       var el = new Button(parentNode, 'menu_button', it, function () {
@@ -1344,9 +1553,11 @@ var Menu = /*#__PURE__*/function (_Button) {
       window.location.hash = 'statistic';
       app.categoryName.textContent = "Statistics";
       app.categoryDesc.textContent = "Click table header to sort";
-      resetActive(); //app.startButton.hide();
-      //app.modeButton.hide();
-
+      resetActive();
+      app.startButton.hide();
+      app.modeButton.hide();
+      app.resetButton.show();
+      app.difficultButton.show();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
       targetNode.innerHTML = '';
@@ -1354,6 +1565,25 @@ var Menu = /*#__PURE__*/function (_Button) {
       //    new Card(targetNode, jt)
       //  });
     });
+
+    var mainClick = function mainClick() {
+      that.currentMenuButton = this;
+      window.location.hash = '';
+      app.categoryName.textContent = "Main page";
+      app.categoryDesc.textContent = "Select a category or click play here to play with random words from all categories";
+      resetActive();
+      this.setClass('menu_button menu_button_active');
+      that.burg.click();
+      drawCards(targetNode, base.getAnyFromCategory(), function (i) {
+        return function () {
+          that.burg.click();
+          that.categories[i].click();
+        };
+      });
+    };
+
+    _this.main.setClick(mainClick);
+
     return _this;
   }
 
@@ -1363,6 +1593,12 @@ var Menu = /*#__PURE__*/function (_Button) {
       this.currentCards.forEach(function (it) {
         it.setMode(mode);
       });
+
+      if (this.app.mode) {
+        this.app.startButton.show();
+      } else {
+        this.app.startButton.hide();
+      }
     }
   }]);
 
