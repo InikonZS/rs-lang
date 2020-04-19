@@ -29,10 +29,28 @@ class Control {
 
   hide() {
     this.node.style = 'display:none';
+    //this.node.style = 'transform: translateX(-2000px)';
   }
 
   show() {
     this.node.style = '';
+  }
+
+  animate(animationCssClass){
+    window.requestAnimationFrame(()=>{
+      window.requestAnimationFrame(()=>{
+        this.node.className = animationCssClass;
+      });
+    });  
+  }
+
+  styleAnimate(style_){
+    window.requestAnimationFrame(()=>{
+      window.requestAnimationFrame(()=>{
+        this.node.style = style_;
+      });
+    });  
+    
   }
   // own props functions
 }

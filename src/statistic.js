@@ -54,7 +54,7 @@ class Statistic extends Control {
         that.rows.push(tr);
       });
     };
-
+      
     makeSorted((a, b) => b.statDown - a.statDown);
   }
 

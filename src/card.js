@@ -4,7 +4,25 @@ const Button = require('./button.js');
 class Card extends Button {
   constructor(parentNode, baseRecord, click) {
     super(parentNode, 'dash_item', '', click);
+    this.node.style=`transform:
+      translate(${Math.round(Math.random()*3000)-1500}px, ${Math.round(Math.random()*500-250)}px) 
+      rotateX(${Math.round(Math.random()*360)}deg)
+      rotateX(${Math.round(Math.random()*360)}deg)
+      rotateY(${Math.round(Math.random()*360)}deg)
+      rotateZ(${Math.round(Math.random()*360)}deg)
+      scale(0.1);
+      `;
+    this.node.addEventListener('transitionend',()=>{
+     
+    });
+   //this.styleAnimate();
+    //this.animate('dash_item dash_item_static');
+    this.animate('dash_item dash_item_static');
+    this.styleAnimate('');
+    
+    //this.node.style = "";
     this.baseRecord = baseRecord;
+    this.mode;
 
     const imgURL = `assets/${this.baseRecord.imageSrc}`;
     this.aud = new Control(this.node, 'audio', '', '');
@@ -51,6 +69,7 @@ class Card extends Button {
     this.sideB.hide();
     this.sideA.name.hide();
     this.sideA.cardMenu.hide();
+    this.mode = 'play';
   }
 
   setTrainMode() {
@@ -58,19 +77,23 @@ class Card extends Button {
     this.sideA.name.show();
     this.sideA.cardMenu.show();
     this.rotate(0);
+    this.mode = 'train';
   }
 
   setCategoryMode() {
     this.sideB.hide();
     this.sideA.name.node.textContent = this.baseRecord.category;
     this.sideA.cardMenu.hide();
+    this.mode = 'category';
   }
 
   setMode(mode) {
-    if (mode) {
-      this.setPlayMode();
-    } else {
-      this.setTrainMode();
+    if (this.mode!='category'){
+      if (mode) {
+        this.setPlayMode();
+      } else {
+        this.setTrainMode();
+      }
     }
   }
 
@@ -79,7 +102,10 @@ class Card extends Button {
     // console.log('dis');
     this.sideA.node.style = 'opacity:50%';
   }
+
+  
 }
+
 
 
 module.exports = Card;

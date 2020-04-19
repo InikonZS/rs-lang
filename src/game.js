@@ -1,62 +1,79 @@
 const Base = require('./base.js');
 const Button = require('./button.js');
+const ButtonEx = require('./buttonEx.js');
 const Control = require('./control.js');
 const Card = require('./card.js');
 
 class Game {
   constructor(app, parentNode, seqBase) {
     this.base = seqBase.getRandomized();
-    this.finished = false;
+    if (seqBase.words.length != 0) {
+      this.finished = false;
 
-    this.finishBack = new Button(parentNode, 'dash_modal', '', function () {
-      app.menu.main.click();
-      app.menu.burg.click();
-      this.hide();
-    });
-    this.finishBack.hide();
-    this.finishWindow = new Control(this.finishBack.node, 'div', 'dash_modal_window', '');
+      this.finishBack = new Button(parentNode, 'dash_modal', '', function () {
+        app.menu.main.click();
+        app.menu.burg.click();
+        this.hide();
+      });
+      this.finishBack.hide();
+      this.finishWindow = new Control(this.finishBack.node, 'div', 'dash_modal_window', '');
 
-    this.gameContolNode = app.gameContol;
-    this.gameContolNode.innerHTML = '';
-    this.repeatButton = new Button(this.gameContolNode, 'menu_button', 'repeat word', () => {
+      this.gameContolNode = app.gameContol;
+      this.gameContolNode.innerHTML = '';
+
+      app.startButton.hide();
+      this.repeatButton = new ButtonEx(this.gameContolNode, 'start_button', 'repeat word', false, () => {
+        this.sounds[this.base.words.length - 1].node.play();
+      });
+      this.gameScoreNode = app.gameScore;
+      this.gameScoreNode.innerHTML = '';
+
+      // this.globalError = app.error;
+
+      this.failure = new Control(parentNode, 'audio', '', '');
+      this.failure.node.src = 'assets/snd/' + 'failure.mp3';
+
+      this.error = new Control(parentNode, 'audio', '', '');
+      this.error.node.src = 'assets/snd/' + 'error.mp3';
+
+      this.correct = new Control(parentNode, 'audio', '', '');
+      this.correct.node.src = 'assets/snd/' + 'correct.mp3';
+
+      this.success = new Control(parentNode, 'audio', '', '');
+      this.success.node.src = 'assets/snd/' + 'success.mp3';
+
+      let winImgWrapper = new Control(this.finishWindow.node, 'win_wrapper', '', '');
+      this.winImg = new Control(winImgWrapper.node, 'img', 'ico_big', '');
+      this.winImg.node.src = 'assets/ico/' + 'win.webp';
+      this.winImg.hide();
+      this.loseImg = new Control(winImgWrapper.node, 'img', 'ico_big', '');
+      this.loseImg.node.src = 'assets/ico/' + 'lose.webp';
+      this.loseImg.hide();
+      this.winMsg = new Control(this.finishWindow.node, 'div', '', '');
+
+      this.sounds = [];
+      this.base.words.forEach((it) => {
+        const aud = new Control(parentNode, 'audio', '', '');
+        aud.node.src = `assets/${it.audioSrc}`;
+        this.sounds.push(aud);
+      });
+
+      this.seqScore = [];
+      this.mistakeCount = 0;
+      this.incorrectWords = new Base();
+      this.correctWords = new Base();
+      this.base.getRandomized().words.forEach((it) => {
+        const that = this;
+        const el = new Card(parentNode, it, function () {
+          if (that.step(it)) { this.disable(); }
+        }).setPlayMode();
+      });
+
       this.sounds[this.base.words.length - 1].node.play();
-    });
-    this.gameScoreNode = app.gameScore;
-    this.gameScoreNode.innerHTML = '';
-
-    // this.globalError = app.error;
-
-    this.failure = new Control(parentNode, 'audio', '', '');
-    this.failure.node.src = 'assets/audio/' + 'failure.mp3';
-
-    this.error = new Control(parentNode, 'audio', '', '');
-    this.error.node.src = 'assets/audio/' + 'error.mp3';
-
-    this.correct = new Control(parentNode, 'audio', '', '');
-    this.correct.node.src = 'assets/audio/' + 'correct.mp3';
-
-    this.success = new Control(parentNode, 'audio', '', '');
-    this.success.node.src = 'assets/audio/' + 'success.mp3';
-
-    this.sounds = [];
-    this.base.words.forEach((it) => {
-      const aud = new Control(parentNode, 'audio', '', '');
-      aud.node.src = `assets/${it.audioSrc}`;
-      this.sounds.push(aud);
-    });
-
-    this.seqScore = [];
-    this.mistakeCount = 0;
-    this.incorrectWords = new Base();
-    this.correctWords = new Base();
-    this.base.getRandomized().words.forEach((it) => {
-      const that = this;
-      const el = new Card(parentNode, it, function () {
-        if (that.step(it)) { this.disable(); }
-      }).setPlayMode();
-    });
-
-    this.sounds[this.base.words.length - 1].node.play();
+    } else {
+      parentNode.textContent = 'Cannot start game, category is empty. Try to select another category';
+      this.finished = true;
+    }
   }
 
   step(wordRecord) {
@@ -103,10 +120,12 @@ class Game {
     if (!this.base.words.length) {
       if (this.mistakeCount) {
         const wordList = this.incorrectWords.words.map((it) => it.word).join(', ');
-        this.finishWindow.node.textContent = `You have ${this.mistakeCount} errors in words: ${wordList}`;
+        this.winMsg.node.textContent = `You have ${this.mistakeCount} errors in words: ${wordList}`;
+        this.loseImg.show();
         this.failure.node.play();
       } else {
-        this.finishWindow.node.textContent = 'You are win';
+        this.winMsg.node.textContent = 'You are win';
+        this.winImg.show();
         this.success.node.play();
       }
       this.finishBack.show();

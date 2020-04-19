@@ -1,5 +1,5 @@
 const cards = [
-  ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions', 'Coronavirus', 'Tools'],
+  ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions', 'Coronavirus', 'Tools', 'kitchen', 'transport', 'weapons', 'unsorted'],
   [
     {
       word: 'cry',
@@ -400,6 +400,134 @@ const cards = [
       audioSrc: 'audio/crowbar.mp3',
     },
   ],
+  [
+    {
+      word: 'pan',
+      translation: 'кастрюля', 
+    },
+    {
+      word: 'fork',
+      translation: 'вилка', 
+    },
+    {
+      word: 'knife',
+      translation: 'нож', 
+    },
+    {
+      word: 'glass',
+      translation: 'стакан', 
+    },
+    {
+      word: 'colander',
+      translation: 'дуршлаг', 
+    },
+    {
+      word: 'cup',
+      translation: 'кружка', 
+    },
+    {
+      word: 'spoon',
+      translation: 'ложка', 
+    },
+    {
+      word: 'teapot',
+      translation: 'чайник', 
+    },
+    {
+      word: 'sticks',
+      translation: 'палочки', 
+    },
+    {
+      word: 'grater',
+      translation: 'терка', 
+    },
+    {
+      word: 'plate',
+      translation: 'тарелка', 
+    },
+  ],
+  [
+    {
+      word: 'bike',
+      translation: 'мотоцикл', 
+    },
+    {
+      word: 'car',
+      translation: 'машина', 
+    },
+    {
+      word: 'bus',
+      translation: 'автобус', 
+    },
+    {
+      word: 'train',
+      translation: 'поезд', 
+    },
+    {
+      word: 'ship',
+      translation: 'корабль', 
+    },
+    {
+      word: 'tram',
+      translation: 'трамвай', 
+    },
+    {
+      word: 'plane',
+      translation: 'самолет', 
+    },
+    {
+      word: 'truck',
+      translation: 'грузовик', 
+    },
+  ],
+  [
+    {
+      word: 'helmet',
+      translation: 'каска', 
+    },
+    {
+      word: 'bullet',
+      translation: 'пуля', 
+    },
+    {
+      word: 'pistol',
+      translation: 'пистолет', 
+    },
+    {
+      word: 'rifle',
+      translation: 'винтовка', 
+    },
+    {
+      word: 'grenade',
+      translation: 'граната', 
+    },
+    {
+      word: 'shotgun',
+      translation: 'дробовик', 
+    },
+  ],
+  [
+    {
+      word: 'beer',
+      translation: 'пиво', 
+    },
+    {
+      word: 'whiskey',
+      translation: 'виски', 
+    },
+    {
+      word: 'juice',
+      translation: 'сок', 
+    },
+    {
+      word: 'cocktail',
+      translation: 'коктейль', 
+    },
+    {
+      word: 'vine',
+      translation: 'вино', 
+    },
+  ]
 ];
 
 module.exports = cards;

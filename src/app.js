@@ -1,5 +1,6 @@
 const Control = require('./control.js');
 const Button = require('./button.js');
+const ButtonEx = require('./buttonEx.js');
 const Base = require('./base.js');
 const Game = require('./game.js');
 const Menu = require('./menu.js');
@@ -20,14 +21,56 @@ class App {
     
 
     this.error = new Control(parentNode, 'audio', '', '');
-    this.error.node.src = 'assets/audio/' + 'error.mp3';
+    this.error.node.src = 'assets/snd/' + 'error.mp3';
 
     const baseOutput = new Control(parentNode, 'div', 'dash_wrapper', '');
 
     // let menuOutput = new Control(menuNode, 'div', '', '');
     this.menu = new Menu(this, menuNode, baseOutput.node, base);
 
-    switch (window.location.hash) {
+    
+
+
+    this.startButton = new ButtonEx(this.mainContol, 'start_button', 'Start Play', false, () => {
+      console.log(this.menu.currentBase);
+      baseOutput.clear();
+      this.game = new Game(this, baseOutput.node, this.menu.currentBase);
+    });
+
+    this.resetButton = new ButtonEx(this.mainContol, 'start_button', 'reset', false, () => {
+      window.localStorage.clear();
+      this.base = new Base();
+      this.base = this.base.addFromBaseData(cards);
+      this.menu.burg.click();
+      this.menu.statistic.click();
+    });
+
+    this.difficultButton = new ButtonEx(this.mainContol, 'start_button', 'repeat difficult words', false, () => {
+      this.menu.burg.click();
+      this.menu.diffucult.click();
+    });
+
+    this.modeButton = new ButtonEx(this.mainContol, 'start_button', 'to Game mode', true, function () {
+     // this.changeState();
+      that.mode = this.state;
+      if (that.mode) {
+        this.render('menu_button', 'to train mode');
+      } else {
+        this.render('menu_button', 'to Game mode');
+      }
+      if (that.game && !that.game.finished) {
+        that.game.finish();
+        that.error.node.play();
+      }
+      that.menu.redraw(that.mode);
+    });
+
+    this.hashProc(window.location.hash);
+    window.onpopstate = ()=>{this.hashProc(window.location.hash)};
+  }
+
+  hashProc(hash){
+    switch (hash) {
       case '#main':
         this.menu.burg.click();
         this.menu.main.click();
@@ -48,30 +91,6 @@ class App {
         this.menu.burg.click();
         this.menu.main.click();
     }
-
-
-    this.startButton = new Button(this.mainContol, 'menu_button', 'Start Play', () => {
-      console.log(this.menu.currentBase);
-      baseOutput.clear();
-      this.game = new Game(this, baseOutput.node, this.menu.currentBase);
-    });
-
-    this.modeButton = new Button(this.mainContol, 'menu_button', 'to Game mode', function () {
-      this.changeState();
-      that.mode = this.state;
-      if (that.mode) {
-        this.render('menu_button', 'to train mode');
-      } else {
-        this.render('menu_button', 'to Game mode');
-      }
-      that.menu.redraw(that.mode);
-    });
-
-
-    // this.button = new Button(parentNode, '', 'Click here', (() => {
-    //  baseOutput.clear();
-    //  new Game(baseOutput.node, base.getAnyFromCategory());
-    // }));
   }
 }
 

@@ -97,8 +97,8 @@ class Base {
 
 
 function makeRecord(category, word, translation, imageSrc, audioSrc) {
-  const imageSrcV = imageSrc || `./assets/images/${word}.jpg`;
-  const audioSrcV = audioSrc || `./assets/audio/${word}.mp3`;
+  const imageSrcV = imageSrc || `img/${word}.jpg`;
+  const audioSrcV = audioSrc || `audio/${word}.mp3`;
   const obj = {};
   obj.hash = `${category} ${word} ${translation}`;
   obj.word = word;

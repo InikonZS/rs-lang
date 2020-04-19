@@ -12,6 +12,8 @@ class Menu extends Button {
 
     const that = this;
 
+    this.app = app;
+
     this.burg = new Button(parentNode_, 'burger', '', function () {
       if (this.state) {
         that.hide();
@@ -34,15 +36,27 @@ class Menu extends Button {
 
     this.currentCards = [];
 
-    const drawCards = (targetNode, base, click) => {
+    const drawCards = (targetNode, base, clicker) => {
       this.currentBase = base;
       targetNode.innerHTML = '';
       this.currentCards = [];
-      base.words.forEach((it) => {
-        const el = new Card(targetNode, it, click);
-        el.setMode(app.mode);
-        that.currentCards.push(el);
-      });
+      console.log(base.words.length);
+      if (base.words.length){
+        base.words.forEach((it, i) => {
+          let el;
+          if (clicker){
+            el = new Card(targetNode, it, clicker(i));
+            el.setCategoryMode();
+          } else {
+            el = new Card(targetNode, it);
+            el.setMode(app.mode);
+          }
+          that.currentCards.push(el);
+        });
+      } else {
+        app.startButton.hide();
+        targetNode.textContent = ('Nothing found. Try another category.');
+      }
     };
 
     const resetActive = () => {
@@ -56,20 +70,28 @@ class Menu extends Button {
       this.statistic.setClass(c);
       this.diffucult.setClass(c);
       this.categories.forEach((it) => { it.setClass(c); });
-     // app.startButton.show();
-      //app.modeButton.show();
+      app.resetButton.hide();
+      app.difficultButton.hide();
+      if (app.mode){
+        app.startButton.show();
+      } else {
+        app.startButton.hide();
+      }
+      app.modeButton.show();
     };
 
 
-    this.main = new Button(parentNode, 'menu_button', 'main', function () {
+    this.main = new Button(parentNode, 'menu_button', 'main');
+    
+    /*let bk= function () {
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.currentMenuButton = this;
       window.location.hash = '';
       app.categoryName.textContent = "Main page";
       app.categoryDesc.textContent = "Select any category";
-      //app.startButton.hide();
-      //app.modeButton.show();
+      app.startButton.hide();
+      app.modeButton.show();
       that.burg.click();
       targetNode.innerHTML = '';
       that.currentBase = base.getAnyFromCategory();
@@ -84,7 +106,9 @@ class Menu extends Button {
         }).setCategoryMode();
         // that.currentCards.push(el);
       });
-    });
+    }//);
+*/
+    
 
     this.categories = [];
     base.getCategories().forEach((it, i) => {
@@ -120,7 +144,11 @@ class Menu extends Button {
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
-      drawCards(targetNode, base.getFiltered((it)=>it.getPercent()>0).getSorted((a, b)=>b.getPercent() - a.getPercent()).getFirstN(8));
+      drawCards(targetNode, base
+        .getFiltered((it)=>it.getPercent()>0)
+        .getSorted((a, b)=>b.getPercent() - a.getPercent())
+        .getFirstN(8)
+      );
       // targetNode.innerHTML="";
       // base.getRandomized().getFirstN(2).words.forEach((jt)=>{
       //  new Card(targetNode, jt)
@@ -133,8 +161,10 @@ class Menu extends Button {
       app.categoryName.textContent = "Statistics";
       app.categoryDesc.textContent = "Click table header to sort";
       resetActive();
-      //app.startButton.hide();
-      //app.modeButton.hide();
+      app.startButton.hide();
+      app.modeButton.hide();
+      app.resetButton.show();
+      app.difficultButton.show();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
       targetNode.innerHTML = '';
@@ -143,12 +173,47 @@ class Menu extends Button {
     //    new Card(targetNode, jt)
     //  });
     });
+
+
+    let mainClick= function () {
+      that.currentMenuButton = this;
+      window.location.hash = '';
+      app.categoryName.textContent = "Main page";
+      app.categoryDesc.textContent = "Select a category or click play here to play with random words from all categories";
+      resetActive();
+      this.setClass('menu_button menu_button_active');
+      that.burg.click();
+      drawCards(targetNode, base.getAnyFromCategory(),(i)=>{
+        return ()=>{
+          that.burg.click();
+          that.categories[i].click(); 
+        } 
+      });
+    }
+    this.main.setClick(mainClick);
   }
 
   redraw(mode) {
     this.currentCards.forEach((it) => {
       it.setMode(mode);
-    });
+    }); 
+    if (this.app.mode){
+      this.app.startButton.show();
+    } else {
+      this.app.startButton.hide();
+    }
+  }
+
+  hide(){
+    this.styleAnimate(`
+      transform: scale(0);
+    `);
+  }
+
+  show(){
+    this.styleAnimate(`
+      transform: scale(1);
+    `);
   }
 }
 
