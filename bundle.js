@@ -129,7 +129,7 @@ var App = /*#__PURE__*/function () {
     this.categoryName = document.querySelector('#category');
     this.categoryDesc = document.querySelector('#category-description');
     this.error = new Control(parentNode, 'audio', '', '');
-    this.error.node.src = 'assets/audio/' + 'error.mp3';
+    this.error.node.src = 'assets/snd/' + 'error.mp3';
     var baseOutput = new Control(parentNode, 'div', 'dash_wrapper', ''); // let menuOutput = new Control(menuNode, 'div', '', '');
 
     this.menu = new Menu(this, menuNode, baseOutput.node, base);
@@ -351,8 +351,8 @@ var Base = /*#__PURE__*/function () {
 }();
 
 function makeRecord(category, word, translation, imageSrc, audioSrc) {
-  var imageSrcV = imageSrc || "./assets/images/".concat(word, ".jpg");
-  var audioSrcV = audioSrc || "./assets/audio/".concat(word, ".mp3");
+  var imageSrcV = imageSrc || "img/".concat(word, ".jpg");
+  var audioSrcV = audioSrc || "audio/".concat(word, ".mp3");
   var obj = {};
   obj.hash = "".concat(category, " ").concat(word, " ").concat(translation);
   obj.word = word;
@@ -560,7 +560,7 @@ var ButtonEx = /*#__PURE__*/function (_Control) {
           if (!_this2.disabled && e.buttons == 1) {
             _this2.checkClicked = true;
 
-            _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__down');
+            _this2.setClass("".concat(_this2.basicClass, " ").concat(_this2.basicClass, "__down"));
           }
         });
         this.node.addEventListener('mouseout', function (e) {
@@ -568,7 +568,7 @@ var ButtonEx = /*#__PURE__*/function (_Control) {
             _this2.checkClicked = false;
 
             if (_this2.state) {
-              _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__toggled');
+              _this2.setClass("".concat(_this2.basicClass, " ").concat(_this2.basicClass, "__toggled"));
             } else {
               _this2.setClass(_this2.basicClass);
             }
@@ -577,9 +577,9 @@ var ButtonEx = /*#__PURE__*/function (_Control) {
         this.node.addEventListener('mouseover', function (e) {
           if (!_this2.disabled) {
             if (!_this2.state) {
-              _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__hover');
+              _this2.setClass("".concat(_this2.basicClass, " ").concat(_this2.basicClass, "__hover"));
             } else {
-              _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__dover');
+              _this2.setClass("".concat(_this2.basicClass, " ").concat(_this2.basicClass, "__dover"));
             }
           }
         });
@@ -596,9 +596,9 @@ var ButtonEx = /*#__PURE__*/function (_Control) {
             _this2.checkClicked = false;
 
             if (!_this2.state) {
-              _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__hover');
+              _this2.setClass("".concat(_this2.basicClass, " ").concat(_this2.basicClass, "__hover"));
             } else {
-              _this2.setClass(_this2.basicClass + ' ' + _this2.basicClass + '__dover');
+              _this2.setClass("".concat(_this2.basicClass, " ").concat(_this2.basicClass, "__dover"));
             }
           }
         });
@@ -673,6 +673,17 @@ var Card = /*#__PURE__*/function (_Button) {
     _classCallCheck(this, Card);
 
     _this = _super.call(this, parentNode, 'dash_item', '', click);
+    _this.node.style = "transform:\n      translate(".concat(Math.round(Math.random() * 3000) - 1500, "px, ").concat(Math.round(Math.random() * 500 - 250), "px) \n      rotateX(").concat(Math.round(Math.random() * 360), "deg)\n      rotateX(").concat(Math.round(Math.random() * 360), "deg)\n      rotateY(").concat(Math.round(Math.random() * 360), "deg)\n      rotateZ(").concat(Math.round(Math.random() * 360), "deg)\n      scale(0.1);\n      ");
+
+    _this.node.addEventListener('transitionend', function () {}); // this.styleAnimate();
+    // this.animate('dash_item dash_item_static');
+
+
+    _this.animate('dash_item dash_item_static');
+
+    _this.styleAnimate(''); // this.node.style = "";
+
+
     _this.baseRecord = baseRecord;
     _this.mode;
     var imgURL = "assets/".concat(_this.baseRecord.imageSrc);
@@ -776,7 +787,7 @@ module.exports = Card;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var cards = [['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions', 'Coronavirus', 'Tools'], [{
+var cards = [['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions', 'Coronavirus', 'Tools', 'kitchen', 'transport', 'weapons', 'unsorted'], [{
   word: 'cry',
   translation: 'плакать',
   image: 'img/cry.jpg',
@@ -1096,6 +1107,96 @@ var cards = [['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set
   translation: 'лом',
   image: 'img/crowbar.jpg',
   audioSrc: 'audio/crowbar.mp3'
+}], [{
+  word: 'pan',
+  translation: 'кастрюля'
+}, {
+  word: 'fork',
+  translation: 'вилка'
+}, {
+  word: 'knife',
+  translation: 'нож'
+}, {
+  word: 'glass',
+  translation: 'стакан'
+}, {
+  word: 'colander',
+  translation: 'дуршлаг'
+}, {
+  word: 'cup',
+  translation: 'кружка'
+}, {
+  word: 'spoon',
+  translation: 'ложка'
+}, {
+  word: 'teapot',
+  translation: 'чайник'
+}, {
+  word: 'sticks',
+  translation: 'палочки'
+}, {
+  word: 'grater',
+  translation: 'терка'
+}, {
+  word: 'plate',
+  translation: 'тарелка'
+}], [{
+  word: 'bike',
+  translation: 'мотоцикл'
+}, {
+  word: 'car',
+  translation: 'машина'
+}, {
+  word: 'bus',
+  translation: 'автобус'
+}, {
+  word: 'train',
+  translation: 'поезд'
+}, {
+  word: 'ship',
+  translation: 'корабль'
+}, {
+  word: 'tram',
+  translation: 'трамвай'
+}, {
+  word: 'plane',
+  translation: 'самолет'
+}, {
+  word: 'truck',
+  translation: 'грузовик'
+}], [{
+  word: 'helmet',
+  translation: 'каска'
+}, {
+  word: 'bullet',
+  translation: 'пуля'
+}, {
+  word: 'pistol',
+  translation: 'пистолет'
+}, {
+  word: 'rifle',
+  translation: 'винтовка'
+}, {
+  word: 'grenade',
+  translation: 'граната'
+}, {
+  word: 'shotgun',
+  translation: 'дробовик'
+}], [{
+  word: 'beer',
+  translation: 'пиво'
+}, {
+  word: 'whiskey',
+  translation: 'виски'
+}, {
+  word: 'juice',
+  translation: 'сок'
+}, {
+  word: 'cocktail',
+  translation: 'коктейль'
+}, {
+  word: 'vine',
+  translation: 'вино'
 }]];
 module.exports = cards;
 
@@ -1152,12 +1253,34 @@ var Control = /*#__PURE__*/function () {
   }, {
     key: "hide",
     value: function hide() {
-      this.node.style = 'display:none'; //this.node.style = 'transform: translateX(-2000px)';
+      this.node.style = 'display:none'; // this.node.style = 'transform: translateX(-2000px)';
     }
   }, {
     key: "show",
     value: function show() {
       this.node.style = '';
+    }
+  }, {
+    key: "animate",
+    value: function animate(animationCssClass) {
+      var _this = this;
+
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          _this.node.className = animationCssClass;
+        });
+      });
+    }
+  }, {
+    key: "styleAnimate",
+    value: function styleAnimate(style_) {
+      var _this2 = this;
+
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          _this2.node.style = style_;
+        });
+      });
     } // own props functions
 
   }]);
@@ -1186,6 +1309,8 @@ var Base = __webpack_require__(/*! ./base.js */ "./src/base.js");
 
 var Button = __webpack_require__(/*! ./button.js */ "./src/button.js");
 
+var ButtonEx = __webpack_require__(/*! ./buttonEx.js */ "./src/buttonEx.js");
+
 var Control = __webpack_require__(/*! ./control.js */ "./src/control.js");
 
 var Card = __webpack_require__(/*! ./card.js */ "./src/card.js");
@@ -1209,20 +1334,29 @@ var Game = /*#__PURE__*/function () {
       this.finishWindow = new Control(this.finishBack.node, 'div', 'dash_modal_window', '');
       this.gameContolNode = app.gameContol;
       this.gameContolNode.innerHTML = '';
-      this.repeatButton = new Button(this.gameContolNode, 'menu_button', 'repeat word', function () {
+      app.startButton.hide();
+      this.repeatButton = new ButtonEx(this.gameContolNode, 'start_button', 'repeat word', false, function () {
         _this.sounds[_this.base.words.length - 1].node.play();
       });
       this.gameScoreNode = app.gameScore;
       this.gameScoreNode.innerHTML = ''; // this.globalError = app.error;
 
       this.failure = new Control(parentNode, 'audio', '', '');
-      this.failure.node.src = 'assets/audio/' + 'failure.mp3';
+      this.failure.node.src = 'assets/snd/' + 'failure.mp3';
       this.error = new Control(parentNode, 'audio', '', '');
-      this.error.node.src = 'assets/audio/' + 'error.mp3';
+      this.error.node.src = 'assets/snd/' + 'error.mp3';
       this.correct = new Control(parentNode, 'audio', '', '');
-      this.correct.node.src = 'assets/audio/' + 'correct.mp3';
+      this.correct.node.src = 'assets/snd/' + 'correct.mp3';
       this.success = new Control(parentNode, 'audio', '', '');
-      this.success.node.src = 'assets/audio/' + 'success.mp3';
+      this.success.node.src = 'assets/snd/' + 'success.mp3';
+      var winImgWrapper = new Control(this.finishWindow.node, 'win_wrapper', '', '');
+      this.winImg = new Control(winImgWrapper.node, 'img', 'ico_big', '');
+      this.winImg.node.src = 'assets/ico/' + 'win.webp';
+      this.winImg.hide();
+      this.loseImg = new Control(winImgWrapper.node, 'img', 'ico_big', '');
+      this.loseImg.node.src = 'assets/ico/' + 'lose.webp';
+      this.loseImg.hide();
+      this.winMsg = new Control(this.finishWindow.node, 'div', '', '');
       this.sounds = [];
       this.base.words.forEach(function (it) {
         var aud = new Control(parentNode, 'audio', '', '');
@@ -1304,10 +1438,12 @@ var Game = /*#__PURE__*/function () {
           var wordList = this.incorrectWords.words.map(function (it) {
             return it.word;
           }).join(', ');
-          this.finishWindow.node.textContent = "You have ".concat(this.mistakeCount, " errors in words: ").concat(wordList);
+          this.winMsg.node.textContent = "You have ".concat(this.mistakeCount, " errors in words: ").concat(wordList);
+          this.loseImg.show();
           this.failure.node.play();
         } else {
-          this.finishWindow.node.textContent = 'You are win';
+          this.winMsg.node.textContent = 'You are win';
+          this.winImg.show();
           this.success.node.play();
         }
 
@@ -1480,7 +1616,7 @@ var Menu = /*#__PURE__*/function (_Button) {
     };
 
     _this.main = new Button(parentNode, 'menu_button', 'main');
-    /*let bk= function () {
+    /* let bk= function () {
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.currentMenuButton = this;
@@ -1511,8 +1647,8 @@ var Menu = /*#__PURE__*/function (_Button) {
       var el = new Button(parentNode, 'menu_button', it, function () {
         that.currentMenuButton = this;
         window.location.hash = i;
-        app.categoryName.textContent = "Category: " + that.categories[i].node.textContent;
-        app.categoryDesc.textContent = "Click start play button to test youself";
+        app.categoryName.textContent = "Category: ".concat(that.categories[i].node.textContent);
+        app.categoryDesc.textContent = 'Click start play button to test youself';
         resetActive();
         this.setClass('menu_button menu_button_active');
         that.burg.click();
@@ -1524,8 +1660,8 @@ var Menu = /*#__PURE__*/function (_Button) {
     _this.random = new Button(parentNode, 'menu_button', 'random', function () {
       that.currentMenuButton = this;
       window.location.hash = 'random';
-      app.categoryName.textContent = "Random words";
-      app.categoryDesc.textContent = "There are a few random words from all categories. Click start play button to test youself";
+      app.categoryName.textContent = 'Random words';
+      app.categoryDesc.textContent = 'There are a few random words from all categories. Click start play button to test youself';
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
@@ -1534,8 +1670,8 @@ var Menu = /*#__PURE__*/function (_Button) {
     _this.diffucult = new Button(parentNode, 'menu_button', 'difficult', function () {
       that.currentMenuButton = this;
       window.location.hash = 'difficult';
-      app.categoryName.textContent = "Difficult words";
-      app.categoryDesc.textContent = "There are most difficult words from last games. Click start play button to test youself";
+      app.categoryName.textContent = 'Difficult words';
+      app.categoryDesc.textContent = 'There are most difficult words from last games. Click start play button to test youself';
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
@@ -1551,8 +1687,8 @@ var Menu = /*#__PURE__*/function (_Button) {
     _this.statistic = new Button(parentNode, 'menu_button', 'statistic', function () {
       // that.currentMenuButton = this;
       window.location.hash = 'statistic';
-      app.categoryName.textContent = "Statistics";
-      app.categoryDesc.textContent = "Click table header to sort";
+      app.categoryName.textContent = 'Statistics';
+      app.categoryDesc.textContent = 'Click table header to sort';
       resetActive();
       app.startButton.hide();
       app.modeButton.hide();
@@ -1569,8 +1705,8 @@ var Menu = /*#__PURE__*/function (_Button) {
     var mainClick = function mainClick() {
       that.currentMenuButton = this;
       window.location.hash = '';
-      app.categoryName.textContent = "Main page";
-      app.categoryDesc.textContent = "Select a category or click play here to play with random words from all categories";
+      app.categoryName.textContent = 'Main page';
+      app.categoryDesc.textContent = 'Select a category or click play here to play with random words from all categories';
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
@@ -1599,6 +1735,16 @@ var Menu = /*#__PURE__*/function (_Button) {
       } else {
         this.app.startButton.hide();
       }
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      this.styleAnimate("\n      transform: scale(0);\n    ");
+    }
+  }, {
+    key: "show",
+    value: function show() {
+      this.styleAnimate("\n      transform: scale(1);\n    ");
     }
   }]);
 
