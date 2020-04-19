@@ -18,7 +18,7 @@ class App {
     this.gameScore = document.querySelector('#game-score');
     this.categoryName = document.querySelector('#category');
     this.categoryDesc = document.querySelector('#category-description');
-    
+
 
     this.error = new Control(parentNode, 'audio', '', '');
     this.error.node.src = 'assets/snd/' + 'error.mp3';
@@ -27,8 +27,6 @@ class App {
 
     // let menuOutput = new Control(menuNode, 'div', '', '');
     this.menu = new Menu(this, menuNode, baseOutput.node, base);
-
-    
 
 
     this.startButton = new ButtonEx(this.mainContol, 'start_button', 'Start Play', false, () => {
@@ -51,7 +49,7 @@ class App {
     });
 
     this.modeButton = new ButtonEx(this.mainContol, 'start_button', 'to Game mode', true, function () {
-     // this.changeState();
+      // this.changeState();
       that.mode = this.state;
       if (that.mode) {
         this.render('menu_button', 'to train mode');
@@ -66,10 +64,10 @@ class App {
     });
 
     this.hashProc(window.location.hash);
-    window.onpopstate = ()=>{this.hashProc(window.location.hash)};
+    window.onpopstate = () => { this.hashProc(window.location.hash); };
   }
 
-  hashProc(hash){
+  hashProc(hash) {
     switch (hash) {
       case '#main':
         this.menu.burg.click();

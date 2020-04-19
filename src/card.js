@@ -4,23 +4,23 @@ const Button = require('./button.js');
 class Card extends Button {
   constructor(parentNode, baseRecord, click) {
     super(parentNode, 'dash_item', '', click);
-    this.node.style=`transform:
-      translate(${Math.round(Math.random()*3000)-1500}px, ${Math.round(Math.random()*500-250)}px) 
-      rotateX(${Math.round(Math.random()*360)}deg)
-      rotateX(${Math.round(Math.random()*360)}deg)
-      rotateY(${Math.round(Math.random()*360)}deg)
-      rotateZ(${Math.round(Math.random()*360)}deg)
+    this.node.style = `transform:
+      translate(${Math.round(Math.random() * 3000) - 1500}px, ${Math.round(Math.random() * 500 - 250)}px) 
+      rotateX(${Math.round(Math.random() * 360)}deg)
+      rotateX(${Math.round(Math.random() * 360)}deg)
+      rotateY(${Math.round(Math.random() * 360)}deg)
+      rotateZ(${Math.round(Math.random() * 360)}deg)
       scale(0.1);
       `;
-    this.node.addEventListener('transitionend',()=>{
-     
+    this.node.addEventListener('transitionend', () => {
+
     });
-   //this.styleAnimate();
-    //this.animate('dash_item dash_item_static');
+    // this.styleAnimate();
+    // this.animate('dash_item dash_item_static');
     this.animate('dash_item dash_item_static');
     this.styleAnimate('');
-    
-    //this.node.style = "";
+
+    // this.node.style = "";
     this.baseRecord = baseRecord;
     this.mode;
 
@@ -88,7 +88,7 @@ class Card extends Button {
   }
 
   setMode(mode) {
-    if (this.mode!='category'){
+    if (this.mode != 'category') {
       if (mode) {
         this.setPlayMode();
       } else {
@@ -102,10 +102,7 @@ class Card extends Button {
     // console.log('dis');
     this.sideA.node.style = 'opacity:50%';
   }
-
-  
 }
-
 
 
 module.exports = Card;

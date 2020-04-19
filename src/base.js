@@ -61,7 +61,7 @@ class Base {
 
   getFirstN(n) {
     const res = new Base();
-    let m = Math.min(n, this.words.length);
+    const m = Math.min(n, this.words.length);
     for (let i = 0; i < m; i++) {
       res.words.push(this.words[i]);
     }
@@ -90,7 +90,7 @@ class Base {
     return res;
   }
 
-  saveChanges(rec){
+  saveChanges(rec) {
     saveToStorage(rec);
   }
 }
@@ -110,31 +110,31 @@ function makeRecord(category, word, translation, imageSrc, audioSrc) {
   obj.statDown = 0;
   obj.getPercent = () => {
     let res = 0;
-    if ((obj.statDown+obj.statUp)!==0){
-      let rel = obj.statUp / (obj.statDown+obj.statUp);
-      res = Math.trunc(rel*1000)/10;
+    if ((obj.statDown + obj.statUp) !== 0) {
+      const rel = obj.statUp / (obj.statDown + obj.statUp);
+      res = Math.trunc(rel * 1000) / 10;
     }
     return res;
-  }
+  };
   return obj;
 }
 
-function makeStorageRecord(statUp, statDown){
+function makeStorageRecord(statUp, statDown) {
   const obj = {};
   obj.statUp = statUp;
   obj.statDown = statDown;
   return obj;
 }
 
-function saveToStorage(rec){
-  let item = JSON.stringify(makeStorageRecord(rec.statUp, rec.statDown));
+function saveToStorage(rec) {
+  const item = JSON.stringify(makeStorageRecord(rec.statUp, rec.statDown));
   localStorage.setItem(rec.hash, item);
 }
 
-function loadFromStorage(rec){
-  let ls = localStorage.getItem(rec.hash)
-  if (ls!==null){
-    let item = JSON.parse(ls);
+function loadFromStorage(rec) {
+  const ls = localStorage.getItem(rec.hash);
+  if (ls !== null) {
+    const item = JSON.parse(ls);
     rec.statUp = item.statUp;
     rec.statDown = item.statDown;
   }

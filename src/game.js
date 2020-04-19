@@ -42,7 +42,7 @@ class Game {
       this.success = new Control(parentNode, 'audio', '', '');
       this.success.node.src = 'assets/snd/' + 'success.mp3';
 
-      let winImgWrapper = new Control(this.finishWindow.node, 'win_wrapper', '', '');
+      const winImgWrapper = new Control(this.finishWindow.node, 'win_wrapper', '', '');
       this.winImg = new Control(winImgWrapper.node, 'img', 'ico_big', '');
       this.winImg.node.src = 'assets/ico/' + 'win.webp';
       this.winImg.hide();

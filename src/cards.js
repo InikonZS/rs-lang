@@ -403,131 +403,131 @@ const cards = [
   [
     {
       word: 'pan',
-      translation: 'кастрюля', 
+      translation: 'кастрюля',
     },
     {
       word: 'fork',
-      translation: 'вилка', 
+      translation: 'вилка',
     },
     {
       word: 'knife',
-      translation: 'нож', 
+      translation: 'нож',
     },
     {
       word: 'glass',
-      translation: 'стакан', 
+      translation: 'стакан',
     },
     {
       word: 'colander',
-      translation: 'дуршлаг', 
+      translation: 'дуршлаг',
     },
     {
       word: 'cup',
-      translation: 'кружка', 
+      translation: 'кружка',
     },
     {
       word: 'spoon',
-      translation: 'ложка', 
+      translation: 'ложка',
     },
     {
       word: 'teapot',
-      translation: 'чайник', 
+      translation: 'чайник',
     },
     {
       word: 'sticks',
-      translation: 'палочки', 
+      translation: 'палочки',
     },
     {
       word: 'grater',
-      translation: 'терка', 
+      translation: 'терка',
     },
     {
       word: 'plate',
-      translation: 'тарелка', 
+      translation: 'тарелка',
     },
   ],
   [
     {
       word: 'bike',
-      translation: 'мотоцикл', 
+      translation: 'мотоцикл',
     },
     {
       word: 'car',
-      translation: 'машина', 
+      translation: 'машина',
     },
     {
       word: 'bus',
-      translation: 'автобус', 
+      translation: 'автобус',
     },
     {
       word: 'train',
-      translation: 'поезд', 
+      translation: 'поезд',
     },
     {
       word: 'ship',
-      translation: 'корабль', 
+      translation: 'корабль',
     },
     {
       word: 'tram',
-      translation: 'трамвай', 
+      translation: 'трамвай',
     },
     {
       word: 'plane',
-      translation: 'самолет', 
+      translation: 'самолет',
     },
     {
       word: 'truck',
-      translation: 'грузовик', 
+      translation: 'грузовик',
     },
   ],
   [
     {
       word: 'helmet',
-      translation: 'каска', 
+      translation: 'каска',
     },
     {
       word: 'bullet',
-      translation: 'пуля', 
+      translation: 'пуля',
     },
     {
       word: 'pistol',
-      translation: 'пистолет', 
+      translation: 'пистолет',
     },
     {
       word: 'rifle',
-      translation: 'винтовка', 
+      translation: 'винтовка',
     },
     {
       word: 'grenade',
-      translation: 'граната', 
+      translation: 'граната',
     },
     {
       word: 'shotgun',
-      translation: 'дробовик', 
+      translation: 'дробовик',
     },
   ],
   [
     {
       word: 'beer',
-      translation: 'пиво', 
+      translation: 'пиво',
     },
     {
       word: 'whiskey',
-      translation: 'виски', 
+      translation: 'виски',
     },
     {
       word: 'juice',
-      translation: 'сок', 
+      translation: 'сок',
     },
     {
       word: 'cocktail',
-      translation: 'коктейль', 
+      translation: 'коктейль',
     },
     {
       word: 'vine',
-      translation: 'вино', 
+      translation: 'вино',
     },
-  ]
+  ],
 ];
 
 module.exports = cards;

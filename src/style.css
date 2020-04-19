@@ -20,6 +20,7 @@
     max-width: 1020px;
     background-color: rgb(151, 142, 199);
     font-family: verdana, sans-serif;
+    overflow: hidden;
 }
 
 .header{
@@ -115,6 +116,7 @@ h1{
     height: calc(100vh - 60px);
     overflow-y: auto;
     transform-origin: top left;
+    transform: scale(0);
 }
 .burger{
     display: flex;

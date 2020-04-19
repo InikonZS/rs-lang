@@ -41,10 +41,10 @@ class Menu extends Button {
       targetNode.innerHTML = '';
       this.currentCards = [];
       console.log(base.words.length);
-      if (base.words.length){
+      if (base.words.length) {
         base.words.forEach((it, i) => {
           let el;
-          if (clicker){
+          if (clicker) {
             el = new Card(targetNode, it, clicker(i));
             el.setCategoryMode();
           } else {
@@ -72,7 +72,7 @@ class Menu extends Button {
       this.categories.forEach((it) => { it.setClass(c); });
       app.resetButton.hide();
       app.difficultButton.hide();
-      if (app.mode){
+      if (app.mode) {
         app.startButton.show();
       } else {
         app.startButton.hide();
@@ -82,8 +82,8 @@ class Menu extends Button {
 
 
     this.main = new Button(parentNode, 'menu_button', 'main');
-    
-    /*let bk= function () {
+
+    /* let bk= function () {
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.currentMenuButton = this;
@@ -108,15 +108,15 @@ class Menu extends Button {
       });
     }//);
 */
-    
+
 
     this.categories = [];
     base.getCategories().forEach((it, i) => {
       const el = new Button(parentNode, 'menu_button', it, function () {
         that.currentMenuButton = this;
         window.location.hash = i;
-        app.categoryName.textContent = "Category: "+that.categories[i].node.textContent;
-        app.categoryDesc.textContent = "Click start play button to test youself";
+        app.categoryName.textContent = `Category: ${that.categories[i].node.textContent}`;
+        app.categoryDesc.textContent = 'Click start play button to test youself';
         resetActive();
         this.setClass('menu_button menu_button_active');
         that.burg.click();
@@ -128,8 +128,8 @@ class Menu extends Button {
     this.random = new Button(parentNode, 'menu_button', 'random', function () {
       that.currentMenuButton = this;
       window.location.hash = 'random';
-      app.categoryName.textContent = "Random words";
-      app.categoryDesc.textContent = "There are a few random words from all categories. Click start play button to test youself";
+      app.categoryName.textContent = 'Random words';
+      app.categoryDesc.textContent = 'There are a few random words from all categories. Click start play button to test youself';
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
@@ -139,16 +139,15 @@ class Menu extends Button {
     this.diffucult = new Button(parentNode, 'menu_button', 'difficult', function () {
       that.currentMenuButton = this;
       window.location.hash = 'difficult';
-      app.categoryName.textContent = "Difficult words";
-      app.categoryDesc.textContent = "There are most difficult words from last games. Click start play button to test youself";
+      app.categoryName.textContent = 'Difficult words';
+      app.categoryDesc.textContent = 'There are most difficult words from last games. Click start play button to test youself';
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
       drawCards(targetNode, base
-        .getFiltered((it)=>it.getPercent()>0)
-        .getSorted((a, b)=>b.getPercent() - a.getPercent())
-        .getFirstN(8)
-      );
+        .getFiltered((it) => it.getPercent() > 0)
+        .getSorted((a, b) => b.getPercent() - a.getPercent())
+        .getFirstN(8));
       // targetNode.innerHTML="";
       // base.getRandomized().getFirstN(2).words.forEach((jt)=>{
       //  new Card(targetNode, jt)
@@ -158,8 +157,8 @@ class Menu extends Button {
     this.statistic = new Button(parentNode, 'menu_button', 'statistic', function () {
       // that.currentMenuButton = this;
       window.location.hash = 'statistic';
-      app.categoryName.textContent = "Statistics";
-      app.categoryDesc.textContent = "Click table header to sort";
+      app.categoryName.textContent = 'Statistics';
+      app.categoryDesc.textContent = 'Click table header to sort';
       resetActive();
       app.startButton.hide();
       app.modeButton.hide();
@@ -175,42 +174,40 @@ class Menu extends Button {
     });
 
 
-    let mainClick= function () {
+    const mainClick = function () {
       that.currentMenuButton = this;
       window.location.hash = '';
-      app.categoryName.textContent = "Main page";
-      app.categoryDesc.textContent = "Select a category or click play here to play with random words from all categories";
+      app.categoryName.textContent = 'Main page';
+      app.categoryDesc.textContent = 'Select a category or click play here to play with random words from all categories';
       resetActive();
       this.setClass('menu_button menu_button_active');
       that.burg.click();
-      drawCards(targetNode, base.getAnyFromCategory(),(i)=>{
-        return ()=>{
-          that.burg.click();
-          that.categories[i].click(); 
-        } 
+      drawCards(targetNode, base.getAnyFromCategory(), (i) => () => {
+        that.burg.click();
+        that.categories[i].click();
       });
-    }
+    };
     this.main.setClick(mainClick);
   }
 
   redraw(mode) {
     this.currentCards.forEach((it) => {
       it.setMode(mode);
-    }); 
-    if (this.app.mode){
+    });
+    if (this.app.mode) {
       this.app.startButton.show();
     } else {
       this.app.startButton.hide();
     }
   }
 
-  hide(){
+  hide() {
     this.styleAnimate(`
       transform: scale(0);
     `);
   }
 
-  show(){
+  show() {
     this.styleAnimate(`
       transform: scale(1);
     `);
