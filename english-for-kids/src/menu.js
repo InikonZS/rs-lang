@@ -40,7 +40,6 @@ class Menu extends Button {
       this.currentBase = base;
       targetNode.innerHTML = '';
       this.currentCards = [];
-      console.log(base.words.length);
       if (base.words.length) {
         base.words.forEach((it, i) => {
           let el;
@@ -83,33 +82,6 @@ class Menu extends Button {
 
     this.main = new Button(parentNode, 'menu_button', 'main');
 
-    /* let bk= function () {
-      resetActive();
-      this.setClass('menu_button menu_button_active');
-      that.currentMenuButton = this;
-      window.location.hash = '';
-      app.categoryName.textContent = "Main page";
-      app.categoryDesc.textContent = "Select any category";
-      app.startButton.hide();
-      app.modeButton.show();
-      that.burg.click();
-      targetNode.innerHTML = '';
-      that.currentBase = base.getAnyFromCategory();
-      that.currentBase.words.forEach((it, i) => {
-        const el = new Card(targetNode, it, () => {
-          window.location.hash = i;
-          app.categoryName.textContent = "Category: "+that.categories[i].node.textContent;
-          app.categoryDesc.textContent = "Click start play button to test youself";
-          resetActive();
-          that.categories[i].setClass('menu_button menu_button_active');
-          drawCards(targetNode, base.selectCategory(it.category));
-        }).setCategoryMode();
-        // that.currentCards.push(el);
-      });
-    }//);
-*/
-
-
     this.categories = [];
     base.getCategories().forEach((it, i) => {
       const el = new Button(parentNode, 'menu_button', it, function () {
@@ -148,14 +120,9 @@ class Menu extends Button {
         .getFiltered((it) => it.getPercent() > 0)
         .getSorted((a, b) => b.getPercent() - a.getPercent())
         .getFirstN(8));
-      // targetNode.innerHTML="";
-      // base.getRandomized().getFirstN(2).words.forEach((jt)=>{
-      //  new Card(targetNode, jt)
-      // });
     });
 
     this.statistic = new Button(parentNode, 'menu_button', 'statistic', function () {
-      // that.currentMenuButton = this;
       window.location.hash = 'statistic';
       app.categoryName.textContent = 'Statistics';
       app.categoryDesc.textContent = 'Click table header to sort';
@@ -168,9 +135,6 @@ class Menu extends Button {
       that.burg.click();
       targetNode.innerHTML = '';
       new Statistic(targetNode, base);
-    //  base.words.forEach((jt)=>{
-    //    new Card(targetNode, jt)
-    //  });
     });
 
 

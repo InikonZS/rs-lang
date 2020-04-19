@@ -15,12 +15,10 @@ class Card extends Button {
     this.node.addEventListener('transitionend', () => {
 
     });
-    // this.styleAnimate();
-    // this.animate('dash_item dash_item_static');
+ 
     this.animate('dash_item dash_item_static');
     this.styleAnimate('');
 
-    // this.node.style = "";
     this.baseRecord = baseRecord;
     this.mode;
 
@@ -99,7 +97,6 @@ class Card extends Button {
 
   disable() {
     super.disable();
-    // console.log('dis');
     this.sideA.node.style = 'opacity:50%';
   }
 }

@@ -29,7 +29,6 @@ class Control {
 
   hide() {
     this.node.style = 'display:none';
-    // this.node.style = 'transform: translateX(-2000px)';
   }
 
   show() {

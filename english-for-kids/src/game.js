@@ -28,8 +28,6 @@ class Game {
       this.gameScoreNode = app.gameScore;
       this.gameScoreNode.innerHTML = '';
 
-      // this.globalError = app.error;
-
       this.failure = new Control(parentNode, 'audio', '', '');
       this.failure.node.src = 'assets/snd/' + 'failure.mp3';
 
@@ -108,15 +106,12 @@ class Game {
 
       if (this.base.words.length == 0) {
         this.finish();
-      } else {
-        // this.sounds[this.base.words.length-1].node.play();
       }
     }
     return res;
   }
 
   finish() {
-    console.log('fin');
     if (!this.base.words.length) {
       if (this.mistakeCount) {
         const wordList = this.incorrectWords.words.map((it) => it.word).join(', ');
@@ -129,17 +124,10 @@ class Game {
         this.success.node.play();
       }
       this.finishBack.show();
-    } else {
-      // this.error.node.play();
     }
     this.finished = true;
     this.gameContolNode.innerHTML = '';
     this.gameScoreNode.innerHTML = '';
-
-
-    // let res = {};
-    // res.cancel = !!this.base.words.length;
-    // return res;
   }
 }
 

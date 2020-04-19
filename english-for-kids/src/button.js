@@ -5,12 +5,6 @@ class Button extends Control {
     super(parentNode, 'div', className, textContent);
     this.state = false;
     this.disabled = false;
-    /*   if (click) {
-      this.click = click;
-      this.node.addEventListener('click', (e) => {
-        this.click();
-      });
-    } */
     this.setClick(click);
   }
 

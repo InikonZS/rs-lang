@@ -1,5 +1,4 @@
 const Control = require('./control.js');
-const Button = require('./button.js');
 const ButtonEx = require('./buttonEx.js');
 const Base = require('./base.js');
 const Game = require('./game.js');
@@ -19,15 +18,12 @@ class App {
     this.categoryName = document.querySelector('#category');
     this.categoryDesc = document.querySelector('#category-description');
 
-
     this.error = new Control(parentNode, 'audio', '', '');
     this.error.node.src = 'assets/snd/' + 'error.mp3';
 
     const baseOutput = new Control(parentNode, 'div', 'dash_wrapper', '');
 
-    // let menuOutput = new Control(menuNode, 'div', '', '');
     this.menu = new Menu(this, menuNode, baseOutput.node, base);
-
 
     this.startButton = new ButtonEx(this.mainContol, 'start_button', 'Start Play', false, () => {
       console.log(this.menu.currentBase);
@@ -49,7 +45,6 @@ class App {
     });
 
     this.modeButton = new ButtonEx(this.mainContol, 'start_button', 'to Game mode', true, function () {
-      // this.changeState();
       that.mode = this.state;
       if (that.mode) {
         this.render('menu_button', 'to train mode');

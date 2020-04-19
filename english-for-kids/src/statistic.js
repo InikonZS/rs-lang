@@ -62,7 +62,6 @@ class Statistic extends Control {
     const baseWords = this.base.words.sort(comparator);
 
     this.rows.forEach((it, i) => {
-      // let tr = new Control(this.node, 'tr');
       it.category.render('', baseWords[i].category);
       it.word.render('', baseWords[i].word);
       it.translation.render('', baseWords[i].translation);
