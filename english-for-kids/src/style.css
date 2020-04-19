@@ -55,6 +55,7 @@
     background-color: rgb(151, 142, 199);
     border-style: none;
     padding: 30px 15px;
+    min-height: calc(100vh - 190px);
 }
 a{
     color:#fff;
@@ -138,13 +139,13 @@ img{
     width: calc(100% - 10px);
     padding: 10px;
     border-radius: 5px;
-    margin: 5px 5px;
+    margin: 1px 5px;
     background-color: #aaa;
     box-sizing: border-box;
     overflow: hidden;
+    user-select: none;
 }
-.menuj_button:hover{
-    margin: 5px 5px;
+.menu_button:hover{
     background-color: #ccc;
 }
 .menu_button__down{
@@ -169,6 +170,7 @@ img{
     overflow: hidden;
    /* animation: start-button 3s linear 1s infinite alternate;*/
     transition-duration: 300ms;
+    user-select: none;
 }
 /*@keyframes start-button{
     from {
