@@ -9,8 +9,8 @@ class App {
   constructor(parentNode, menuNode) {
     const that = this;
     this.mode = 0;
-    const base = new Base();
-    base.addFromBaseData(cards);
+    this.base = new Base();
+    this.base.addFromBaseData(cards);
 
     this.mainContol = document.querySelector('#main-control');
     this.gameContol = document.querySelector('#game-control');
@@ -23,7 +23,7 @@ class App {
 
     const baseOutput = new Control(parentNode, 'div', 'dash_wrapper', '');
 
-    this.menu = new Menu(this, menuNode, baseOutput.node, base);
+    this.menu = new Menu(this, menuNode, baseOutput.node);
 
     this.startButton = new ButtonEx(this.mainContol, 'start_button', 'Start Play', false, () => {
       console.log(this.menu.currentBase);
@@ -33,8 +33,10 @@ class App {
 
     this.resetButton = new ButtonEx(this.mainContol, 'start_button', 'reset', false, () => {
       window.localStorage.clear();
-      this.base = new Base();
-      this.base = this.base.addFromBaseData(cards);
+     // this.base = new Base(); // bug with statistics
+     // console.log(this.base);
+      this.base.words = [];
+      this.base.addFromBaseData(cards);
       this.menu.burg.click();
       this.menu.statistic.click();
     });

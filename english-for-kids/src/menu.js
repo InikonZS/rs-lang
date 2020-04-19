@@ -6,14 +6,14 @@ const Statistic = require('./statistic.js');
 
 
 class Menu extends Button {
-  constructor(app, parentNode_, targetNode, base) {
+  constructor(app, parentNode_, targetNode) {
     const parent = super(parentNode_, 'basic_block menu_burger');
     const parentNode = parent.node;
-
+ 
     const that = this;
 
     this.app = app;
-
+    let base = app.base; // warning; it cant refresh from app
     this.burg = new Button(parentNode_, 'burger', '', function () {
       if (this.state) {
         that.hide();
