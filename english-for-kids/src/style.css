@@ -168,7 +168,6 @@ img{
     background-color: #aaa;
     box-sizing: border-box;
     overflow: hidden;
-   /* animation: start-button 3s linear 1s infinite alternate;*/
     transition-duration: 300ms;
     user-select: none;
 }
@@ -203,6 +202,17 @@ img{
     transform: scale(1);
 }
 
+.repeat{
+    background-repeat: no-repeat, no-repeat;
+    background-image: url(assets/ico/repeat.svg);
+    width:45px;
+    height: 45px;
+}
+
+.rotate{
+    background-repeat: no-repeat, no-repeat;
+    background-image: url(assets/ico/rotate.svg);
+}
 
 .dash_wrapper{
     display:flex;
@@ -224,7 +234,6 @@ img{
     border-style: solid;
     position: absolute;
     top:0px;
-    height: 100%;
     backface-visibility: hidden;
 }
 .dash_item:hover{
@@ -232,12 +241,12 @@ img{
 }
 .card_side_a{
     position: relative;
-    width: calc(100% - 0px);
+   /* width: calc(100% - 0px);
     top:0px;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between;*/
 }
 
 .dash_item{
@@ -320,6 +329,46 @@ img{
     justify-content: flex-end;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.game_score{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game_score_wrapper{
+    display: flex;
+    flex-direction: row-reverse;
+    width: calc((20px + 14px) * 4);
+    overflow: hidden;   
+}
+
+@media screen and (min-width: 425px){
+    .game_score_wrapper{
+        display: flex;
+        flex-direction: row-reverse;
+        width: calc((20px + 14px) * 8);
+        overflow: hidden;   
+    }
+}
+
+@media screen and (min-width: 600px){
+    .game_score_wrapper{
+        display: flex;
+        flex-direction: row-reverse;
+        width: calc((20px + 14px) * 12);
+        overflow: hidden;   
+    }
+}
+
+@media screen and (min-width: 767px){
+    .game_score_wrapper{
+        display: flex;
+        flex-direction: row-reverse;
+        width: calc((20px + 14px) * 16);
+        overflow: hidden;   
+    }
 }
 .game_header{
     display: flex;

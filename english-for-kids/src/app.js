@@ -55,6 +55,8 @@ class App {
       }
       if (that.game && !that.game.finished) {
         that.game.finish();
+        that.menu.burg.click();
+        that.menu.currentMenuButton.click();
         that.error.node.play();
       }
       that.menu.redraw(that.mode);
@@ -65,7 +67,24 @@ class App {
   }
 
   hashProc(hash) {
+    if (hash[1]=='_'){
+      let hs = hash.split('');
+      hs.shift();
+      hs.shift();
+      let cat = +(hs.join(''));
+      this.menu.burg.click();
+      this.menu.categories[cat].click();
+    } else {
+
     switch (hash) {
+      case '':
+        this.menu.burg.click();
+        this.menu.main.click();
+        break;
+      case '#':
+        this.menu.burg.click();
+        this.menu.main.click();
+        break;
       case '#main':
         this.menu.burg.click();
         this.menu.main.click();
@@ -82,9 +101,7 @@ class App {
         this.menu.burg.click();
         this.menu.statistic.click();
         break;
-      default:
-        this.menu.burg.click();
-        this.menu.main.click();
+    }
     }
   }
 }

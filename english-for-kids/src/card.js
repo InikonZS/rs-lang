@@ -33,6 +33,9 @@ class Card extends Button {
     this.sideB.img = new Control(imgWrapperB.node, 'img', '', '');
     this.sideB.img.node.src = imgURL;
     this.sideB.node.style = `z-index: 1; transform: perspective(500px) rotateY(${180}deg)`;
+    this.sideB.cardMenu = new Control(this.sideB.node, 'div', 'card_menu', '');
+    let cmc = new Control(this.sideB.cardMenu.node,'div', 'card_button', 'rotate');
+    cmc.node.style="visibility:hidden;";
 
     this.sideA = new Control(this.node, 'div', 'card_side card_side_a', '');
     this.sideA.name = new Control(this.sideA.node, 'div', 'card_name', this.baseRecord.word);

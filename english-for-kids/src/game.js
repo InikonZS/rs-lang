@@ -22,7 +22,7 @@ class Game {
       this.gameContolNode.innerHTML = '';
 
       app.startButton.hide();
-      this.repeatButton = new ButtonEx(this.gameContolNode, 'start_button', 'repeat word', false, () => {
+      this.repeatButton = new ButtonEx(this.gameContolNode, 'start_button repeat', '', false, () => {
         this.sounds[this.base.words.length - 1].node.play();
       });
       this.gameScoreNode = app.gameScore;

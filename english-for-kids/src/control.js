@@ -7,7 +7,7 @@ class Control {
     this.hidden=false;
     this.node = document.createElement(tagNameV);
     this.render(classNameV, textContentV);
-    parentNode.appendChild(this.node);
+    parentNode.appendChild(this.node);  
   }
 
   destroy() {

@@ -10,7 +10,7 @@ class Menu extends Button {
     const parent = super(parentNode_, 'basic_block menu_burger');
     const parentNode = parent.node;
  
-    const that = this;
+    let that = this;
 
     this.app = app;
     let base = app.base; // warning; it cant refresh from app
@@ -84,9 +84,11 @@ class Menu extends Button {
 
     this.categories = [];
     base.getCategories().forEach((it, i) => {
-      const el = new Button(parentNode, 'menu_button', it, function () {
+      var el = new Button(parentNode, 'menu_button', it, function () {
         that.currentMenuButton = this;
-        window.location.hash = i;
+        console.log(app.menu.currentMenuButton);
+        console.log(this);
+        window.location.hash = '_'+i;
         app.categoryName.textContent = `Category: ${that.categories[i].node.textContent}`;
         app.categoryDesc.textContent = 'Click start play button to test youself';
         resetActive();
@@ -123,6 +125,7 @@ class Menu extends Button {
     });
 
     this.statistic = new Button(parentNode, 'menu_button', 'statistic', function () {
+      that.currentMenuButton = this;
       window.location.hash = 'statistic';
       app.categoryName.textContent = 'Statistics';
       app.categoryDesc.textContent = 'Click table header to sort';
@@ -155,6 +158,7 @@ class Menu extends Button {
   }
 
   redraw(mode) {
+    console.log(this.currentCards);
     this.currentCards.forEach((it) => {
       it.setMode(mode);
     });
