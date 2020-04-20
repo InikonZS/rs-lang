@@ -112,7 +112,7 @@ h1{
     position: absolute;
     z-index: 1000;
     border-style: none;
-    background-color: #ff8e94;
+    background-color: #481221cc;
     top: 60px;
     max-width: 70%;
     left: 0px;
@@ -143,13 +143,13 @@ img{
     padding: 10px;
     border-radius: 5px;
     margin: 1px 5px;
-    background-color: #aaa;
+    background-color: #aaa0;
     box-sizing: border-box;
     overflow: hidden;
     user-select: none;
 }
 .menu_button:hover{
-    background-color: #ccc;
+    background-color: #684251cc;;
 }
 .menu_button__down{
     background-color: #4af;
@@ -174,14 +174,7 @@ img{
     transition-duration: 300ms;
     user-select: none;
 }
-/*@keyframes start-button{
-    from {
-        background-image: linear-gradient(-30deg, #fff, 100%, #000, 0%);
-    }
-    to{
-     /*   background-image: linear-gradient(-30deg, #fff, 0%, #000, 100%);
-    }
-}*/
+
 
 .start_button__hover{
     background-color: #ccc;
@@ -258,12 +251,6 @@ img{
 }
 .card_side_a{
     position: relative;
-   /* width: calc(100% - 0px);
-    top:0px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;*/
 }
 
 .dash_item{

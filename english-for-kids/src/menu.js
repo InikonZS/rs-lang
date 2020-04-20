@@ -86,8 +86,6 @@ class Menu extends Button {
     base.getCategories().forEach((it, i) => {
       var el = new Button(parentNode, 'menu_button', it, function () {
         that.currentMenuButton = this;
-        console.log(app.menu.currentMenuButton);
-        console.log(this);
         window.location.hash = '_'+i;
         app.categoryName.textContent = `Category: ${that.categories[i].node.textContent}`;
         app.categoryDesc.textContent = 'Click start play button to test youself';
