@@ -59,8 +59,12 @@ class Card extends Button {
   }
 
   rotate(deg) {
-    this.sideA.node.style = `z-index: 1; transform: perspective(500px) rotateY(${deg}deg)`;
-    this.sideB.node.style = `z-index: 1; transform: perspective(500px) rotateY(${180 + deg}deg)`;
+    if (!this.sideA.hidden){
+      this.sideA.node.style = `z-index: 1; transform: perspective(500px) rotateY(${deg}deg)`;
+    }
+    if (!this.sideB.hidden){
+      this.sideB.node.style = `z-index: 1; transform: perspective(500px) rotateY(${180 + deg}deg)`;
+    }
   }
 
   setPlayMode() {

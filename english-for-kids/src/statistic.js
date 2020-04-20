@@ -15,17 +15,17 @@ class Statistic extends Control {
       let bf;
       bf = new Control(tr.node, 'td');
       tr.category = new Button(bf.node, '', 'category', () => {
-        that.drawSorted((a, b) => a.category > b.category);
+        that.drawSorted((a, b) => +(a.category > b.category)*2-1);
       });
 
       bf = new Control(tr.node, 'td');
       tr.word = new Button(bf.node, '', 'word', () => {
-        that.drawSorted((a, b) => a.word > b.word);
+        that.drawSorted((a, b) => +(a.word > b.word)*2-1);
       });
 
       bf = new Control(tr.node, 'td');
       tr.translation = new Button(bf.node, '', 'translation', () => {
-        that.drawSorted((a, b) => a.translation > b.translation);
+        that.drawSorted((a, b) => +(a.translation > b.translation)*2-1);
       });
 
       bf = new Control(tr.node, 'td');

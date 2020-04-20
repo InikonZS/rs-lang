@@ -4,6 +4,7 @@ class Control {
     const classNameV = className || '';
     const textContentV = textContent || '';
     const tagNameV = tagName || 'div';
+    this.hidden=false;
     this.node = document.createElement(tagNameV);
     this.render(classNameV, textContentV);
     parentNode.appendChild(this.node);
@@ -28,10 +29,12 @@ class Control {
   }
 
   hide() {
+    this.hidden=true;
     this.node.style = 'display:none';
   }
 
   show() {
+    this.hidden=false;
     this.node.style = '';
   }
 
