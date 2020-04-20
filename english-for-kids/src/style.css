@@ -31,7 +31,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
+    padding: 10px 17px;
     z-index: 2000;
 }
 .header_item{
@@ -54,7 +54,7 @@
 .main_wrapper{
     background-color: rgb(151, 142, 199);
     border-style: none;
-    padding: 30px 15px;
+    padding: 10px 10px;
     min-height: calc(100vh - 190px);
 }
 a{
@@ -97,10 +97,13 @@ table, tr, td{
 p{
     margin:0px;
     padding: 5px 5px;
+    color: fff;
 }
 h1{
     margin:0px;
     padding: 5px 5px;
+    color: #fff;
+    font-size: 18pt;
 }
 .menu_burger{
     display: flex;
@@ -204,15 +207,29 @@ img{
 
 .repeat{
     background-repeat: no-repeat, no-repeat;
+    background-size:contain;
     background-image: url(assets/ico/repeat.svg);
-    width:45px;
+    width: 45px;
     height: 45px;
 }
 
 .rotate{
     background-repeat: no-repeat, no-repeat;
+    background-size:contain;
     background-image: url(assets/ico/rotate.svg);
+    width: 45px;
+    height: 45px;
+    
 }
+
+.listen{
+    background-repeat: no-repeat, no-repeat;
+    background-size:contain;
+    background-image: url(assets/ico/listen.svg);
+    width: 45px;
+    height: 45px;
+}
+
 
 .dash_wrapper{
     display:flex;
@@ -315,13 +332,18 @@ img{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(50% - 10px);
+   /* width: calc(50% - 10px); */
     padding: 10px;
     border-radius: 5px;
     margin: 5px 0px;
-    background-color: #aaa;
+    background-color: #fffc;
     box-sizing: border-box;
     overflow: hidden;
+    background-blend-mode: exclusion;
+}
+
+.card_button:hover{
+    background-color: #fff9;
 }
 
 .game_control{

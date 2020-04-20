@@ -34,7 +34,7 @@ class Card extends Button {
     this.sideB.img.node.src = imgURL;
     this.sideB.node.style = `z-index: 1; transform: perspective(500px) rotateY(${180}deg)`;
     this.sideB.cardMenu = new Control(this.sideB.node, 'div', 'card_menu', '');
-    let cmc = new Control(this.sideB.cardMenu.node,'div', 'card_button', 'rotate');
+    let cmc = new Control(this.sideB.cardMenu.node,'div', 'card_button rotate', '');
     cmc.node.style="visibility:hidden;";
 
     this.sideA = new Control(this.node, 'div', 'card_side card_side_a', '');
@@ -44,7 +44,7 @@ class Card extends Button {
     this.sideA.img.node.src = imgURL;
     this.sideA.cardMenu = new Control(this.sideA.node, 'div', 'card_menu', '');
 
-    this.rotateButton = new Button(this.sideA.cardMenu.node, 'card_button', 'rotate', (event) => {
+    this.rotateButton = new Button(this.sideA.cardMenu.node, 'card_button rotate', '', (event) => {
       this.rotate(180);
     });
 
@@ -54,7 +54,7 @@ class Card extends Button {
       }
     });
 
-    this.listenButton = new Button(this.sideA.cardMenu.node, 'card_button', 'listen', (event) => {
+    this.listenButton = new Button(this.sideA.cardMenu.node, 'card_button listen', '', (event) => {
       this.aud.node.play();
     });
 
