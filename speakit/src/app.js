@@ -13,6 +13,7 @@ class App{
     this.scoreNode=scoreNode;
     this.controlsNode=controlsNode;
     this.isGameStarted = false;
+    this.gameCounter = 0;
 
     let parentNode = dashBoardNode;
     this.failure = new Control(parentNode, 'audio', '', '');
@@ -36,6 +37,7 @@ class App{
       (value, values)=>{
         let said = value;
         let ok = false;
+
         let okCard;
         //console.log(values.join(' '))
         this.cards.forEach((it)=>{
@@ -43,6 +45,7 @@ class App{
           //console.log(cur);
           let ind = values.indexOf(cur);
           if (ind!=-1){
+            said = cur;
             if (!it.isMarked){
               said = cur;
               ok=true;
@@ -53,8 +56,19 @@ class App{
 
         if (ok){
           okCard.mark();
+          okCard.click();
           new Control(app.scoreNode, 'div', 'star_item star_item_ok');
           this.correct.node.play();
+          this.gameCounter++;
+          if (this.gameCounter==this.cards.length){
+            this.startPlayButton.untoggle();
+            this.startPlayButton.click();
+            this.success.node.play();
+            let nextLevelButton = this.levelButtons[this.currentLevelButtonIndex+1];
+            if (nextLevelButton){
+              nextLevelButton.click();
+            }
+          }
         } else {
           //new Control(app.scoreNode, 'div', 'star_item star_item_err');
           //this.error.node.play();
@@ -78,13 +92,14 @@ class App{
           }
         });
         app.currentLevelButtonIndex=i;
-        app.refreshCards(app.currentLevelButtonIndex);
+        app.refreshCards(app.currentLevelButtonIndex, 3);
         app.levelButtons[app.currentLevelButtonIndex].toggle();
+        app.startPlayButton.untoggle();
+        app.startPlayButton.click();
       });
       this.levelButtons.push(el);
     }
-    this.levelButtons[0].click();
-    this.levelButtons[0].toggle();
+    
 
     const startCaption = 'Start Game';
     const stopCaption = 'Stop Game';
@@ -103,6 +118,9 @@ class App{
     this.resultsButton = new Button(this.controlsNode, 'basic_button', 'Results', true, function(){
 
     });
+
+    this.levelButtons[0].click();
+    this.levelButtons[0].toggle();
   }
   
   gameStart(){
@@ -110,6 +128,7 @@ class App{
       this.isGameStarted = true;
       this.recognition.start(); 
       app.scoreNode.innerHTML=""; 
+      this.gameCounter = 0;
     }
   }
 
@@ -121,17 +140,19 @@ class App{
     }
   }
 
-  refreshCards(group){
+  refreshCards(group, count=20){
     this.cards=[];
     this.dashBoardNode.innerHTML='';
     let page = Math.trunc(Math.random()*30);
     getServerDataJSON(page,group,(res)=>{
       if (res && Array.isArray(res)){
-        res.forEach((it)=>{
-          let card = new Card(this.dashBoardNode, it, ()=>{
-            this.ext.refresh(it);
-          });  
-          this.cards.push(card);
+        res.forEach((it, i)=>{
+          if (i<count){
+            let card = new Card(this.dashBoardNode, it, ()=>{
+              this.ext.refresh(it);
+            });  
+            this.cards.push(card);
+          }
         })
         this.ext.refresh(res[0]);
       }
