@@ -1,3 +1,27 @@
+
+.score_wrapper{
+  display:flex;
+  flex-direction: row-reverse;
+}
+
+.star_item{
+  display:flex;
+  border-style: solid;
+  border-radius:50%;
+  border-width: 2px;
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+}
+
+.star_item_ok{
+  background-color: #00ff00;  
+}
+
+.star_item_err{
+  background-color: #ff0000;  
+}
+
 .extcard_wrapper{
   display:flex;
   flex-direction: column;
@@ -8,6 +32,18 @@
 .extcard_item{
   justify-content: center;
   align-items: center;
+}
+
+.levels_wrapper{
+  display:flex;
+}
+
+.score_wrapper{
+  display:flex;
+}
+
+.controls_wrapper{
+  display:flex;
 }
 
 .dash_wrapper{

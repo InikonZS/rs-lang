@@ -77,6 +77,20 @@ class Button extends Control {
     }
   }
 
+  untoggle(){
+    if (this.allowToggle) {
+      this.isToggled = false;
+      this.node.className=(this.basicClass);
+    }  
+  }
+
+  toggle(){
+    if (this.allowToggle) {
+      this.isToggled = true;
+      this.node.className=(`${this.basicClass} ${this.basicClass}__toggled`);
+    }  
+  }
+
 }
 
 module.exports = Button;

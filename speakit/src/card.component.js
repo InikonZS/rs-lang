@@ -5,6 +5,7 @@ const Utils = require('./utils.js');
 class Card extends Control{
   constructor (parentNode, cardData, click){
     super(parentNode,'div', 'dash_item', '', click);
+    this.isMarked=false;
     this.cardData = cardData;
     this.audioControl = new Control(this.node, 'audio');
     this.audioControl.node.src = Utils.getMediaURL(cardData.audio);
@@ -23,6 +24,24 @@ class Card extends Control{
     //this.imageControl.node.src = getMediaURL(cardData.image);
 
     
+  }
+  setPlayMode(){
+    this.audioPlayButton.hide();
+  }
+
+  setTrainMode(){
+    this.audioPlayButton.show();
+    this.unmark();
+  }
+
+  mark(){
+    this.isMarked=true;
+    this.node.classList.add('card_correct');
+  }
+
+  unmark(){
+    this.isMarked=false;
+    this.node.className=('dash_item');
   }
 }
 
