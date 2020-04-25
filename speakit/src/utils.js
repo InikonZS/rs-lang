@@ -33,7 +33,6 @@ function speechInit(app, onResult, onError){
   return recognition;
 }
 
-
 function sendGetRequest(URL, onLoad, onError){
   let httpRequest = new XMLHttpRequest();
     

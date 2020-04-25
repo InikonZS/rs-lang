@@ -6,10 +6,11 @@ class Card extends Control{
   constructor (parentNode, cardData, click){
     super(parentNode,'div', 'dash_item', '', click);
     this.isMarked=false;
+    this.isSelected=false;
     this.cardData = cardData;
     this.audioControl = new Control(this.node, 'audio');
     this.audioControl.node.src = Utils.getMediaURL(cardData.audio);
-    this.audioPlayButton = new Button(this.node,'basic_button listen', '', false, ()=>{
+    this.audioPlayButton = new Button(this.node,'icon listen basic_button', '', false, ()=>{
       this.audioControl.node.play();
     });
     
@@ -41,7 +42,19 @@ class Card extends Control{
 
   unmark(){
     this.isMarked=false;
-    this.node.className=('dash_item');
+    this.node.classList.remove('card_correct');
+    //this.node.className=('dash_item');
+  }
+
+  select(){
+    this.isSelected=true;
+    this.node.classList.add('card_select');
+  }
+
+  unselect(){
+    this.isSelected=false;
+    this.node.classList.remove('card_select');
+    //this.node.className=('dash_item');
   }
 }
 

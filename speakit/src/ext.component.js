@@ -6,19 +6,22 @@ class Ext extends Control{
   constructor(parentNode){
     super(parentNode, 'div', 'extcard_wrapper');
     this.translationControl = new Control(this.node, 'div', 'extcard_item');
-    this.imgWrapperControl = new Control(this.node, 'div', 'extcard_item');
-    this.imgControl = new Control(this.node, 'img');
+    this.imgWrapperControl = new Control(this.node, 'div', 'extcard_item img_wrapper');
+    this.imgControl = new Control(this.imgWrapperControl.node, 'img', 'ext_img');
     this.meaningControl = new Control(this.node, 'div', 'extcard_item');
     this.exampleControl = new Control(this.node, 'div', 'extcard_item');
   }
 
   refreshTranslation(word){
+    let translate;
     Utils.sendGetRequest(Utils.getTranslateRequestURL(word), 
       (res)=>{
-        this.translationControl.node.textContent = res.text[0];
+        translate = res.text[0];
+        this.translationControl.node.textContent = translate;
       },
       ()=>{
-        this.translationControl.node.textContent = Utils.defaultRejectMessage;
+        translate = Utils.defaultRejectMessage;
+        this.translationControl.node.textContent = translate;
       }
     );  
   }

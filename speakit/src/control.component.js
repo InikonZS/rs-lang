@@ -1,16 +1,23 @@
 class Control {
   // Hard DOM functions
-  constructor(parentNode, tagName, className, textContent, click) {
+  constructor(parentNode, tagName, className, textContent, click, fromParent) {
     const classNameV = className || '';
     const textContentV = textContent || '';
     const tagNameV = tagName || 'div';
     this.isDisabled=false;
     this.isHidden=false;
 
-    this.node = document.createElement(tagNameV);
-    this.render(classNameV, textContentV);
-    parentNode.appendChild(this.node);  
+    if (!fromParent){
+      this.node = document.createElement(tagNameV);
+      parentNode.appendChild(this.node);  
+      this.node.className = classNameV;
+      this.node.textContent = textContentV;
+    } else {
+      this.node = parentNode;
+      this.node.className = classNameV;
+    }
 
+    //this.render(classNameV, textContentV);
     if (click) {
       this.click = click;
       this.node.addEventListener('click', (e) => {
@@ -41,10 +48,15 @@ class Control {
     this.node.style = '';
   }
 
-  animate(animationCssClass) {
+  animate(animationCssClass, inlineStyle) {
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
-        this.node.className = animationCssClass;
+        if (animationCssClass){
+          this.node.className = animationCssClass;
+        }
+        if (inlineStyle){
+          this.node.style = inlineStyle;
+        }
       });
     });
   }
