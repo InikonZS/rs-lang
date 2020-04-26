@@ -79,7 +79,7 @@ class App{
     this.levelButtons=[];
     this.currentLevelButtonIndex=-1;
     for (let i=0; i<6; i++){
-      let el = new Button(levelsNode, 'basic_button', (i+1).toString(), true, function(){
+      let el = new Button(levelsNode, 'select_button', (i+1).toString(), true, function(){
         app.levelButtons.forEach((it)=>{
           if (this!=it) {
             it.untoggle();
@@ -97,7 +97,7 @@ class App{
 
     const startCaption = 'Start Game';
     const stopCaption = 'Stop Game';
-    this.startPlayButton = new Button(this.controlsNode, 'basic_button', startCaption, true, function(){
+    this.startPlayButton = new Button(this.controlsNode, 'startplay_button basic_button', startCaption, true, function(){
       if (!this.isToggled){
         this.node.textContent=startCaption;
         app.gameStop();
@@ -116,7 +116,7 @@ class App{
       app.appScreen.animate(false, 'transform: translateX(0px)');  
     })
 
-    this.resultsButton = new Button(this.controlsNode, 'basic_button', 'Results', false, function(){
+    this.resultsButton = new Button(this.controlsNode, 'results_button basic_button', 'Results', false, function(){
       statRender(app, app.statisticScreenNode);
       app.startScreen.animate(false, 'transform: translateX(-100%)');
       app.statisticScreen.animate(false, 'transform: translateX(0px)');
@@ -274,10 +274,10 @@ function statWrite(card){
 function statRender(app, parentNode){
   parentNode.innerHTML='';
   let controlStat = new Control (parentNode, 'div', 'controls_wrapper');
-  let statReturnButton = new Button (controlStat.node, 'basic_button','back to Game', false, function(){
+  let statReturnButton = new Button (controlStat.node, 'basic_button','Back to Game', false, function(){
     app.focusAppPage();  
   });
-  let statResetButton = new Button (controlStat.node, 'basic_button','reset', false, function(){
+  let statResetButton = new Button (controlStat.node, 'basic_button','Reset', false, function(){
     window.localStorage.clear();
     statRender(app, parentNode);
   });
@@ -339,7 +339,8 @@ function statRender(app, parentNode){
   if (recList.length){
     new Table(parentNode,'',recList,['word', 'score']);
   }
-  sumStat.node.textContent = `Word known: ${recList.length}. Correct speaked: ${sumCount} times`
+  sumStat.node.textContent = `Word known: ${recList.length}. Correct speaked: ${sumCount} times`;
+  
 }
 
 
