@@ -3,6 +3,7 @@ const Button = require('./button.component.js');
 const Card = require('./card.component.js');
 const Ext = require('./ext.component.js');
 const Record = require('./record.component.js');
+const Table = require('./table.component.js');
 const Utils = require('./utils.js');
 
 class App{
@@ -32,12 +33,9 @@ class App{
       (value, values)=>{
         let said = value;
         let ok = false;
-
         let okCard;
-        //console.log(values.join(' '))
         this.cards.forEach((it)=>{
-          let cur = it.cardData.word.trim();
-          //console.log(cur);
+          let cur = it.cardData.word.trim().toLowerCase();
           let ind = values.indexOf(cur);
           if (ind!=-1){
             said = cur;
@@ -158,6 +156,7 @@ class App{
     if (this.isGameStarted){
       this.isGameStarted = false;
       this.recognition.stop(); 
+      gameStatWrite(this);
       app.scoreNode.innerHTML="";  
     }
   }
@@ -181,7 +180,6 @@ class App{
         if (this.cards[0]){
           this.cards[0].click();
         }
-        //this.ext.refresh(res[0]);
       }
     });
   }
@@ -209,12 +207,39 @@ function getServerDataJSON(page, group, onLoad, onError){
 function findWord(statArray, word){
   for (let i=0; i<statArray.length; i++){
     if (statArray[i].word == word){
-      //console.log(statArray[i].word, word);
       return i;
     }
   }
   return -1;
 }
+
+
+function gameStatRead(){
+  let statString = window.localStorage.getItem('gameStat');
+  let stat;
+  if (statString!==null){
+    stat = JSON.parse(statString);
+  } else {
+    stat = [];
+  }
+  return stat;
+}
+
+function gameStatWrite(app){
+  let stat = gameStatRead();
+  let rec = {};
+  let date = new Date(Date.now());
+  rec.index = stat.length;
+  rec.date = date.toLocaleString();
+  rec.correctCount=app.gameCounter;
+  rec.incorrectCount=12 - app.gameCounter;
+  rec.finished = rec.incorrectCount ? 'no':'yes';
+  stat.push(rec);
+  statString = JSON.stringify(stat);
+  window.localStorage.setItem('gameStat', statString);
+}
+
+
 
 function addWordToStat(statArray, word){
   let rec = {};
@@ -262,21 +287,22 @@ function statRender(app, parentNode){
     if (app.gameCounter){
       new Control (parentNode, 'div', 'main_font', 'Correct speaked:');
     }
+    let correctWrapper = new Control (parentNode, 'div', 'dash_wrapper', '');
     app.cards.forEach((it)=>{
       if (it){
         if (it.isMarked){
-          new Card(parentNode, it.cardData);
+          new Card(correctWrapper.node, it.cardData);
         }
       }  
     });
-
     if (app.cards.length-app.gameCounter){
       new Control (parentNode, 'div', 'main_font', 'Still not speaked:');
     }
+    let incorrectWrapper = new Control (parentNode, 'div', 'dash_wrapper', '');
     app.cards.forEach((it)=>{
       if (it){
         if (!it.isMarked){
-          new Card(parentNode, it.cardData);
+          new Card(incorrectWrapper.node, it.cardData);
         }
       }  
     });
@@ -284,16 +310,35 @@ function statRender(app, parentNode){
   } else {
     new Control (parentNode, 'div', 'main_font', 'not started');
   }
+  
+
+  let gameStatData = gameStatRead();
+  new Control (parentNode, 'div', 'medium_font', 'Last Game Statistics: ');
+  let sumGameStat = new Control (parentNode, 'div', 'main_font', '');
+  if (gameStatData.length){
+    new Table(parentNode,'',gameStatData, ['№', 'data', '+', '-', 'win']);
+  }
+  let winCount=0;
+  gameStatData.forEach((it)=>{
+    if (it.win=='yes'){
+      winCount++;
+    }
+  });
+  sumGameStat.node.textContent = `Played games: ${gameStatData.length}. Win games: ${winCount}`;
+
   new Control (parentNode, 'div', 'medium_font', 'Word Statistics: ');
   let sumStat = new Control (parentNode, 'div', 'main_font', '');
   let recList = statRead();
   let sumCount=0;
   recList.forEach((it)=>{
     if (it){
-      new Record(parentNode, it);
+    //  new Record(parentNode, it);
       sumCount+=(+it.count);
     }  
   });
+  if (recList.length){
+    new Table(parentNode,'',recList,['word', 'score']);
+  }
   sumStat.node.textContent = `Word known: ${recList.length}. Correct speaked: ${sumCount} times`
 }
 

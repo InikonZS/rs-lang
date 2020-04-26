@@ -62,6 +62,18 @@ body{
   color: #a31;
 }
 
+@media screen and (max-width: 480px){
+  .big_font{
+    font-size:48pt;
+  }
+  .medium_font{
+    font-size:24pt;
+  }
+  .main_font{
+    font-size:14pt;
+  }
+}
+
 .start_page__closed{
   transform: translateX(-100%);
 }
@@ -84,6 +96,13 @@ body{
   width: 20px;
   height: 20px;
   margin: 5px;
+}
+@media screen and (max-width: 480px){
+  .star_item{
+    width: 16px;
+    height: 16px;
+    margin: 7px 2px;
+  }
 }
 
 .star_item_ok{
@@ -243,10 +262,101 @@ body{
   height: 45px;
 }
 
+
+
+.table_button{
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  /*width: calc(100% - 10px);*/
+  padding: 10px 2px;
+  border-radius: 5px;
+  margin: 5px 2px;
+  background-color: #aaa;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition-duration: 300ms;
+  user-select: none;
+  color: #000;
+  font-size: 14pt;
+}
+@media screen and (max-width: 480px){
+  .table_button{ 
+    font-size: 10pt;
+  }   
+}
+
+.table_button__hover{
+  background-color: #ccc;
+  transform: scale(1);
+  box-shadow: 0px 0px 12px #fffc;
+}
+
+.table_button__down{
+  background-color: rgb(48, 122, 182);
+  transform: scale(0.95);
+}
+
+.table_button__toggled{
+  background-color: #4af;
+  transform: scale(1);
+}
+
+.table_button__dover{
+  background-color: #4af;
+  box-shadow: 0px 0px 12px #4afc;
+  transform: scale(1);
+}
+
+table{
+  text-align: center;
+  border-collapse: collapse;
+  border-style:solid;
+  border-width: 1px;
+  word-break: break-word;
+  width:100%;
+}
+td{
+  border-bottom-style:solid;
+  border-bottom-width: 1px;
+}
+th{
+  border-bottom-style:solid;
+  border-bottom-width: 1px;
+  background-color: #ddd;
+  padding:0px;
+  margin:0px;
+}
+
+.table_sort{
+  background-repeat: no-repeat, no-repeat;
+  background-size: contain;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transition-property: transform;
+  transition-duration: 300ms;
+  transform: rotateZ(0deg);
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+@media screen and (max-width: 480px){
+  .table_sort{ 
+    width: 7px;
+    height: 7px;
+    margin-left: 2px;
+  }   
+}
+
 .listen{
   background-image: url(assets/ico/listen.svg);
 }
 
 .micro{
   background-image: url(assets/ico/radio.svg);
+}
+
+.arrow{
+  background-image: url(assets/ico/compass.svg);
 }
