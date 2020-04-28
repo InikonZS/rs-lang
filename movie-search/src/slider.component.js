@@ -38,7 +38,7 @@ class Slider extends Control {
     });
 
     this.bottomControlWrapper = new Control(this.node, 'div', 'slider_horizontal_wrapper');
-    this.bottomControl = new Group(this.bottomControlWrapper.node,'slider_bottom_control', 'select_button');
+    this.bottomControl = new Group(this.bottomControlWrapper.node,'slider_bottom_control', 'slider_button');
 
 
     this.isDowned = false;

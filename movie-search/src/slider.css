@@ -37,9 +37,36 @@
   position: relative;
   width:100%;
   height: 100%;
-  min-height: 300px;
+  min-height: 450px;
   overflow: hidden;
+  transition-duration: 200ms;
 }
+
+@media screen and (max-width: 1020px){
+  .slider_area{ 
+    min-height: 350px
+  }   
+}
+
+@media screen and (max-width: 768px){
+  .slider_area{ 
+    min-height: 270px
+  }   
+}
+
+@media screen and (max-width: 480px){
+  .slider_area{ 
+    min-height: 240px;
+  }   
+}
+
+@media screen and (max-width: 375px){
+  .slider_area{ 
+    min-height: 200px;
+  }   
+}
+
+
 .slider_sides{
   display: flex;
   position: relative;
@@ -84,10 +111,18 @@
   height:50px;
 }
 
-@media screen and (max-width: 480px){
+@media screen and (max-width: 768px){
   .slider_button{ 
     width: 40px;
     height: 40px;
+    margin: 5px 2px;
+  }   
+}
+
+@media screen and (max-width: 480px){
+  .slider_button{ 
+    width: 30px;
+    height: 30px;
     margin: 5px 2px;
   }   
 }

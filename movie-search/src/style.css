@@ -2,6 +2,10 @@ body{
   margin:0px;
   padding: 0px;
 }
+.img_wrapper{
+  overflow: hidden;
+  height: 100%;
+}
 .global_wrapper{
   overflow: hidden;
   position: relative;
@@ -123,10 +127,11 @@ body{
   flex-direction: column;
 }
 .extcard_wrapper{
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
 .said_wrapper{
@@ -145,13 +150,33 @@ body{
 }
 
 .extcard_item{
+  display: flex;
   justify-content: center;
   align-items: center;
   max-width: 100%;
+  text-align: center;
+  min-height: 39pt;
+  font-size: 13pt;
+  line-height: 13pt;
+}
+@media screen and (max-width: 767px){
+  .extcard_item{ 
+    min-height: 33pt;
+    font-size: 11pt;
+    line-height: 11pt;
+  }   
+}
+@media screen and (max-width: 480px){
+  .extcard_item{ 
+    min-height: 27pt;
+    font-size: 9pt;
+    line-height: 9pt;
+  }   
 }
 
 .ext_img{
   max-width: 100%;
+  max-height: 100%;
 }
 
 .levels_wrapper{
