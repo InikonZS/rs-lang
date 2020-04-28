@@ -15,7 +15,7 @@ class App{
     }
 
     this.sld = new Slider(dashBoardNode, 'slider_wrapper', 'slider_slide');
-    for (let i=0; i<15; i++){
+    for (let i=0; i<20; i++){
       let slide = this.sld.addSlide('');
       let el = new Control(slide.node, 'div', '', 'Slide '+i);
       el.node.style =`background-color: rgb(${Math.trunc(Math.random()*155+100)},${Math.trunc(Math.random()*155+100)},${Math.trunc(Math.random()*155+100)}); width:100%; height:100%; display:flex; justify-content:center; align-items:center; font-size:48pt`;
