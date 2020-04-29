@@ -9,6 +9,7 @@ class Card extends Control{
     this.imgWrapperControl = new Control(this.node, 'div', 'extcard_item img_wrapper');
     this.imgControl = new Control(this.imgWrapperControl.node, 'img', 'ext_img');
     this.yearControl = new Control(this.node, 'div', 'extcard_item');
+    this.ratingControl = new Control(this.node, 'div', 'extcard_item');
   }
 
   refreshTranslation(word){
@@ -29,6 +30,7 @@ class Card extends Control{
     this.titleControl.node.textContent = cardData.title;
     this.imgControl.node.src = cardData.image;
     this.yearControl.node.innerHTML = cardData.year;
+    this.ratingControl.node.textContent = 'Rating: '+cardData.rating;
     //this.exampleControl.node.innerHTML = `For example: ${cardData.textExample}`;
   }
 }

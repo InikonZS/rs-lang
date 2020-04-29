@@ -3,13 +3,15 @@ const Button = require('./button.component.js');
 const Group = require('./radio-group.component.js');
 
 class Slider extends Control {
-  constructor(parentNode, className, slideClassName) {
+  constructor(parentNode, className, slideClassName, onLeftMax, onRightMax) {
     super(parentNode, 'div', className, '');
     let slider = this;
     this.slideClassName = slideClassName;
     this.currentPosition = -1;
     this.slides = [];
     this.slidesPerPage=4;
+    this.onLeftMax = onLeftMax;
+    this.onRightMax = onRightMax;
 
     this.horizontalWrapper = new Control(this.node, 'div', 'slider_horizontal_wrapper');
 
@@ -17,6 +19,12 @@ class Slider extends Control {
     this.leftButtonWrapper = new Control(this.zwLeftButtonWrapper.node, 'div', 'slider_sides');
     this.leftButton = new Button(this.leftButtonWrapper.node, 'slider_button', '<', false, function(){
       let pos = slider.currentPosition-1;
+      if (pos < (0)){
+        console.log('left');
+        if (slider.onLeftMax){
+          slider.onLeftMax();
+        }
+      }
       if ((pos>=0) && (pos<= (slider.getMaxPosition()))){
         let nextButton = slider.bottomControl.buttons[pos];
         if (nextButton){
@@ -29,12 +37,21 @@ class Slider extends Control {
     this.rightButtonWrapper = new Control(this.zwRightButtonWrapper.node, 'div', 'slider_sides');
     this.rightButton = new Button(this.rightButtonWrapper.node, 'slider_button', '>', false, function(){
       let pos = slider.currentPosition+1;
+      if (pos > (slider.getMaxPosition())){
+        console.log(this.onRightMax);
+        if (slider.onRightMax){
+          
+          slider.onRightMax();
+        }
+      }
+
       if ((pos>=0) && (pos<= (slider.getMaxPosition()))){
         let nextButton = slider.bottomControl.buttons[pos];
         if (nextButton){
           nextButton.click();
         }
       }
+
     });
 
     this.bottomControlWrapper = new Control(this.node, 'div', 'slider_horizontal_wrapper');
@@ -44,7 +61,6 @@ class Slider extends Control {
     this.isDowned = false;
     this.dragStartX = 0;
     this.dragX = 0;
-
     this.dragXSpeed = 0;
     this.dragLastTime = 0;
     this.node.addEventListener('mousedown', (e) => {
@@ -106,9 +122,17 @@ class Slider extends Control {
       this.bottomControl.buttons[this.bottomControl.buttons.length-this.slidesPerPage].show();
     }
     this.slides.forEach((it, i)=>{
-      it.node.style = `width:${this.getSlideWidth()}%; transform: translateX(${100*(i-this.currentPosition-1)}%)`; 
+      it.node.style = `transition-duration:0ms; width:${this.getSlideWidth()}%; transform: translateX(${100*(i-this.currentPosition)}%)`; 
     });
     return el;
+  }
+
+  clear(){
+    this.currentPosition = -1;
+    this.slides = [];
+    this.slideArea.node.innerHTML='';
+    this.bottomControl.buttons=[];
+    this.bottomControl.node.innerHTML='';
   }
 
   getSlideWidth(){

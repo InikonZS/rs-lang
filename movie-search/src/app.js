@@ -8,16 +8,38 @@ const Utils = require('./utils.js');
 class App{
   constructor(dashBoardNode){
     const app=this;
-    let sel = new Control(dashBoardNode, 'div', 'levels_wrapper', 'no-selected');
+   /* let sel = new Control(dashBoardNode, 'div', 'levels_wrapper', 'no-selected');
     let gr = new Group(dashBoardNode, 'levels_wrapper', 'select_button');
     for (let i=0; i<5; i++){
       gr.addButton('bt'+i, function(){
         sel.node.textContent = gr.currentButton.node.textContent + ' ' + i;
       });
-    }
+    }*/
+    this.searchWrapper = new Control(dashBoardNode, 'div', '');
+    this.searchEdit = new Control(this.searchWrapper.node, 'input', '');
+    this.searchEdit.node.type = 'text';
+    this.searchClearButton = new Button(this.searchWrapper.node, 'select_button', 'X', false,()=>{
+      app.searchEdit.node.value='';
+    });
+    this.searchKeyboardButton = new Button(this.searchWrapper.node, 'select_button', 'kbd', false);
+    this.searchButton = new Button(this.searchWrapper.node, 'select_button', 'search', false,()=>{
+      this.currentQuery=this.searchEdit.node.value;
+      this.currentPage=1;
+      this.sld.clear();
+      app.refreshResults(this.currentQuery, app.currentPage);
 
-    this.sld = new Slider(dashBoardNode, 'slider_wrapper', 'slider_slide');
-    this.refreshResults();
+    });
+
+    this.currentPage = 1;
+    this.currentQuery = 'dream';
+    let rightMaxHandler = function(){
+      app.currentPage++;
+      console.log('page '+ app.currentPage);
+      app.refreshResults(this.currentQuery, app.currentPage);
+    }
+    this.sld = new Slider(dashBoardNode, 'slider_wrapper', 'slider_slide', false, rightMaxHandler);
+    
+    this.refreshResults(this.currentQuery, 1);
   /*  for (let i=0; i<20; i++){
       let slide = this.sld.addSlide('');
       let el = new Control(slide.node, 'div', '', 'Slide '+i);
@@ -29,7 +51,14 @@ class App{
     new Control(dashBoardNode,'div','','some text after slider');
   }
 
-  refreshResults(){
+  refreshResults(query = 'dream', page = 1){
+    Utils.sendGetRequest(Utils.getMediaURL(query, page),(res)=>{
+      res.Search.forEach((it)=>{ 
+        this.getMoreFilmData(it);
+      });
+    })
+  }
+ /* refreshResults(){
     Utils.sendGetRequest(Utils.getMediaURL('dream', 2),(res)=>{
       console.log(res);
       res.Search.forEach((it)=>{
@@ -46,7 +75,30 @@ class App{
         this.sld.bottomControl.buttons[0].click();
       }
     })
+  }*/
+
+
+  getMoreFilmData(mainData){
+    Utils.sendGetRequest(Utils.getMediaInfoURL(mainData.imdbID),(res)=>{
+      this.addCards(mainData, res); 
+    });
+  }
+  
+  addCards(mainData, secondaryData){
+    console.log(secondaryData);
+    let slide = this.sld.addSlide('');
+    
+    let el = new Card(slide.node);
+    el.refresh({image: mainData.Poster, year: mainData.Year, title: mainData.Title, rating: secondaryData.imdbRating});
+    
+    if (this.sld.slides.length && this.sld.currentPosition===-1){
+      this.sld.bottomControl.buttons[0].click();
+    } 
+    this.sld.setDragOffset();
+      
   }
 }
+
+
 
 module.exports = App;
