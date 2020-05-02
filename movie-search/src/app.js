@@ -3,10 +3,11 @@ const Button = require('./button.component.js');
 const Card = require('./card.component.js');
 const Group = require('./radio-group.component.js');
 const Slider = require('./slider.component.js');
+const Search = require('./search.component.js');
 const Utils = require('./utils.js');
 
 class App{
-  constructor(dashBoardNode){
+  constructor(dashBoardNode, searchNode){
     const app=this;
    /* let sel = new Control(dashBoardNode, 'div', 'levels_wrapper', 'no-selected');
     let gr = new Group(dashBoardNode, 'levels_wrapper', 'select_button');
@@ -15,20 +16,14 @@ class App{
         sel.node.textContent = gr.currentButton.node.textContent + ' ' + i;
       });
     }*/
-    this.searchWrapper = new Control(dashBoardNode, 'div', '');
-    this.searchEdit = new Control(this.searchWrapper.node, 'input', '');
-    this.searchEdit.node.type = 'text';
-    this.searchClearButton = new Button(this.searchWrapper.node, 'select_button', 'X', false,()=>{
-      app.searchEdit.node.value='';
-    });
-    this.searchKeyboardButton = new Button(this.searchWrapper.node, 'select_button', 'kbd', false);
-    this.searchButton = new Button(this.searchWrapper.node, 'select_button', 'search', false,()=>{
-      this.currentQuery=this.searchEdit.node.value;
+    
+    this.searchElement = new Search(this, searchNode, (request)=>{
+      this.currentQuery=request;
       this.currentPage=1;
       this.sld.clear();
       app.refreshResults(this.currentQuery, app.currentPage);
-
     });
+
 
     this.currentPage = 1;
     this.currentQuery = 'dream';

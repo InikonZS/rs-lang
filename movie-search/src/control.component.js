@@ -22,7 +22,7 @@ class Control {
       this.click = click;
       this.node.addEventListener('click', (e) => {
         if (!this.isDisabled) {
-          this.click();
+          this.click(e);
         }
       });
     }

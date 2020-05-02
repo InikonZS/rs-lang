@@ -122,7 +122,11 @@ class Slider extends Control {
       this.bottomControl.buttons[this.bottomControl.buttons.length-this.slidesPerPage].show();
     }
     this.slides.forEach((it, i)=>{
-      it.node.style = `transition-duration:0ms; width:${this.getSlideWidth()}%; transform: translateX(${100*(i-this.currentPosition)}%)`; 
+      it.node.style = `
+        transition-duration:0ms; 
+        width:${this.getSlideWidth()}%; 
+        transform: translateX(${100*(i-this.currentPosition)}%)
+      `; 
     });
     return el;
   }
@@ -146,7 +150,11 @@ class Slider extends Control {
 
   setDragOffset(){
     this.slides.forEach((it, i)=>{
-      it.node.style = `transition-duration:0ms; width:${this.getSlideWidth()}%; transform: translateX(calc(${100*(i-this.currentPosition)}% + ${this.dragX}px))`; 
+      it.node.style = `
+        transition-duration:0ms;
+        width:${this.getSlideWidth()}%; 
+        transform: translateX(calc(${100*(i-this.currentPosition)}% + ${this.dragX}px))
+      `; 
     });
   }
 
@@ -164,7 +172,10 @@ class Slider extends Control {
           if (i>pos){
             this.slides[i].animate(false, `transform: translateX(100%)`);  
           }*/
-          this.slides[i].animate(false, `width:${this.getSlideWidth()}%; transform: translateX(${100*(i-pos)}%)`);
+          this.slides[i].animate(false, `
+            width:${this.getSlideWidth()}%; 
+            transform: translateX(${100*(i-pos)}%)
+          `);
         });
       }
       return true;
