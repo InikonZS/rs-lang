@@ -28,6 +28,18 @@ class Group extends Control {
     return el;
   }
   
+  highlight (index){
+    if (this.buttons[index]){
+      this.buttons.forEach((it, i)=>{
+        if (i !== index){
+          it.untoggle();
+        } else {
+          it.toggle();
+        }
+      });  
+    }
+
+  }
 }
 
 module.exports = Group;

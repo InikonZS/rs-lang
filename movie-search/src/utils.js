@@ -9,12 +9,11 @@ function sendGetRequest(URL, onLoad, onError){
     
     httpRequest.onerror = function() {
       if (onError){
-        onError();
+        onError(httpRequest.responseText);
       }
     };
-    
-    httpRequest.open('GET', URL);
-    httpRequest.send();  
+      httpRequest.open('GET', URL);
+      httpRequest.send(); 
 }
 
 const defaultRejectMessage = 'not found';

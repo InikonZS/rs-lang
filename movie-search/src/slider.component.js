@@ -12,6 +12,7 @@ class Slider extends Control {
     this.slidesPerPage=4;
     this.onLeftMax = onLeftMax;
     this.onRightMax = onRightMax;
+    this.lock = false;
 
     this.horizontalWrapper = new Control(this.node, 'div', 'slider_horizontal_wrapper');
 
@@ -40,8 +41,10 @@ class Slider extends Control {
       if (pos > (slider.getMaxPosition())){
         console.log(this.onRightMax);
         if (slider.onRightMax){
-          
-          slider.onRightMax();
+          if (!slider.lock){
+            slider.lock = true;
+            slider.onRightMax();
+          }
         }
       }
 
@@ -55,7 +58,7 @@ class Slider extends Control {
     });
 
     this.bottomControlWrapper = new Control(this.node, 'div', 'slider_horizontal_wrapper');
-    this.bottomControl = new Group(this.bottomControlWrapper.node,'slider_bottom_control', 'slider_button');
+    this.bottomControl = new Group(this.bottomControlWrapper.node,'slider_bottom_control', 'page_button');
 
 
     this.isDowned = false;
@@ -63,6 +66,7 @@ class Slider extends Control {
     this.dragX = 0;
     this.dragXSpeed = 0;
     this.dragLastTime = 0;
+
     this.node.addEventListener('mousedown', (e) => {
       e.preventDefault();
       if (!this.isDisabled && (e.buttons == 1)) {
@@ -76,21 +80,61 @@ class Slider extends Control {
         this.dragStartX = e.pageX;
       }
     });
+
+    this.node.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      if (!this.isDisabled && (e.touches[0])) {
+        this.isDowned = true;
+        let time = Date.now(); 
+        this.dragXSpeed = 0;
+        this.dragLastTime = time;
+        
+        this.dragX = 0;
+        this.dragXSpeed = 0;
+        this.dragStartX = e.touches[0].pageX;
+      }
+    });
+
+    let uniMoveHandler = (x)=>{
+      this.dragX = x-this.dragStartX; 
+      this.setDragOffset();
+
+      let slideWidth = this.slideArea.node.clientWidth / this.slidesPerPage;
+      let slidesMoved = Math.round((this.dragX)/slideWidth);
+      let nextSlide = this.currentPosition - slidesMoved;
+      this.bottomControl.highlight(nextSlide);
+      if (nextSlide>this.getMaxPosition()){
+        if (slider.onRightMax){
+          if (!this.lock){
+            this.lock = true;
+            slider.onRightMax();
+          }
+        }
+      }  
+    }
+
     this.node.addEventListener('mousemove', (e) => {
       e.preventDefault();
       if (!this.isDisabled && (e.buttons == 1) && (this.isDowned)) {
-        this.dragX = e.pageX-this.dragStartX; 
-        this.setDragOffset();
+        uniMoveHandler(e.pageX);  
       }
     });
-    let mouseUpHandler = (e) => {
+
+    this.node.addEventListener('touchmove', (e) => {
       e.preventDefault();
+      if (!this.isDisabled && (e.touches[0]) && (this.isDowned)) {
+        uniMoveHandler(e.touches[0].pageX);  
+      }
+    });
+
+    let uniUpHandler = (x) => {
       let slideWidth = this.slideArea.node.clientWidth / this.slidesPerPage;
 
       let time = Date.now();
-      this.dragXSpeed = (e.pageX-this.dragStartX) / (time - this.dragLastTime);
+      this.dragXSpeed = (x-this.dragStartX) / (time - this.dragLastTime);
 
-      let slidesMoved = Math.round((this.dragX + this.dragXSpeed*300)/slideWidth);
+      // slidesMoved = Math.round((this.dragX + this.dragXSpeed*300)/slideWidth);
+      slidesMoved = Math.round((this.dragX)/slideWidth);
       let nextSlide = this.currentPosition - slidesMoved;
       if (nextSlide<0) {nextSlide = 0;}
       if (nextSlide>this.getMaxPosition()){ nextSlide = this.getMaxPosition();}
@@ -101,12 +145,30 @@ class Slider extends Control {
       this.isDowned=false;
       this.dragXSpeed=0;
       this.dragLastTime = 0;
-      this.dragStartX =0;
+      this.dragStartX =0;  
+    }
+
+    let mouseUpHandler = (e) => {
+      e.preventDefault();
+      uniUpHandler(e.pageX);
+    }
+
+    let touchUpHandler = (e) => {
+      e.preventDefault();
+      if (e.touches && e.touches[0]) {
+        uniUpHandler(e.touches[0].pageX);
+      } else {
+        uniUpHandler(this.dragX);
+      }
     }
 
     this.node.addEventListener('mouseup', mouseUpHandler);
 
     this.node.addEventListener('mouseleave', mouseUpHandler);
+
+    this.node.addEventListener('touchcancel', touchUpHandler);
+
+    this.node.addEventListener('touchend', touchUpHandler);
   }
   addSlide (caption){
     let slider = this;

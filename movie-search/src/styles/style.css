@@ -2,6 +2,26 @@ body{
   margin:0px;
   padding: 0px;
 }
+.main_block{
+  width:100%;
+  min-height: 40px;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ccc;
+  box-sizing: border-box;
+}
+.center_wrapper{
+  width:100%;
+  min-height: calc(100vh - 80px);
+  box-sizing: border-box;
+}
+.header{
+
+}
+.footer{
+  
+}
 .img_wrapper{
   overflow: hidden;
   height: 100%;
@@ -155,23 +175,32 @@ body{
   align-items: center;
   max-width: 100%;
   text-align: center;
+  font-size: 13pt;
+  line-height: 13pt;
+}
+
+.extcard_title{
   min-height: 39pt;
   font-size: 13pt;
   line-height: 13pt;
 }
 @media screen and (max-width: 767px){
   .extcard_item{ 
-    min-height: 33pt;
     font-size: 11pt;
     line-height: 11pt;
   }   
+  .extcard_title{ 
+    min-height: 33pt;
+  }
 }
 @media screen and (max-width: 480px){
   .extcard_item{ 
-    min-height: 27pt;
     font-size: 9pt;
     line-height: 9pt;
-  }   
+  }  
+  .extcard_title{ 
+    min-height: 27pt;
+  } 
 }
 
 .ext_img{

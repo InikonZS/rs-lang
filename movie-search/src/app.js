@@ -5,6 +5,7 @@ const Group = require('./radio-group.component.js');
 const Slider = require('./slider.component.js');
 const Search = require('./search.component.js');
 const Utils = require('./utils.js');
+const Keyboard = require('./keyboard.component.js');
 
 class App{
   constructor(dashBoardNode, searchNode){
@@ -17,12 +18,59 @@ class App{
       });
     }*/
     
+    let detectRussian = (msg) =>{
+      res = false;
+      ru = 'абвгдеёжзиклмопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+      arr = ru.split('');
+      for (let i=0; i<msg.length; i+=1){
+        if (arr[i].indexOf(msg)!=-1){
+          res = true;
+          break;
+        }
+      }
+      return res;
+    }
+
     this.searchElement = new Search(this, searchNode, (request)=>{
       this.currentQuery=request;
+      this.translate;
       this.currentPage=1;
       this.sld.clear();
-      app.refreshResults(this.currentQuery, app.currentPage);
+      if (detectRussian(this.currentQuery)){
+        Utils.sendGetRequest(Utils.getTranslateRequestURL(word), 
+        (res)=>{
+          this.translate = res.text[0];
+          app.refreshResults(this.translate, app.currentPage);
+          //todo: translation message
+          //this.translationControl.node.textContent = translate;
+        },
+        ()=>{
+          this.translate = undefined;
+          //this.translationControl.node.textContent = translate;
+        }
+      );  
+      } else {
+        app.refreshResults(this.currentQuery, app.currentPage);
+      }
     });
+
+
+   /* refreshTranslation(word){
+      let translate;
+      Utils.sendGetRequest(Utils.getTranslateRequestURL(word), 
+        (res)=>{
+          translate = res.text[0];
+          this.translationControl.node.textContent = translate;
+        },
+        ()=>{
+          translate = Utils.defaultRejectMessage;
+          this.translationControl.node.textContent = translate;
+        }
+      );  
+    }*/
+
+
+    //console.log(this.searchElement.searchWrapper.node);
 
 
     this.currentPage = 1;
@@ -30,7 +78,7 @@ class App{
     let rightMaxHandler = function(){
       app.currentPage++;
       console.log('page '+ app.currentPage);
-      app.refreshResults(this.currentQuery, app.currentPage);
+      app.refreshResults(app.currentQuery, app.currentPage);
     }
     this.sld = new Slider(dashBoardNode, 'slider_wrapper', 'slider_slide', false, rightMaxHandler);
     
@@ -48,9 +96,17 @@ class App{
 
   refreshResults(query = 'dream', page = 1){
     Utils.sendGetRequest(Utils.getMediaURL(query, page),(res)=>{
-      res.Search.forEach((it)=>{ 
-        this.getMoreFilmData(it);
-      });
+      if (res && res.Search){
+        res.Search.forEach((it, i)=>{ 
+          last = (i==res.Search.length-1);
+          this.getMoreFilmData(it, last);
+        });
+      } else {
+        app.searchElement.searchMessage.node.textContent = Utils.defaultRejectMessage;  
+      }
+    }, (message)=>{
+      console.log('fsdsf', message);
+      app.searchElement.searchMessage.node.textContent = message || Utils.defaultRejectMessage;
     })
   }
  /* refreshResults(){
@@ -73,13 +129,13 @@ class App{
   }*/
 
 
-  getMoreFilmData(mainData){
+  getMoreFilmData(mainData, last){
     Utils.sendGetRequest(Utils.getMediaInfoURL(mainData.imdbID),(res)=>{
-      this.addCards(mainData, res); 
+      this.addCards(mainData, res, last); 
     });
   }
   
-  addCards(mainData, secondaryData){
+  addCards(mainData, secondaryData, last){
     console.log(secondaryData);
     let slide = this.sld.addSlide('');
     
@@ -89,9 +145,31 @@ class App{
     if (this.sld.slides.length && this.sld.currentPosition===-1){
       this.sld.bottomControl.buttons[0].click();
     } 
-    this.sld.setDragOffset();
-      
+
+    if (last){
+      this.sld.lock = false;
+      this.sld.setDragOffset();
+    } 
   }
+}
+
+function addRandomSlide(slideParent, contentText){
+  let el = new Control(slideParent, 'div', '', contentText);
+  el.node.style =`
+    background-color: 
+    rgb(
+      ${Math.trunc(Math.random()*155+100)},
+      ${Math.trunc(Math.random()*155+100)},
+      ${Math.trunc(Math.random()*155+100)}
+    ); 
+    width:100%; 
+    height:100%; 
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    font-size:48pt
+  `;
+  return el;
 }
 
 
