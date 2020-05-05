@@ -358,7 +358,7 @@ class Keyboard	{
 		}	else {
 			el = outputNode;
 		}
-		el.onkeydown = () => false;
+		
 		keyboard = makeKeyboard(mainWindow);
 		this.keyboard = keyboard;
 		if (showHint){
@@ -388,11 +388,13 @@ class Keyboard	{
 	hide() {
 		this.isDisabled = true;
 		this.keyboard.style = "display:none";
+		el.onkeydown = undefined;
 	}
 
 	show() {
 		this.isDisabled = false;
 		this.keyboard.style = "";
+		el.onkeydown = () => false;
 	}
 }
 //let mv = document.querySelector('#wnd');

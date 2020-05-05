@@ -23,7 +23,7 @@ class App{
       ru = 'абвгдеёжзиклмопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
       arr = ru.split('');
       for (let i=0; i<msg.length; i+=1){
-        if (arr[i].indexOf(msg)!=-1){
+        if (msg.indexOf(arr[i])!=-1){
           res = true;
           break;
         }
@@ -37,6 +37,7 @@ class App{
       this.currentPage=1;
       this.sld.clear();
       if (detectRussian(this.currentQuery)){
+        let word = this.currentQuery;
         Utils.sendGetRequest(Utils.getTranslateRequestURL(word), 
         (res)=>{
           this.translate = res.text[0];
@@ -44,7 +45,8 @@ class App{
           //todo: translation message
           //this.translationControl.node.textContent = translate;
         },
-        ()=>{
+        (m)=>{
+          console.log('fdf '+m);
           this.translate = undefined;
           //this.translationControl.node.textContent = translate;
         }
