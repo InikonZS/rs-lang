@@ -134,7 +134,7 @@ class Slider extends Control {
       this.dragXSpeed = (x-this.dragStartX) / (time - this.dragLastTime);
 
       // slidesMoved = Math.round((this.dragX + this.dragXSpeed*300)/slideWidth);
-      slidesMoved = Math.round((this.dragX)/slideWidth);
+      let slidesMoved = Math.round((this.dragX)/slideWidth);
       let nextSlide = this.currentPosition - slidesMoved;
       if (nextSlide<0) {nextSlide = 0;}
       if (nextSlide>this.getMaxPosition()){ nextSlide = this.getMaxPosition();}
@@ -211,6 +211,20 @@ class Slider extends Control {
   }
 
   setDragOffset(){
+    this.bottomControl.buttons.forEach((it, i)=>{
+      if (i>this.getMaxPosition()){
+        it.hide();
+      }else {
+        it.show();
+      }
+    });
+    let nextSlide = this.currentPosition;
+    if (this.currentPosition>this.getMaxPosition()){ 
+      nextSlide = this.getMaxPosition();
+      this.bottomControl.buttons[nextSlide].click();
+    }
+    if (!this.dragX) {this.dragX=0;}
+    if (this.currentPosition<0) { this.currentPosition=0;}
     this.slides.forEach((it, i)=>{
       it.node.style = `
         transition-duration:0ms;

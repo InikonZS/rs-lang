@@ -44,7 +44,7 @@
   transition-duration: 200ms;
 }
 
-@media screen and (max-width: 1020px){
+/*@media screen and (max-width: 1020px){
   .slider_area{ 
     min-height: 350px
   }   
@@ -66,7 +66,7 @@
   .slider_area{ 
     min-height: 200px;
   }   
-}
+}*/
 
 
 .slider_sides{
@@ -113,7 +113,7 @@
   height:50px;
 }
 
-@media screen and (max-width: 768px){
+/*@media screen and (max-width: 768px){
   .slider_button{ 
     width: 40px;
     height: 40px;
@@ -128,7 +128,7 @@
     margin: 5px 2px;
   }   
 }
-
+*/
 .slider_button__hover{
   background-color: #ccc;
   transform: scale(1);

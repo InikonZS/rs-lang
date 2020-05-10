@@ -29,7 +29,7 @@ class Search {
     this.searchButton = new Button(this.searchWrapper.node, 'search_im search_item search_submit', 'search', false,()=>{
       this.searchButton.node.textContent = 'wait...';
       this.searchButton.disable();
-      onSubmit(this.searchEdit.node.value);  
+      onSubmit(this.searchEdit.node.value||'dream');  
     });
 
     this.keyboard = new Keyboard (parentNode, this.searchEdit.node, false, ()=>{

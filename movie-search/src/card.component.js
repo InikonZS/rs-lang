@@ -5,6 +5,8 @@ const Utils = require('./utils.js');
 class Card extends Control{
   constructor(parentNode){
     super(parentNode, 'div', 'extcard_wrapper');
+    this.node.style="width:100%";
+    this.node.style='';
     this.titleControl = new Control(this.node, 'div', 'extcard_item extcard_title');
     //https://www.imdb.com/title/tt8398600/
     this.titleLink = new Control(this.titleControl.node, 'a', 'extcard_item extcard_title');
@@ -34,6 +36,7 @@ class Card extends Control{
   refresh(cardData){
     this.titleLink.node.textContent = cardData.title;
     this.titleLink.node.href = `https://www.imdb.com/title/${cardData.id}/`;
+    this.titleLink.node.target="_blank";
     this.imgControl.node.src = cardData.image;
     this.yearControl.node.innerHTML = cardData.year;
     this.ratingControl.node.textContent = 'Rating: '+cardData.rating;

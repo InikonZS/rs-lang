@@ -10,6 +10,7 @@ function sendGetRequest(URL, onLoad, onError){
     httpRequest.onerror = function() {
       if (onError){
         onError(httpRequest.responseText);
+        return false;
       }
     };
       httpRequest.open('GET', URL);

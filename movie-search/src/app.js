@@ -55,27 +55,29 @@ class App{
         this.translate;
         this.currentPage=1;
         this.sld.clear();
-        if (detectRussian(this.currentQuery)){
-          let word = this.currentQuery;
+       /// try{
+          if (detectRussian(this.currentQuery)){
+            let word = this.currentQuery;
 
-          Utils.sendGetRequest(Utils.getTranslateRequestURL(word), 
-          (res)=>{
-            this.translate = res.text[0];
-            app.refreshResults(this.translate, app.currentPage);
-            //todo: translation message
-            //this.translationControl.node.textContent = translate;
-          },
-          (m)=>{
-            app.searchElement.searchButton.node.textContent = 'search';
-            app.searchElement.searchButton.enable();
+            Utils.sendGetRequest(Utils.getTranslateRequestURL(word), 
+            (res)=>{
+              this.translate = res.text[0];
+              app.refreshResults(this.translate, app.currentPage);
+            },
+            (m)=>{
+              app.searchElement.searchButton.node.textContent = 'search';
+              app.searchElement.searchButton.enable();
+              this.translate = undefined;
+            }); 
 
-            this.translate = undefined;
-            //this.translationControl.node.textContent = translate;
-          });  
-
-        } else {
-          app.refreshResults(this.currentQuery, app.currentPage);
-        }
+          } else {
+            app.refreshResults(this.currentQuery, app.currentPage);
+          }
+       /* } catch (e){
+          console.log('catched');
+          app.searchElement.searchButton.node.textContent = 'search';
+          app.searchElement.searchButton.enable();
+        }*/
       }
     });
 
@@ -94,13 +96,30 @@ class App{
 
     let resizeHandler = ()=>{
       console.log('resize');
+      let dw = document.documentElement.clientWidth;
+      if (dw>1023){
+        this.sld.slidesPerPage=4;
+        this.sld.setDragOffset();
+      } else if (dw>767){
+        this.sld.slidesPerPage=3;
+        this.sld.setDragOffset();
+      } else if (dw>480){
+        this.sld.slidesPerPage=2;
+        this.sld.setDragOffset();
+      } else {
+        this.sld.slidesPerPage=1;
+        this.sld.setDragOffset();
+      }
+      
       if (document.documentElement.clientWidth<768){
         this.searchElement.searchKeyboardButton.hide();
+        
         if (this.searchElement.searchKeyboardButton.isToggled){
           this.searchElement.keyboard.hide();
         }
       } 
       if (document.documentElement.clientWidth>798){
+        
         this.searchElement.searchKeyboardButton.show();
         if (this.searchElement.searchKeyboardButton.isToggled){
           this.searchElement.keyboard.show();
@@ -110,7 +129,7 @@ class App{
 
     window.addEventListener('resize', resizeHandler);
     resizeHandler();
-    //this.refreshResults(this.currentQuery, 1);
+    this.refreshResults(this.currentQuery, 1);
   }
 
   refreshResults(query = 'dream', page = 1){
@@ -151,15 +170,16 @@ class App{
     let el = new Card(slide.node);
     el.refresh({image: mainData.Poster, year: mainData.Year, title: mainData.Title, rating: secondaryData.imdbRating, id: mainData.imdbID});
     
-    if (this.sld.slides.length && this.sld.currentPosition===-1){
-      this.sld.bottomControl.buttons[0].click();
-    } 
+    
 
     if (last){
       app.searchElement.searchButton.node.textContent = 'search';
       app.searchElement.searchButton.enable();
       this.sld.lock = false;
       this.sld.setDragOffset();
+    } 
+    if (this.sld.slides.length && this.sld.currentPosition===-1){
+      this.sld.bottomControl.buttons[0].click();
     } 
   }
 }

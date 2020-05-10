@@ -198,7 +198,7 @@ body{
   font-size: 13pt;
   line-height: 13pt;
 }
-@media screen and (max-width: 767px){
+/*@media screen and (max-width: 767px){
   .extcard_item{ 
     font-size: 11pt;
     line-height: 11pt;
@@ -216,7 +216,7 @@ body{
     min-height: 27pt;
   } 
 }
-
+*/
 .ext_img{
   max-width: 100%;
   max-height: 100%;
