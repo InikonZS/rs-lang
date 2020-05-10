@@ -10,13 +10,31 @@ const Keyboard = require('./keyboard.component.js');
 class App{
   constructor(dashBoardNode, searchNode){
     const app=this;
-   /* let sel = new Control(dashBoardNode, 'div', 'levels_wrapper', 'no-selected');
-    let gr = new Group(dashBoardNode, 'levels_wrapper', 'select_button');
-    for (let i=0; i<5; i++){
-      gr.addButton('bt'+i, function(){
-        sel.node.textContent = gr.currentButton.node.textContent + ' ' + i;
+
+    this.currentType;
+    this.currentPage = 1;
+    this.currentQuery = 'dream';
+
+  //  this.spinnerImg;
+  //  Utils.sendBlobRequest('assets/loading.gif','image/gif',(blob)=>{
+  //    this.spinnerImg = URL.createObjectURL(blob); 
+  //  });
+
+    let types = ['all', 'movie', 'series', 'game'];
+    let sel = new Control(searchNode, 'div', 'levels_wrapper', 'no-selected');
+    sel.hide();
+    let gr = new Group(searchNode, 'levels_wrapper', 'select_button');
+    for (let i=0; i<types.length; i++){
+      gr.addButton(types[i], ()=>{
+        if (this.currentType!=types[i]){
+          sel.node.textContent = gr.currentButton.node.textContent;
+          
+          this.currentType = types[i];
+          this.searchElement.searchButton.click();
+        }
       });
-    }*/
+    }
+    this.typeSelector = gr;
     
     let detectRussian = (msg) =>{
       res = false;
@@ -32,123 +50,114 @@ class App{
     }
 
     this.searchElement = new Search(this, searchNode, (request)=>{
-      this.currentQuery=request;
-      this.translate;
-      this.currentPage=1;
-      this.sld.clear();
-      if (detectRussian(this.currentQuery)){
-        let word = this.currentQuery;
-        Utils.sendGetRequest(Utils.getTranslateRequestURL(word), 
-        (res)=>{
-          this.translate = res.text[0];
-          app.refreshResults(this.translate, app.currentPage);
-          //todo: translation message
-          //this.translationControl.node.textContent = translate;
-        },
-        (m)=>{
-          console.log('fdf '+m);
-          this.translate = undefined;
-          //this.translationControl.node.textContent = translate;
+      if (request){
+        this.currentQuery=request;
+        this.translate;
+        this.currentPage=1;
+        this.sld.clear();
+        if (detectRussian(this.currentQuery)){
+          let word = this.currentQuery;
+
+          Utils.sendGetRequest(Utils.getTranslateRequestURL(word), 
+          (res)=>{
+            this.translate = res.text[0];
+            app.refreshResults(this.translate, app.currentPage);
+            //todo: translation message
+            //this.translationControl.node.textContent = translate;
+          },
+          (m)=>{
+            app.searchElement.searchButton.node.textContent = 'search';
+            app.searchElement.searchButton.enable();
+
+            this.translate = undefined;
+            //this.translationControl.node.textContent = translate;
+          });  
+
+        } else {
+          app.refreshResults(this.currentQuery, app.currentPage);
         }
-      );  
-      } else {
-        app.refreshResults(this.currentQuery, app.currentPage);
       }
     });
 
-
-   /* refreshTranslation(word){
-      let translate;
-      Utils.sendGetRequest(Utils.getTranslateRequestURL(word), 
-        (res)=>{
-          translate = res.text[0];
-          this.translationControl.node.textContent = translate;
-        },
-        ()=>{
-          translate = Utils.defaultRejectMessage;
-          this.translationControl.node.textContent = translate;
-        }
-      );  
-    }*/
-
-
-    //console.log(this.searchElement.searchWrapper.node);
-
-
-    this.currentPage = 1;
-    this.currentQuery = 'dream';
+    
     let rightMaxHandler = function(){
       app.currentPage++;
       console.log('page '+ app.currentPage);
-      app.refreshResults(app.currentQuery, app.currentPage);
+      app.refreshResults(app.translate || app.currentQuery, app.currentPage);
     }
     this.sld = new Slider(dashBoardNode, 'slider_wrapper', 'slider_slide', false, rightMaxHandler);
     
-    this.refreshResults(this.currentQuery, 1);
-  /*  for (let i=0; i<20; i++){
-      let slide = this.sld.addSlide('');
-      let el = new Control(slide.node, 'div', '', 'Slide '+i);
-      el.node.style =`background-color: rgb(${Math.trunc(Math.random()*155+100)},${Math.trunc(Math.random()*155+100)},${Math.trunc(Math.random()*155+100)}); width:100%; height:100%; display:flex; justify-content:center; align-items:center; font-size:48pt`;
+    this.searchElement.searchEdit.node.focus();
+    this.typeSelector.buttons[0].click();
+    app.searchElement.searchButton.node.textContent = 'search';
+    app.searchElement.searchButton.enable();
+
+    let resizeHandler = ()=>{
+      console.log('resize');
+      if (document.documentElement.clientWidth<768){
+        this.searchElement.searchKeyboardButton.hide();
+        if (this.searchElement.searchKeyboardButton.isToggled){
+          this.searchElement.keyboard.hide();
+        }
+      } 
+      if (document.documentElement.clientWidth>798){
+        this.searchElement.searchKeyboardButton.show();
+        if (this.searchElement.searchKeyboardButton.isToggled){
+          this.searchElement.keyboard.show();
+        }  
+      }
     }
-    if (this.sld.slides.length){
-      this.sld.bottomControl.buttons[0].click();
-    }*/
-    new Control(dashBoardNode,'div','','some text after slider');
+
+    window.addEventListener('resize', resizeHandler);
+    resizeHandler();
+    //this.refreshResults(this.currentQuery, 1);
   }
 
   refreshResults(query = 'dream', page = 1){
-    Utils.sendGetRequest(Utils.getMediaURL(query, page),(res)=>{
+    Utils.sendGetRequest(Utils.getMediaURL(query, page, this.currentType),(res)=>{
+      console.log(res);
       if (res && res.Search){
         res.Search.forEach((it, i)=>{ 
           last = (i==res.Search.length-1);
           this.getMoreFilmData(it, last);
+          app.searchElement.searchMessage.node.textContent = 'Found '+res.totalResults+' for '+query;
         });
       } else {
-        app.searchElement.searchMessage.node.textContent = Utils.defaultRejectMessage;  
+        app.searchElement.searchButton.node.textContent = 'search';
+        app.searchElement.searchButton.enable();
+        app.searchElement.searchMessage.node.textContent = res.Error || Utils.defaultRejectMessage;  
       }
     }, (message)=>{
+      app.searchElement.searchButton.node.textContent = 'search';
+      app.searchElement.searchButton.enable();
       console.log('fsdsf', message);
       app.searchElement.searchMessage.node.textContent = message || Utils.defaultRejectMessage;
     })
   }
- /* refreshResults(){
-    Utils.sendGetRequest(Utils.getMediaURL('dream', 2),(res)=>{
-      console.log(res);
-      res.Search.forEach((it)=>{
-        let slide = this.sld.addSlide('');
-        let el = new Card(slide.node);
-        el.refresh({image: it.Poster, year: it.Year, title: it.Title});
-        //let el = new Control(slide.node, 'div', '', 'Slide '+i);
-        //el.node.style =`background-color: rgb(${Math.trunc(Math.random()*155+100)},${Math.trunc(Math.random()*155+100)},${Math.trunc(Math.random()*155+100)}); width:100%; height:100%; display:flex; justify-content:center; align-items:center; font-size:48pt`;
-        
-
-        //it.poster
-      });
-      if (this.sld.slides.length && this.sld.currentPosition===-1){
-        this.sld.bottomControl.buttons[0].click();
-      }
-    })
-  }*/
 
 
   getMoreFilmData(mainData, last){
     Utils.sendGetRequest(Utils.getMediaInfoURL(mainData.imdbID),(res)=>{
+      //console.log(res);
       this.addCards(mainData, res, last); 
+      
     });
   }
   
   addCards(mainData, secondaryData, last){
-    console.log(secondaryData);
+    //console.log(secondaryData);
     let slide = this.sld.addSlide('');
     
     let el = new Card(slide.node);
-    el.refresh({image: mainData.Poster, year: mainData.Year, title: mainData.Title, rating: secondaryData.imdbRating});
+    el.refresh({image: mainData.Poster, year: mainData.Year, title: mainData.Title, rating: secondaryData.imdbRating, id: mainData.imdbID});
     
     if (this.sld.slides.length && this.sld.currentPosition===-1){
       this.sld.bottomControl.buttons[0].click();
     } 
 
     if (last){
+      app.searchElement.searchButton.node.textContent = 'search';
+      app.searchElement.searchButton.enable();
       this.sld.lock = false;
       this.sld.setDragOffset();
     } 

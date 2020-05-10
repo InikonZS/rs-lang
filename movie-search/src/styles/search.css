@@ -14,6 +14,7 @@
   align-items: center;
   border-style:solid;
   border-radius: 10px;
+  background-color: #ccc;
 }
 .search_item{
   margin: 5px 5px;
@@ -62,7 +63,6 @@
   font-size: 14pt;
   background-color: #fff;
   flex-grow: 2;
-  flex-basis: 100%;
   width: 100%;
 }
 .search_edit::placeholder{
@@ -84,8 +84,31 @@
   transform: scale(0.95);
 }
 
-@media screen and (max-width: 768px){
-  .search_keyboard{ 
-    display: none;
-  }   
+.keyboard_im{
+  background-image: url(keyboard.png);
+  background-repeat: no-repeat no-repeat;
+  background-repeat: no-repeat no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 65px;
+}
+
+.search_im{
+  background-image: url(search.png);
+  background-repeat: no-repeat no-repeat;
+  background-repeat: no-repeat no-repeat;
+  background-position: center center;
+  background-position: 5px center;
+  background-size: 25px;
+  padding-left: 35px;
+
+}
+
+.clear_im{
+  background-image: url(clear.png);
+  background-repeat: no-repeat no-repeat;
+  background-repeat: no-repeat no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 10px;
 }

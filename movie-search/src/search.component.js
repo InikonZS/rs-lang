@@ -16,21 +16,26 @@ class Search {
     });
     this.searchEdit.node.placeholder ="search request...";
     this.searchEdit.node.type = 'text';
-    this.searchClearButton = new Button(this.searchWrapper.node, 'search_item search_clear', 'X', false,()=>{
+    this.searchClearButton = new Button(this.searchWrapper.node, 'clear_im search_item search_clear', '', false,()=>{
       this.searchEdit.node.value='';
     });
-    this.searchKeyboardButton = new Button(this.searchWrapper.node, 'search_item search_keyboard', 'kbd', true, ()=>{
+    this.searchKeyboardButton = new Button(this.searchWrapper.node, 'keyboard_im search_item search_keyboard', '', true, ()=>{
       if (this.searchKeyboardButton.isToggled){
         this.keyboard.show();
       } else {
         this.keyboard.hide();
       }
     });
-    this.searchButton = new Button(this.searchWrapper.node, 'search_item search_submit', 'search', false,()=>{
+    this.searchButton = new Button(this.searchWrapper.node, 'search_im search_item search_submit', 'search', false,()=>{
+      this.searchButton.node.textContent = 'wait...';
+      this.searchButton.disable();
       onSubmit(this.searchEdit.node.value);  
     });
 
-    this.keyboard = new Keyboard (parentNode, this.searchEdit.node);
+    this.keyboard = new Keyboard (parentNode, this.searchEdit.node, false, ()=>{
+      this.searchButton.click();  
+    });
+      
     this.keyboard.hide();
     this.searchMessage = new Control(parentNode, 'div', '', 'search results');
   }

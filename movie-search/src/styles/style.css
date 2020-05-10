@@ -8,23 +8,31 @@ body{
   display:flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ccc;
+  background-color: #333;
+  color: #fff;
   box-sizing: border-box;
+  padding: 5px 10px;
 }
 .center_wrapper{
   width:100%;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 97px);
   box-sizing: border-box;
+  background-color: #999;
 }
 .header{
+  border-bottom: solid 5px #222;
+}
+.footer a{
+  color:#fff;  
+}
+.footer a:visited{
+  color:#fff;  
+}
 
-}
-.footer{
-  
-}
 .img_wrapper{
   overflow: hidden;
   height: 100%;
+  padding: 5px 0px;
 }
 .global_wrapper{
   overflow: hidden;
@@ -35,6 +43,7 @@ body{
   margin:auto;
   font-family: sans-serif;
   font-size: 14pt;
+  min-width: 300px;
 }
 .page{
   position: absolute;
@@ -152,6 +161,11 @@ body{
   justify-content: center;
   align-items: center;
   height: 100%;
+  width: 100%;
+  padding: 5px;
+  background-color: #ddd;
+  box-sizing: border-box;
+  margin: 2px;
 }
 
 .said_wrapper{
@@ -277,7 +291,7 @@ body{
   align-items: center;
   /*width: calc(100% - 10px);*/
   padding: 10px;
-  border-radius: 50%;
+  border-radius: 10px;
   margin: 5px 5px;
   background-color: #ab4;
   box-sizing: border-box;
@@ -286,14 +300,10 @@ body{
   user-select: none;
   color: #000;
   font-size: 14pt;
-  width:50px;
-  height:50px;
 }
 
 @media screen and (max-width: 480px){
   .select_button{ 
-    width: 40px;
-    height: 40px;
     margin: 5px 2px;
   }   
 }
@@ -480,4 +490,26 @@ th{
 
 .arrow{
   background-image: url(assets/ico/compass.svg);
+}
+.gitlink{
+  background-image: url(github.png);
+  background-repeat: no-repeat no-repeat;
+  
+  background-position: left center;
+  background-size: contain;
+  padding-left: 30px;
+}
+
+.logo{
+  background-image: url(filmstrip.png);
+  background-repeat: no-repeat no-repeat;
+  background-position: 10px center;
+  background-size: 120px;
+  padding-left: 65px;
+  background-color: #111;
+  border-radius: 10px;
+  padding: 10px 10px 10px 135px;
+  font-size: 16pt;
+  font-weight: 900;
+  line-height: 22px;
 }

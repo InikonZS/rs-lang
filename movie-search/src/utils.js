@@ -16,6 +16,25 @@ function sendGetRequest(URL, onLoad, onError){
       httpRequest.send(); 
 }
 
+function sendBlobRequest(URL, mimeType, onLoad, onError){
+  let httpRequest = new XMLHttpRequest();
+  httpRequest.responseType = 'arraybuffer';  
+    httpRequest.onload = function() {
+      if (onLoad){
+        let blob = new Blob([httpRequest.response], {type:mimeType});
+        onLoad(blob);
+      }
+    };
+    
+    httpRequest.onerror = function() {
+      if (onError){
+        onError(httpRequest.responseText);
+      }
+    };
+      httpRequest.open('GET', URL);
+      httpRequest.send(); 
+}
+
 const defaultRejectMessage = 'not found';
 
 const translateApiCode =  `trnsl.1.1.20200322T155651Z.de98a60e6a99185e.089aea4237b51c6db082c966f27a7895cd1e8b44`;
@@ -26,8 +45,13 @@ const getTranslateRequestURL = function (word) {
 }
 
 const mediaDataApiCode = `48b3a0e4`;
-const getMediaURL = function (search, page){
-  let url = `https://www.omdbapi.com/?s=${search}&page=${page}&apikey=${mediaDataApiCode}`;
+const getMediaURL = function (search, page, type){
+  let url;
+  if (type && type!='all'){
+    url = `https://www.omdbapi.com/?s=${search}&type=${type}&page=${page}&apikey=${mediaDataApiCode}`;
+  } else {
+    url = `https://www.omdbapi.com/?s=${search}&page=${page}&apikey=${mediaDataApiCode}`;
+  }
   return url;
 }
 
@@ -38,6 +62,7 @@ const getMediaInfoURL = function (infoCode){
 
 const Utils = {
   sendGetRequest,
+  sendBlobRequest,
   defaultRejectMessage,
   translateApiCode,
   translateApiURL,

@@ -18,7 +18,7 @@ class Slider extends Control {
 
     this.zwLeftButtonWrapper = new Control(this.horizontalWrapper.node, 'div', 'slider_side_zeros slider_side_zeros_left');
     this.leftButtonWrapper = new Control(this.zwLeftButtonWrapper.node, 'div', 'slider_sides');
-    this.leftButton = new Button(this.leftButtonWrapper.node, 'slider_button', '<', false, function(){
+    this.leftButton = new Button(this.leftButtonWrapper.node, 'left_im slider_button', '', false, function(){
       let pos = slider.currentPosition-1;
       if (pos < (0)){
         console.log('left');
@@ -36,7 +36,7 @@ class Slider extends Control {
     this.slideArea = new Control(this.horizontalWrapper.node, 'div', 'slider_area');
     this.zwRightButtonWrapper = new Control(this.horizontalWrapper.node, 'div', 'slider_side_zeros slider_side_zeros_right');
     this.rightButtonWrapper = new Control(this.zwRightButtonWrapper.node, 'div', 'slider_sides');
-    this.rightButton = new Button(this.rightButtonWrapper.node, 'slider_button', '>', false, function(){
+    this.rightButton = new Button(this.rightButtonWrapper.node, 'right_im slider_button', '', false, function(){
       let pos = slider.currentPosition+1;
       if (pos > (slider.getMaxPosition())){
         console.log(this.onRightMax);

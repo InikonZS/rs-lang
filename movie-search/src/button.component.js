@@ -16,6 +16,31 @@ class Button extends Control {
     if (click) {
       this.click = click;
 
+      this.node.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (!this.isDisabled) {
+          this.isDowned = true;
+          this.node.className=(`${this.basicClass} ${this.basicClass}__down`);
+        }
+      });
+
+      this.node.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        if (!this.isDisabled) {
+          if (this.isDowned) {
+            this.changeState();
+            this.click();
+          }
+          this.isDowned = false;
+          if (!this.isToggled) {
+            this.node.className=(`${this.basicClass} ${this.basicClass}`);
+          } else {
+            this.node.className=(`${this.basicClass} ${this.basicClass}__dover`);
+          }
+        }
+      });
+
+
       this.node.addEventListener('mousedown', (e) => {
         e.preventDefault();
         if (!this.isDisabled && (e.buttons == 1)) {
