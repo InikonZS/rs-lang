@@ -4,12 +4,12 @@ class Control {
     const classNameV = className || '';
     const textContentV = textContent || '';
     const tagNameV = tagName || 'div';
-    this.isDisabled=false;
-    this.isHidden=false;
+    this.isDisabled = false;
+    this.isHidden = false;
 
-    if (!fromParent){
+    if (!fromParent) {
       this.node = document.createElement(tagNameV);
-      parentNode.appendChild(this.node);  
+      parentNode.appendChild(this.node);
       this.node.className = classNameV;
       this.node.textContent = textContentV;
     } else {
@@ -17,7 +17,7 @@ class Control {
       this.node.className = classNameV;
     }
 
-    //this.render(classNameV, textContentV);
+    // this.render(classNameV, textContentV);
     if (click) {
       this.click = click;
       this.node.addEventListener('click', (e) => {
@@ -39,28 +39,27 @@ class Control {
   }
 
   hide() {
-    this.isHidden=true;
+    this.isHidden = true;
     this.node.style = 'display:none';
   }
 
   show() {
-    this.isHidden=false;
+    this.isHidden = false;
     this.node.style = '';
   }
 
   animate(animationCssClass, inlineStyle) {
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
-        if (animationCssClass){
+        if (animationCssClass) {
           this.node.className = animationCssClass;
         }
-        if (inlineStyle){
+        if (inlineStyle) {
           this.node.style = inlineStyle;
         }
       });
     });
   }
-  
 }
 
 module.exports = Control;

@@ -20,7 +20,7 @@ class Button extends Control {
         e.preventDefault();
         if (!this.isDisabled) {
           this.isDowned = true;
-          this.node.className=(`${this.basicClass} ${this.basicClass}__down`);
+          this.node.className = (`${this.basicClass} ${this.basicClass}__down`);
         }
       });
 
@@ -33,9 +33,9 @@ class Button extends Control {
           }
           this.isDowned = false;
           if (!this.isToggled) {
-            this.node.className=(`${this.basicClass} ${this.basicClass}`);
+            this.node.className = (`${this.basicClass} ${this.basicClass}`);
           } else {
-            this.node.className=(`${this.basicClass} ${this.basicClass}__dover`);
+            this.node.className = (`${this.basicClass} ${this.basicClass}__dover`);
           }
         }
       });
@@ -45,7 +45,7 @@ class Button extends Control {
         e.preventDefault();
         if (!this.isDisabled && (e.buttons == 1)) {
           this.isDowned = true;
-          this.node.className=(`${this.basicClass} ${this.basicClass}__down`);
+          this.node.className = (`${this.basicClass} ${this.basicClass}__down`);
         }
       });
 
@@ -53,9 +53,9 @@ class Button extends Control {
         if (!this.isDisabled) {
           this.isDowned = false;
           if (this.isToggled) {
-            this.node.className=(`${this.basicClass} ${this.basicClass}__toggled`);
+            this.node.className = (`${this.basicClass} ${this.basicClass}__toggled`);
           } else {
-            this.node.className=(this.basicClass);
+            this.node.className = (this.basicClass);
           }
         }
       });
@@ -63,9 +63,9 @@ class Button extends Control {
       this.node.addEventListener('mouseover', (e) => {
         if (!this.isDisabled) {
           if (!this.isToggled) {
-            this.node.className=(`${this.basicClass} ${this.basicClass}__hover`);
+            this.node.className = (`${this.basicClass} ${this.basicClass}__hover`);
           } else {
-            this.node.className=(`${this.basicClass} ${this.basicClass}__dover`);
+            this.node.className = (`${this.basicClass} ${this.basicClass}__dover`);
           }
         }
       });
@@ -79,9 +79,9 @@ class Button extends Control {
           }
           this.isDowned = false;
           if (!this.isToggled) {
-            this.node.className=(`${this.basicClass} ${this.basicClass}__hover`);
+            this.node.className = (`${this.basicClass} ${this.basicClass}__hover`);
           } else {
-            this.node.className=(`${this.basicClass} ${this.basicClass}__dover`);
+            this.node.className = (`${this.basicClass} ${this.basicClass}__dover`);
           }
         }
       });
@@ -102,20 +102,19 @@ class Button extends Control {
     }
   }
 
-  untoggle(){
+  untoggle() {
     if (this.allowToggle) {
       this.isToggled = false;
-      this.node.className=(this.basicClass);
-    }  
+      this.node.className = (this.basicClass);
+    }
   }
 
-  toggle(){
+  toggle() {
     if (this.allowToggle) {
       this.isToggled = true;
-      this.node.className=(`${this.basicClass} ${this.basicClass}__toggled`);
-    }  
+      this.node.className = (`${this.basicClass} ${this.basicClass}__toggled`);
+    }
   }
-
 }
 
 module.exports = Button;

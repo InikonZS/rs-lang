@@ -198,25 +198,7 @@ body{
   font-size: 13pt;
   line-height: 13pt;
 }
-/*@media screen and (max-width: 767px){
-  .extcard_item{ 
-    font-size: 11pt;
-    line-height: 11pt;
-  }   
-  .extcard_title{ 
-    min-height: 33pt;
-  }
-}
-@media screen and (max-width: 480px){
-  .extcard_item{ 
-    font-size: 9pt;
-    line-height: 9pt;
-  }  
-  .extcard_title{ 
-    min-height: 27pt;
-  } 
-}
-*/
+
 .ext_img{
   max-width: 100%;
   max-height: 100%;
