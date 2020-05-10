@@ -176,7 +176,6 @@
 .left_im{
   background-image: url(chev_l.png);
   background-repeat: no-repeat no-repeat;
-  background-repeat: no-repeat no-repeat;
   background-position: center center;
   background-size: 33%;
 }
@@ -184,7 +183,12 @@
 .right_im{
   background-image: url(chev_r.png);
   background-repeat: no-repeat no-repeat;
-  background-repeat: no-repeat no-repeat;
   background-position: center center;
   background-size: 33%;
+}
+.load_im{
+  background-image: url(loading.gif);
+  background-repeat: no-repeat no-repeat;
+  background-position: center center;
+  background-size: 66%;
 }

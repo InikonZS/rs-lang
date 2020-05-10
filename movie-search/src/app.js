@@ -66,6 +66,8 @@ class App {
             (m) => {
               app.searchElement.searchButton.node.textContent = 'search';
               app.searchElement.searchButton.enable();
+              app.sld.rightButton.basicClass='right_im slider_button';
+              app.sld.rightButton.node.className='right_im slider_button';
               this.translate = undefined;
             });
         } else {
@@ -139,11 +141,15 @@ class App {
       } else {
         app.searchElement.searchButton.node.textContent = 'search';
         app.searchElement.searchButton.enable();
+        app.sld.rightButton.basicClass='right_im slider_button';
+        app.sld.rightButton.node.className='right_im slider_button';
         app.searchElement.searchMessage.node.textContent = res.Error || Utils.defaultRejectMessage;
       }
     }, (message) => {
       app.searchElement.searchButton.node.textContent = 'search';
       app.searchElement.searchButton.enable();
+      app.sld.rightButton.basicClass='right_im slider_button';
+      app.sld.rightButton.node.className='right_im slider_button';
       console.log('fsdsf', message);
       app.searchElement.searchMessage.node.textContent = message || Utils.defaultRejectMessage;
     });
@@ -169,6 +175,8 @@ class App {
       app.searchElement.searchButton.node.textContent = 'search';
       app.searchElement.searchButton.enable();
       this.sld.lock = false;
+      this.sld.rightButton.basicClass='right_im slider_button';
+      this.sld.rightButton.node.className='right_im slider_button';
       this.sld.setDragOffset();
     }
     if (this.sld.slides.length && this.sld.currentPosition === -1) {

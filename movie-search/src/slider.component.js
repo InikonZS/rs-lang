@@ -43,6 +43,8 @@ class Slider extends Control {
         if (slider.onRightMax) {
           if (!slider.lock) {
             slider.lock = true;
+            slider.rightButton.basicClass='load_im slider_button';
+            slider.rightButton.node.className='load_im slider_button';
             slider.onRightMax();
           }
         }
