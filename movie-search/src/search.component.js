@@ -15,6 +15,8 @@ class Search {
     });
     this.searchEdit.node.placeholder = 'search request...';
     this.searchEdit.node.type = 'text';
+    this.searchEdit.autofocus = true;
+    this.searchEdit.tabIndex = 1;
     this.searchClearButton = new Button(this.searchWrapper.node, 'clear_im search_item search_clear', '', false, () => {
       this.searchEdit.node.value = '';
     });

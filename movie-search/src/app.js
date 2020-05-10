@@ -81,6 +81,9 @@ class App {
       app.refreshResults(app.translate || app.currentQuery, app.currentPage);
     };
     this.sld = new Slider(dashBoardNode, 'slider_wrapper', 'slider_slide', false, rightMaxHandler);
+    this.sld.touchUpEvent = ()=>{
+      this.searchElement.searchEdit.node.blur();
+    }
 
     this.searchElement.searchEdit.node.focus();
     this.typeSelector.buttons[0].click();
