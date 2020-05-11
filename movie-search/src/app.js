@@ -36,7 +36,7 @@ class App {
     }
     this.typeSelector = gr;
 
-    const detectRussian = (msg) => {
+   /* const detectRussian = (msg) => {
       res = false;
       ru = 'абвгдеёжзиклмопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
       arr = ru.split('');
@@ -47,7 +47,7 @@ class App {
         }
       }
       return res;
-    };
+    };*/
 
     this.searchElement = new Search(this, searchNode, (request) => {
       if (request) {
@@ -204,5 +204,17 @@ function addRandomSlide(slideParent, contentText) {
   return el;
 }
 
+function detectRussian(msg){
+  res = false;
+  ru = 'абвгдеёжзиклмопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+  arr = ru.split('');
+  for (let i = 0; i < arr.length; i += 1) {
+    if (msg.indexOf(arr[i]) != -1) {
+      res = true;
+      break;
+    }
+  }
+  return res;
+};
 
-module.exports = App;
+module.exports = {App, detectRussian};

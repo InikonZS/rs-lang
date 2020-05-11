@@ -1,4 +1,4 @@
-const App = require('./app.js');
+const {App} = require('./app.js');
 
 const dashBoardNode = document.querySelector('#app-main');
 const searchNode = document.querySelector('#app-search');
