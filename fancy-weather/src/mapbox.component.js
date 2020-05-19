@@ -47,6 +47,11 @@ class Mapbox{
       this.onExternalError();
     });
   }
+
+  setPosition(lon, lat){
+    this.map.setCenter([lon, lat]);
+    this.marker.setLngLat([lon, lat]);
+  }
 }
 
 function makeExternalLink(parentNode, linkURL, onLoad, onError){

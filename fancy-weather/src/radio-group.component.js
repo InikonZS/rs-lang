@@ -1,0 +1,44 @@
+const Control = require('./control.component.js');
+const Button = require('./button.component.js');
+
+class Group extends Control {
+  constructor(parentNode, className, buttonClassName) {
+    super(parentNode, 'div', className, '');
+    this.buttonClassName = buttonClassName;
+    this.currentButton;
+    this.buttons = [];
+  }
+
+  addButton(caption, click) {
+    const group = this;
+    const el = new Button(this.node, this.buttonClassName, caption, true, function () {
+      group.currentButton = el;
+      group.buttons.forEach((it) => {
+        if (it !== this) {
+          it.untoggle();
+        } else {
+          it.toggle();
+        }
+      });
+      if (click) {
+        click();
+      }
+    });
+    this.buttons.push(el);
+    return el;
+  }
+
+  highlight(index) {
+    if (this.buttons[index]) {
+      this.buttons.forEach((it, i) => {
+        if (i !== index) {
+          it.untoggle();
+        } else {
+          it.toggle();
+        }
+      });
+    }
+  }
+}
+
+module.exports = Group;
