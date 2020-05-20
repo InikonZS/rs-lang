@@ -9,11 +9,16 @@ class Menu extends Control{
     let langs = ['eng', 'ru', 'bel'];
     let units = ['C', 'F', 'K'];
 
-    this.state = {};
-    this.state.lang = langs[0];
-    this.state.langIndex = 0;
-    this.state.unit = units[0];
-    this.state.unitIndex = 0;
+    let localOptions = localStorage.getItem('menu_options');
+    if (!localOptions){
+      this.state = {};
+      this.state.lang = langs[0];
+      this.state.langIndex = 0;
+      this.state.unit = units[0];
+      this.state.unitIndex = 0;
+    } else {
+      this.state = JSON.parse(localOptions);
+    }
 
     this.refreshButton = new Button(this.node, 'basic_button', 'Refresh', false, ()=>{
       this.refresh();   
@@ -27,7 +32,7 @@ class Menu extends Control{
         this.refresh();
       });
     });
-    this.langSelect.highlight(0);
+    this.langSelect.highlight(this.state.langIndex);
 
     this.unitSelect = new RadioGroup(this.node, 'radio_group', 'basic_button');
     units.forEach((it, i)=>{
@@ -37,12 +42,13 @@ class Menu extends Control{
         this.refresh();
       });
     });
-    this.unitSelect.highlight(0);
+    this.unitSelect.highlight(this.state.unitIndex);
     
   }
 
   refresh(){
     if (this.onChange){
+      localStorage.setItem('menu_options', JSON.stringify(this.state));
       this.onChange(this.state);
     }
   }
