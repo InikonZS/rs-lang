@@ -62,14 +62,21 @@ class Mapbox extends Control{
   setPosition(lon, lat){
     this.map.setCenter([lon, lat]);
     this.marker.setLngLat([lon, lat]);
-    this.lonControl.node.textContent = this.lonPref+': '+lon;
-    this.latControl.node.textContent = this.latPref+': '+lat;
+    this.lonControl.node.textContent = this.lonPref+': '+formatDeg(lon);
+    this.latControl.node.textContent = this.latPref+': '+formatDeg(lat);
   }
 
   setOptions(options){
     this.lonPref = lons[options.langIndex];
     this.latPref = lats[options.langIndex];
   }
+}
+
+function formatDeg(val){
+  let deg = Math.trunc (val);
+  let min = Math.trunc((val-deg)*60);
+  let sec = Math.trunc((val*60-deg*60-min)*6000);
+  return `${deg}° ${min}' ${sec}''`;
 }
 
 function makeExternalLink(parentNode, linkURL, onLoad, onError){
