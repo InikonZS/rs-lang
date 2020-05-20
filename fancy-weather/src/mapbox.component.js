@@ -1,12 +1,19 @@
 const Control = require('./control.component.js');
 
-class Mapbox{
+class Mapbox extends Control{
   constructor(parentNode, scriptURL, styleURL, serviceKey){
+    super(parentNode, 'div', 'map_wrapper');
     this.map;
     this.marker;
-    this.mapContainer = new Control(parentNode, 'div');
+    this.mapContainer = new Control(this.node, 'div');
     this.mapContainer.node.id = 'map-render-container';
-    this.mapContainer.node.style = 'height:300px';
+    this.mapContainer.node.style = `
+    height: 300px;
+    width: 100%;
+    border-radius: 20px;`;
+
+    this.lonControl = new Control(this.node,'div');
+    this.latControl = new Control(this.node,'div');
 
     let onExternalLoad = ()=>{
       let lon = 12;
@@ -51,6 +58,8 @@ class Mapbox{
   setPosition(lon, lat){
     this.map.setCenter([lon, lat]);
     this.marker.setLngLat([lon, lat]);
+    this.lonControl.node.textContent = 'Longitude: '+lon;
+    this.latControl.node.textContent = 'Latitude: '+lat;
   }
 }
 

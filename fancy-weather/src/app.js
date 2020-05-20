@@ -1,16 +1,28 @@
 const Control = require('./control.component.js');
 const Button = require('./button.component.js');
 const Search = require('./search.component.js');
+const Clock = require('./clock.component.js');
+const Menu = require('./menu.component.js');
 const Mapbox = require('./mapbox.component.js');
 const WeatherCard = require('./weather-card.component.js');
 
 const Utils = require('./utils.js');
 
 class App {
-  constructor(parentNode) {
-    
+  constructor(
+    menuNode,
+    searchNode,
+    weatherNode,
+    mapNode,
+    footerNode,
+    backNode) {
 
-    this.search = new Search(parentNode);
+    this.menu = new Menu(menuNode);
+    this.menu.onChange = (options)=>{
+      this.refresh(this.backBuffer.weatherData, options);
+    }
+
+    this.search = new Search(searchNode);
     this.search.onSubmit = (req)=>{
       getCoordinates(req)
         .then((data)=>{
@@ -19,7 +31,7 @@ class App {
         })
         .then((data)=>{
           console.log(data);
-          this.refresh(data[0]);
+          this.refresh(data[0], this.menu.options);
         })
         .catch((reason)=>{
           console.log(reason);
@@ -27,16 +39,29 @@ class App {
       );  
     }
 
-    this.map = new Mapbox(parentNode, Utils.mapboxScriptURL, Utils.mapboxStyleURL, Utils.mapboxKey);
-    this.city = new Control(parentNode, 'div');
-    this.weather = new WeatherCard(parentNode);
-    this.imgWrapper = new Control(parentNode, 'div');
-    this.image = new Control(this.imgWrapper.node, 'img');
-    this.image.node.style = `
-          transition-duration:1000ms;
-          opacity:0;
-        `;
+    this.map = new Mapbox(mapNode, Utils.mapboxScriptURL, Utils.mapboxStyleURL, Utils.mapboxKey);
     
+    this.weather = new WeatherCard(weatherNode);
+
+    this.imgWrapperA = new Control(backNode, 'div', 'background');
+    this.imgWrapperA.node.style = `
+      background-image: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%), 
+      url("assets/xaker.jpg")
+    `;
+    this.imgWrapperB = new Control(backNode, 'div', 'background');
+    this.imgWrapperB.node.style = `
+      background-image: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%), 
+      url("assets/xaker.jpg")
+    `;
+    this.activeImg = this.imgWrapperA;
+    this.inactiveImg = this.imgWrapperB;
+    //this.image = new Control(this.imgWrapper.node, 'img');
+    //this.image.node.src = 'assets/xaker.jpg';
+    /*this.image.node.style = `
+          transition-duration:1000ms;
+          opacity:30%;
+        `;*/
+    this.lastSrc='assets/xaker.jpg';
     this.backBuffer = {}
     getUserPositionByNav()
       .then(
@@ -80,7 +105,8 @@ class App {
       .then((data)=>{
         console.log(data);
         if (data[0]){
-          this.refresh(data[0]);  
+          this.backBuffer.weatherData = data[0];
+          this.refresh(data[0], this.menu.options);  
         } else {
           console.log('weather servise unavailable');
         }
@@ -92,19 +118,32 @@ class App {
 
   }
 
-  refresh(weatherData){
-    this.city.node.textContent = this.backBuffer.location;
+  refresh(weatherData, options){
+    
     this.map.setPosition(this.backBuffer.lng, this.backBuffer.lat);
-    this.weather.refresh(weatherData);
+    this.weather.refresh(weatherData, this.backBuffer);
     getImage('nature').then((res)=>{
       console.log(res);
-      this.image.node.onload = () =>{
-        this.image.node.style = `
-          transition-duration:1000ms;
-          opacity:100;
-        `;
+      let im = new Image();
+      im.onload = () =>{
+        this.inactiveImg.node.style = 'transition-duration:1000ms; opacity:0%;';
+        if (this.activeImg == this.imgWrapperA){
+        this.activeImg = this.imgWrapperB;
+        this.inactiveImg = this.imgWrapperA;
+        
+        } else {
+          this.activeImg = this.imgWrapperA;
+          this.inactiveImg = this.imgWrapperB;
+        }
+        this.activeImg.node.style = `background-image: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%), 
+        url("${im.src}"); transition-duration:1000ms; opacity:100%;`;
+        this.inactiveImg.node.style = `background-image: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%), 
+        url("${this.lastSrc}"); transition-duration:1000ms; opacity:0%;`;
+        this.lastSrc = im.src;
       }
-      this.image.node.src = res.urls.regular;
+      im.src = res.urls.regular;
+      
+      
     })
     //this.image.node
   }

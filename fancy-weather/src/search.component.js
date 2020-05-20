@@ -3,13 +3,20 @@ const Button = require('./button.component.js');
 
 class Search extends Control{
   constructor (parentNode){
-    super(parentNode, 'div');
-    this.searchEdit = new Control(parentNode, 'input');
+    super(parentNode, 'div', 'radio_group');
+    this.searchEdit = new Control(this.node, 'input');
+    this.searchEdit.node.addEventListener('keyup', (e) => {
+      e.preventDefault();
+      if (e.code == 'Enter') {
+        this.submitButton.click();
+      }
+    });
+
     this.searchEdit.node.type = 'text';
 
     this.onSubmit;
 
-    this.submitButton = new Button(this.node, '', 'search', false, ()=>{
+    this.submitButton = new Button(this.node, 'basic_button', 'search', false, ()=>{
       this.submit();  
     });
   }

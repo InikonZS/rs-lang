@@ -1,0 +1,50 @@
+.weather_result{
+  display: flex;
+  justify-content: center;
+}
+
+.weather_colomn{
+  display: flex;
+  flex-direction: column;
+}
+
+.weather_ico{
+  width: 100px;
+}
+
+.weather_temp{
+  font-size: 150px;
+}
+
+.weather_future{
+  display: flex;
+  justify-content: center;
+}
+
+.weather_date{
+  display: flex;
+  justify-content: center;
+}
+
+.weather_today_wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.weather_future_block{
+
+}
+
+.weather_date_min{
+  display: flex;
+  justify-content: center;
+}
+
+.weather_ico_min{
+  width: 50px;
+}
+
+.weather_temp_min{
+  font-size: 50px;
+}

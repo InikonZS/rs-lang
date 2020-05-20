@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/basic-button.css">
+    <link rel="stylesheet" href="styles/weather.css">
   </head>
   <body>
     <div class="global_wrapper">
-      <div id="app-main" class=""></div>
+      <div class="background" id="back"></div>
+      <div class="header" id="header">
+        <div class="menu" id="menu_container"></div>
+        <div class="search" id="search_container"></div>
+      </div>
+      <div class="main">
+        <div class="weather" id="weather_container"></div>
+        <div class="map" id="map_container"></div>  
+      </div>
+      <div class="footer" id="footer"></div>
     </div>
     <script src="script.js"></script>
   </body>
