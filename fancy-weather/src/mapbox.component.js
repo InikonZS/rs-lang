@@ -1,8 +1,12 @@
 const Control = require('./control.component.js');
 
+const lons = ['Longitude', 'Долгота', 'Даужыня'];
+const lats = ['Latitude', 'Широта', 'Шырыня'];
 class Mapbox extends Control{
   constructor(parentNode, scriptURL, styleURL, serviceKey){
     super(parentNode, 'div', 'map_wrapper');
+    this.lonPref=lons[0];
+    this.latsPref=lats[0];
     this.map;
     this.marker;
     this.mapContainer = new Control(this.node, 'div');
@@ -58,8 +62,13 @@ class Mapbox extends Control{
   setPosition(lon, lat){
     this.map.setCenter([lon, lat]);
     this.marker.setLngLat([lon, lat]);
-    this.lonControl.node.textContent = 'Longitude: '+lon;
-    this.latControl.node.textContent = 'Latitude: '+lat;
+    this.lonControl.node.textContent = this.lonPref+': '+lon;
+    this.latControl.node.textContent = this.latPref+': '+lat;
+  }
+
+  setOptions(options){
+    this.lonPref = lons[options.langIndex];
+    this.latPref = lats[options.langIndex];
   }
 }
 

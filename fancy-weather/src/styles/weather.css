@@ -32,6 +32,9 @@
   align-items: flex-start;
 }
 
+.weather_city{
+  font-size: 30px;
+}
 .weather_future_block{
 
 }
@@ -42,9 +45,9 @@
 }
 
 .weather_ico_min{
-  width: 50px;
+  width: 80px;
 }
 
 .weather_temp_min{
-  font-size: 50px;
+  font-size: 80px;
 }

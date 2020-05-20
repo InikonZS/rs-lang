@@ -7,9 +7,14 @@ class Menu extends Control{
     super(parentNode, 'div', 'radio_group');
 
     let langs = ['eng', 'ru', 'bel'];
-    let units = ['F', 'C', 'K'];
+    let units = ['C', 'F', 'K'];
 
     this.state = {};
+    this.state.lang = langs[0];
+    this.state.langIndex = 0;
+    this.state.unit = units[0];
+    this.state.unitIndex = 0;
+
     this.refreshButton = new Button(this.node, 'basic_button', 'Refresh', false, ()=>{
       this.refresh();   
     });
@@ -22,6 +27,7 @@ class Menu extends Control{
         this.refresh();
       });
     });
+    this.langSelect.highlight(0);
 
     this.unitSelect = new RadioGroup(this.node, 'radio_group', 'basic_button');
     units.forEach((it, i)=>{
@@ -31,6 +37,7 @@ class Menu extends Control{
         this.refresh();
       });
     });
+    this.unitSelect.highlight(0);
     
   }
 

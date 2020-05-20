@@ -31,7 +31,7 @@ class App {
         })
         .then((data)=>{
           console.log(data);
-          this.refresh(data[0], this.menu.options);
+          this.refresh(data, this.menu.state);
         })
         .catch((reason)=>{
           console.log(reason);
@@ -105,8 +105,8 @@ class App {
       .then((data)=>{
         console.log(data);
         if (data[0]){
-          this.backBuffer.weatherData = data[0];
-          this.refresh(data[0], this.menu.options);  
+          this.backBuffer.weatherData = data;
+          this.refresh(data, this.menu.state);  
         } else {
           console.log('weather servise unavailable');
         }
@@ -120,8 +120,9 @@ class App {
 
   refresh(weatherData, options){
     
+    this.map.setOptions(options);
     this.map.setPosition(this.backBuffer.lng, this.backBuffer.lat);
-    this.weather.refresh(weatherData, this.backBuffer);
+    this.weather.refresh(weatherData, this.backBuffer, options);
     getImage('nature').then((res)=>{
       console.log(res);
       let im = new Image();
