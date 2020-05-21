@@ -67,8 +67,8 @@ class Mapbox extends Control{
   }
 
   setOptions(options){
-    this.lonPref = lons[options.langIndex];
-    this.latPref = lats[options.langIndex];
+    this.lonPref = lons[options.langIndex]||'Longitude';
+    this.latPref = lats[options.langIndex]||'Latitude';
   }
 }
 

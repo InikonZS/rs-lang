@@ -57,6 +57,7 @@ class WeatherCard extends Control{
 
   refresh(dataList, backBuffer, options){
     console.log(data);
+    this.clock.setOptions(options);
     let data = dataList[0];
 
     let unit = options.unit;
@@ -75,7 +76,7 @@ class WeatherCard extends Control{
     this.humidityControl.node.textContent = humidityPref+': '+data.humidity[0].min.value+'%'; 
 
     for (let i=0; i<3; i++){
-      this.childList[i].refresh(dataList[i+1], unit, options);
+      this.childList[i].refresh(dataList[i+2], unit, options);
     }
   }
 }
