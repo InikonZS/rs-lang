@@ -1,8 +1,8 @@
 const Control = require('./control.component.js');
 const Button = require('./button.component.js');
 
-class Search extends Control{
-  constructor (parentNode){
+class Search extends Control {
+  constructor(parentNode) {
     super(parentNode, 'div', 'search_wrapper');
     this.searchEdit = new Control(this.node, 'input', 'search_item search_edit');
     this.searchEdit.node.placeholder = 'city name';
@@ -18,31 +18,29 @@ class Search extends Control{
     this.onSubmit;
     this.onMic;
 
-    this.micButton = new Button(this.node, 'basic_ico micro_im basic_button', '', false, ()=>{
-      this.mic();  
+    this.micButton = new Button(this.node, 'basic_ico micro_im basic_button', '', false, () => {
+      this.mic();
     });
 
-    this.submitButton = new Button(this.node, 'left_ico search_im ico_button', 'search', false, ()=>{
-      this.submit();  
+    this.submitButton = new Button(this.node, 'left_ico search_im ico_button', 'search', false, () => {
+      this.submit();
     });
-
-    
   }
 
-  submit(){
-    if (this.onSubmit){
+  submit() {
+    if (this.onSubmit) {
       this.onSubmit(this.searchEdit.node.value);
     }
   }
 
-  mic(){
-    if (this.onSubmit){
+  mic() {
+    if (this.onSubmit) {
       this.onMic();
     }
   }
 
-  reset(){
-    this.searchEdit.node.value='';
+  reset() {
+    this.searchEdit.node.value = '';
   }
 }
 

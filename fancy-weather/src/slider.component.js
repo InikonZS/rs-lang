@@ -43,8 +43,8 @@ class Slider extends Control {
         if (slider.onRightMax) {
           if (!slider.lock) {
             slider.lock = true;
-            slider.rightButton.basicClass='load_im slider_button';
-            slider.rightButton.node.className='load_im slider_button';
+            slider.rightButton.basicClass = 'load_im slider_button';
+            slider.rightButton.node.className = 'load_im slider_button';
             slider.onRightMax();
           }
         }
@@ -83,9 +83,9 @@ class Slider extends Control {
     });
 
     this.node.addEventListener('touchstart', (e) => {
-      //e.preventDefault();
-      //this.node.tabIndex=2;
-      //this.node.focus();
+      // e.preventDefault();
+      // this.node.tabIndex=2;
+      // this.node.focus();
       if (!this.isDisabled && (e.touches[0])) {
         this.isDowned = true;
         const time = Date.now();
@@ -124,7 +124,7 @@ class Slider extends Control {
     });
 
     this.node.addEventListener('touchmove', (e) => {
-      //e.preventDefault();
+      // e.preventDefault();
       if (!this.isDisabled && (e.touches[0]) && (this.isDowned)) {
         uniMoveHandler(e.touches[0].pageX);
       }
@@ -156,8 +156,8 @@ class Slider extends Control {
     };
 
     const touchUpHandler = (e) => {
-     // e.preventDefault();
-      if (this.touchUpEvent){ //for mobile, i dont know how to blur input and hide mobile keyboard
+      // e.preventDefault();
+      if (this.touchUpEvent) { // for mobile, i dont know how to blur input and hide mobile keyboard
         this.touchUpEvent();
       }
       if (e.touches && e.touches[0]) {

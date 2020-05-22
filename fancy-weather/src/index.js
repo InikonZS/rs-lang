@@ -13,7 +13,7 @@ const app = new App(
   weatherNode,
   mapNode,
   footerNode,
-  backNode
+  backNode,
 );
 
 window.app = app; // allow browser console access
