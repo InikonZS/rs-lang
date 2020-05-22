@@ -72,7 +72,7 @@ class Mapbox extends Control{
 function formatDeg(val){
   let deg = Math.trunc (val);
   let min = Math.trunc((val-deg)*60);
-  let sec = Math.trunc((val*60-deg*60-min)*6000);
+  let sec = Math.trunc((val*60-deg*60-min)*60);
   return `${deg}° ${min}' ${sec}''`;
 }
 

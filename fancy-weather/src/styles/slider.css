@@ -175,20 +175,20 @@
 }
 
 .left_im{
-  background-image: url(chev_l.png);
+  background-image: url(icons/chev_l.png);
   background-repeat: no-repeat no-repeat;
   background-position: center center;
   background-size: 60%;
 }
 
 .right_im{
-  background-image: url(chev_r.png);
+  background-image: url(icons/chev_r.png);
   background-repeat: no-repeat no-repeat;
   background-position: center center;
   background-size: 60%;
 }
 .load_im{
-  background-image: url(loading.gif);
+  background-image: url(icons/loading.gif);
   background-repeat: no-repeat no-repeat;
   background-position: center center;
   background-size: 66%;

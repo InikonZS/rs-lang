@@ -26,11 +26,14 @@ class Menu extends Control{
     });
     this.langSelect.highlight(this.state.langIndex);*/
 
-    this.langSelect = new Select(this.node, '', 'drop_menu', 'basic_button', 'basic_button');
+    this.langSelect = new Select(this.node, 'select_wrapper', 'drop_menu', 'basic_button', 'basic_button');
     langs.forEach((it, i)=>{
       this.langSelect.selectList.addButton(it,()=>{
         this.state.lang = it;
         this.state.langIndex = i;
+        this.langSelect.highlight(this.state.langIndex);
+        this.langSelect.mainButton.untoggle();  
+        this.langSelect.selectList.hide();
         this.refresh();
       });
     });
