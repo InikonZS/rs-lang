@@ -16,6 +16,12 @@ body{
   margin: 0px 10px;
 }
 
+.drop_menu{
+  position: absolute;
+  flex-direction: column;
+  margin: 0px;
+}
+
 .map_wrapper{
   display: flex;
   flex-direction: column;

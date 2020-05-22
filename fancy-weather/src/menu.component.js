@@ -1,6 +1,7 @@
 const Control = require('./control.component.js');
 const Button = require('./button.component.js');
 const RadioGroup = require('./radio-group.component.js');
+const Select = require('./select.component.js');
 
 class Menu extends Control{
   constructor (parentNode){
@@ -15,9 +16,19 @@ class Menu extends Control{
       this.refresh();   
     });
 
-    this.langSelect = new RadioGroup(this.node, 'radio_group', 'basic_button');
+   /* this.langSelect = new RadioGroup(this.node, 'radio_group', 'basic_button');
     langs.forEach((it, i)=>{
       this.langSelect.addButton(it,()=>{
+        this.state.lang = it;
+        this.state.langIndex = i;
+        this.refresh();
+      });
+    });
+    this.langSelect.highlight(this.state.langIndex);*/
+
+    this.langSelect = new Select(this.node, '', 'drop_menu', 'basic_button', 'basic_button');
+    langs.forEach((it, i)=>{
+      this.langSelect.selectList.addButton(it,()=>{
         this.state.lang = it;
         this.state.langIndex = i;
         this.refresh();
