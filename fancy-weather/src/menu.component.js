@@ -12,7 +12,7 @@ class Menu extends Control{
 
     this.state = initOptions();
 
-    this.refreshButton = new Button(this.node, 'basic_button', 'Refresh', false, ()=>{
+    this.refreshButton = new Button(this.node, 'basic_ico refresh_im basic_button', '', false, ()=>{
       this.refresh();   
     });
 
