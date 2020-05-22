@@ -1,0 +1,38 @@
+.ico_button{
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  /*width: calc(100% - 10px);*/
+  border-radius: 5px;
+  margin: 5px 5px;
+  background-color: #aaa;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition-duration: 300ms;
+  user-select: none;
+  color: #000;
+  font-size: 14pt;
+}
+
+.ico_button__hover{
+  background-color: #ccc;
+  transform: scale(1);
+  box-shadow: 0px 0px 12px #fffc;
+}
+
+.ico_button__down{
+  background-color: rgb(48, 122, 182);
+  transform: scale(0.95);
+}
+
+.ico_button__toggled{
+  background-color: #4af;
+  transform: scale(1);
+}
+
+.ico_button__dover{
+  background-color: #4af;
+  box-shadow: 0px 0px 12px #4afc;
+  transform: scale(1);
+}

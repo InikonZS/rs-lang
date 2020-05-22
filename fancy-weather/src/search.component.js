@@ -18,11 +18,11 @@ class Search extends Control{
     this.onSubmit;
     this.onMic;
 
-    this.micButton = new Button(this.node, 'basic_button', 'mic', false, ()=>{
+    this.micButton = new Button(this.node, 'basic_ico micro_im basic_button', '', false, ()=>{
       this.mic();  
     });
 
-    this.submitButton = new Button(this.node, 'basic_button', 'search', false, ()=>{
+    this.submitButton = new Button(this.node, 'left_ico search_im ico_button', 'search', false, ()=>{
       this.submit();  
     });
 

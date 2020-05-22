@@ -65,6 +65,7 @@ class App {
           this.backBuffer.lat = lat;
           this.backBuffer.location = 'Some Place'
           getLocation(lng, lat).then((res)=>{
+            console.log(res);
             if (res && res.results && res.results[0]){
               this.backBuffer.location = res.results[0].formatted;
             }
@@ -87,6 +88,7 @@ class App {
             }
           ).then(
             (data)=>{
+              console.log(data);
               procLocationData(data, this.backBuffer);
               return getWeather(this.backBuffer.lng, this.backBuffer.lat);  
             },

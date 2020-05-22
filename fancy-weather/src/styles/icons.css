@@ -1,0 +1,50 @@
+.basic_ico{
+  background-repeat: no-repeat no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
+.left_ico{
+  background-repeat: no-repeat no-repeat;
+  background-position: 5px center;
+  padding: 10px;
+  padding-left: 28px;
+  background-size: contain;
+}
+
+.search_im{
+  background-image: url("icons/search.png");
+  background-size: 20px;
+}
+
+.clear_im{
+  background-image: url("icons/clear.png");
+}
+
+.chevr_im{
+  background-image: url("icons/chev_r.png");
+}
+
+.chevl_im{
+  background-image: url("icons/chev_l.png");
+}
+
+.github_im{
+  background-image: url("icons/github.png");
+}
+
+.arrow_up_im{
+  background-image: url("icons/arrow-sorted-up.svg");
+}
+
+.arrow_down_im{
+  background-image: url("icons/arrow-sorted-down.svg");
+}
+
+.refresh_im{
+  background-image: url("icons/repeat.svg");
+}
+
+.micro_im{
+  background-image: url("icons/microphone-outline.svg");
+}

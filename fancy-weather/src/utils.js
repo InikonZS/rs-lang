@@ -28,12 +28,12 @@ function getIpinfoRequestURL(){
 
 function getOpencagedataReverseRequestURL(lng, lat){
   const opencagedataKey = '78611a37dbe74246b4cc3489972ab21d';
-  return `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${opencagedataKey}&pretty=1&no_annotations=1`;
+  return `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${opencagedataKey}&pretty=1&no_annotations=0`;
 }
 
 function getOpencagedataRequestURL(query){
   const opencagedataKey = '78611a37dbe74246b4cc3489972ab21d';
-  return `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${opencagedataKey}&pretty=1&no_annotations=1`;
+  return `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${opencagedataKey}&pretty=1&no_annotations=0`;
 }
 
 function getClimacellRequestURL(lat, lon){
