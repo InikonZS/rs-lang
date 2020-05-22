@@ -1,6 +1,7 @@
 const Control = require('./control.component.js');
 const Button = require('./button.component.js');
 const Clock = require('./clock.component.js');
+const Slider = require('./slider.component.js');
 const Utils = require('./utils.js');
 
 const defeaultIco = 'cloudy';
@@ -43,16 +44,25 @@ class WeatherCard extends Control{
     let colomn2 = new Control(result.node, 'div', 'weather_colomn');
     this.iconControl = new Control(colomn2.node, 'img', 'weather_ico');
     //this.iconControl.node.style = 'width:100px;';
-    //this.codeControl = new Control(parentNode, 'div');
+    this.codeControl = new Control(colomn2.node, 'div');
     this.feelsControl = new Control(colomn2.node, 'div', 'weather_line');
     this.windControl = new Control(colomn2.node, 'div', 'weather_line');
     this.humidityControl = new Control(colomn2.node, 'div', 'weather_line');
 
-    this.childList = [];
+   /* this.childList = [];
     let childContainer = new Control(this.node, 'div', 'weather_future');
     for (let i=0; i<3; i++){
       this.childList.push(new WeatherSubCard(childContainer.node));
+    }*/
+
+    this.slider = new Slider(this.node, 'slider_wrapper', 'slider_slide');
+    this.slider.slidesPerPage = 3;
+    this.chl = [];
+    for (let i=0; i<7; i++){
+      let slide = this.slider.addSlide('');
+      this.chl.push(new WeatherSubCard(slide.node));
     }
+    this.slider.setDragOffset();
   }
 
   refresh(dataList, backBuffer, options){
@@ -66,7 +76,7 @@ class WeatherCard extends Control{
     let feelsPref = ['feels like', 'ощущается', 'адчуваецца'][lang];
     let windPref = ['wind speed', 'скорость ветра', 'хуткасць ветру'][lang];
     let humidityPref = ['humidity', 'влажность', 'вiльготнасць'][lang];
-    //this.codeControl.node.textContent = data.weather_code.value;
+    this.codeControl.node.textContent = data.weather_code.value;
     this.city.node.textContent = backBuffer.location;
 
     this.iconControl.node.src = 'assets/weather-icons/'+(codes[data.weather_code.value]||defeaultIco) + '.svg'
@@ -75,8 +85,12 @@ class WeatherCard extends Control{
     this.windControl.node.textContent = windPref+': '+data.wind_speed[0].min.value+'m/s'; 
     this.humidityControl.node.textContent = humidityPref+': '+data.humidity[0].min.value+'%'; 
 
-    for (let i=0; i<3; i++){
+   /* for (let i=0; i<3; i++){
       this.childList[i].refresh(dataList[i+2], unit, options);
+    }*/
+
+    for (let i=0; i<7; i++){
+      this.chl[i].refresh(dataList[i+1], unit, options);
     }
   }
 }

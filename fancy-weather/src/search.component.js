@@ -3,8 +3,9 @@ const Button = require('./button.component.js');
 
 class Search extends Control{
   constructor (parentNode){
-    super(parentNode, 'div', 'radio_group');
-    this.searchEdit = new Control(this.node, 'input');
+    super(parentNode, 'div', 'search_wrapper');
+    this.searchEdit = new Control(this.node, 'input', 'search_item search_edit');
+    this.searchEdit.node.placeholder = 'city name';
     this.searchEdit.node.addEventListener('keyup', (e) => {
       e.preventDefault();
       if (e.code == 'Enter') {
@@ -15,15 +16,28 @@ class Search extends Control{
     this.searchEdit.node.type = 'text';
 
     this.onSubmit;
+    this.onMic;
+
+    this.micButton = new Button(this.node, 'basic_button', 'mic', false, ()=>{
+      this.mic();  
+    });
 
     this.submitButton = new Button(this.node, 'basic_button', 'search', false, ()=>{
       this.submit();  
     });
+
+    
   }
 
   submit(){
     if (this.onSubmit){
       this.onSubmit(this.searchEdit.node.value);
+    }
+  }
+
+  mic(){
+    if (this.onSubmit){
+      this.onMic();
     }
   }
 

@@ -2,6 +2,7 @@ const Control = require('./control.component.js');
 
 const lons = ['Longitude', 'Долгота', 'Даужыня'];
 const lats = ['Latitude', 'Широта', 'Шырыня'];
+
 class Mapbox extends Control{
   constructor(parentNode, scriptURL, styleURL, serviceKey){
     super(parentNode, 'div', 'map_wrapper');
@@ -9,12 +10,8 @@ class Mapbox extends Control{
     this.latsPref=lats[0];
     this.map;
     this.marker;
-    this.mapContainer = new Control(this.node, 'div');
+    this.mapContainer = new Control(this.node, 'div', 'map_container');
     this.mapContainer.node.id = 'map-render-container';
-    this.mapContainer.node.style = `
-    height: 300px;
-    width: 100%;
-    border-radius: 20px;`;
 
     this.lonControl = new Control(this.node,'div');
     this.latControl = new Control(this.node,'div');

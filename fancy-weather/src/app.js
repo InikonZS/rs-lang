@@ -7,6 +7,7 @@ const Mapbox = require('./mapbox.component.js');
 const WeatherCard = require('./weather-card.component.js');
 
 const Utils = require('./utils.js');
+const SpeechModule = require('./speech.utils.js');
 
 class App {
   constructor(
@@ -39,29 +40,21 @@ class App {
       );  
     }
 
-    this.map = new Mapbox(mapNode, Utils.mapboxScriptURL, Utils.mapboxStyleURL, Utils.mapboxKey);
+    this.speech = SpeechModule.speechInit((value, values)=>{
+      this.search.searchEdit.node.value = value;
+    });
     
-    this.weather = new WeatherCard(weatherNode);
+    if (this.speech){
+      this.search.onMic = ()=>{
+        this.speech.start();
+      }
+    }
+    ///SpeechModule.voiceText('works');
 
-    this.imgWrapperA = new Control(backNode, 'div', 'background');
-    this.imgWrapperA.node.style = `
-      background-image: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%), 
-      url("assets/xaker.jpg")
-    `;
-    this.imgWrapperB = new Control(backNode, 'div', 'background');
-    this.imgWrapperB.node.style = `
-      background-image: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%), 
-      url("assets/xaker.jpg")
-    `;
-    this.activeImg = this.imgWrapperA;
-    this.inactiveImg = this.imgWrapperB;
-    //this.image = new Control(this.imgWrapper.node, 'img');
-    //this.image.node.src = 'assets/xaker.jpg';
-    /*this.image.node.style = `
-          transition-duration:1000ms;
-          opacity:30%;
-        `;*/
-    this.lastSrc='assets/xaker.jpg';
+    this.map = new Mapbox(mapNode, Utils.mapboxScriptURL, Utils.mapboxStyleURL, Utils.mapboxKey);
+    this.weather = new WeatherCard(weatherNode);
+    this.backGroundInit(backNode);
+
     this.backBuffer = {}
     getUserPositionByNav()
       .then(
@@ -119,34 +112,50 @@ class App {
   }
 
   refresh(weatherData, options){
-    
     this.map.setOptions(options);
     this.map.setPosition(this.backBuffer.lng, this.backBuffer.lat);
     this.weather.refresh(weatherData, this.backBuffer, options);
     getImage('nature').then((res)=>{
-      console.log(res);
-      let im = new Image();
-      im.onload = () =>{
-        this.inactiveImg.node.style = 'transition-duration:1000ms; opacity:0%;';
-        if (this.activeImg == this.imgWrapperA){
+      //console.log(res);
+      this.changeBackImage(res.urls.regular);
+    });
+  }
+
+  backGroundInit(backNode){
+    this.lastSrc;
+    this.imgWrapperA = new Control(backNode, 'div', 'background');
+    this.imgWrapperB = new Control(backNode, 'div', 'background');
+    this.activeImg = this.imgWrapperA;
+    this.inactiveImg = this.imgWrapperB;
+    this.changeBackImage("assets/xaker.jpg");
+  }
+
+  changeBackImage(imageURL){
+    let im = new Image();
+    im.onload = () =>{
+      //this.inactiveImg.node.style = 'transition-duration:1000ms; opacity:0%;';
+      if (this.activeImg == this.imgWrapperA){
         this.activeImg = this.imgWrapperB;
         this.inactiveImg = this.imgWrapperA;
-        
-        } else {
-          this.activeImg = this.imgWrapperA;
-          this.inactiveImg = this.imgWrapperB;
-        }
-        this.activeImg.node.style = `background-image: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%), 
-        url("${im.src}"); transition-duration:1000ms; opacity:100%;`;
-        this.inactiveImg.node.style = `background-image: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%), 
-        url("${this.lastSrc}"); transition-duration:1000ms; opacity:0%;`;
-        this.lastSrc = im.src;
+      } else {
+        this.activeImg = this.imgWrapperA;
+        this.inactiveImg = this.imgWrapperB;
       }
-      im.src = res.urls.regular;
-      
-      
-    })
-    //this.image.node
+      this.activeImg.node.style = `
+        background-image: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%), 
+        url("${im.src}"); 
+        transition-duration:1000ms; opacity:100%;
+      `;
+      this.inactiveImg.node.style = `
+        background-image: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%), 
+        url("${this.lastSrc}"); transition-duration:1000ms; opacity:0%;
+      `;
+      this.lastSrc = im.src;
+    }
+    im.src = imageURL;
+    if (!this.lastSrc){
+      this.lastSrc = imageURL;
+    }
   }
 }
 

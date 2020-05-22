@@ -4,21 +4,12 @@ const RadioGroup = require('./radio-group.component.js');
 
 class Menu extends Control{
   constructor (parentNode){
-    super(parentNode, 'div', 'radio_group');
+    super(parentNode, 'div', 'menu_wrapper');
 
     let langs = ['eng', 'ru', 'bel'];
     let units = ['C', 'F', 'K'];
 
-    let localOptions = localStorage.getItem('menu_options');
-    if (!localOptions){
-      this.state = {};
-      this.state.lang = langs[0];
-      this.state.langIndex = 0;
-      this.state.unit = units[0];
-      this.state.unitIndex = 0;
-    } else {
-      this.state = JSON.parse(localOptions);
-    }
+    this.state = initOptions();
 
     this.refreshButton = new Button(this.node, 'basic_button', 'Refresh', false, ()=>{
       this.refresh();   
@@ -48,10 +39,31 @@ class Menu extends Control{
 
   refresh(){
     if (this.onChange){
-      localStorage.setItem('menu_options', JSON.stringify(this.state));
+      //localStorage.setItem('menu_options', JSON.stringify(this.state));
+      saveOptions(this.state);
       this.onChange(this.state);
     }
   }
+}
+
+const optionsItemName = 'menu_options';
+
+function initOptions(){
+  let state = {};
+  let localOptions = localStorage.getItem(optionsItemName);
+  if (!localOptions){
+    state.lang = langs[0];
+    state.langIndex = 0;
+    state.unit = units[0];
+    state.unitIndex = 0;
+  } else {
+    state = JSON.parse(localOptions);
+  }  
+  return state;
+}
+
+function saveOptions(state){
+  localStorage.setItem(optionsItemName, JSON.stringify(state));
 }
 
 module.exports = Menu;

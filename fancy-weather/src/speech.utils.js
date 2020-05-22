@@ -1,4 +1,4 @@
-function speechInit(app, onResult, onError){
+function speechInit(onResult, onError){
   const MySpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition;
   if (!MySpeechRecognition){
     onError('not found SpeechRecognition');
@@ -7,7 +7,7 @@ function speechInit(app, onResult, onError){
 
   let recognition = new MySpeechRecognition();
   recognition.lang = 'en-US';
-  recognition.continuous=true;
+  //recognition.continuous=true;
   recognition.maxAlternatives = 95;
 
   recognition.addEventListener('result' , (event) => {
@@ -22,17 +22,24 @@ function speechInit(app, onResult, onError){
   );
   // Mozilla continuois problem solution
   recognition.addEventListener('end' , (event) => {
-    if (app.isGameStarted) {
+
+ /*   if (app.isGameStarted) {
       recognition.start();  
-    }
+    }*/
   });
 
-  if (app.isGameStarted) {
-    recognition.start();  
-  }
+ // if (app.isGameStarted) {
+ //   recognition.start();  
+  //}
   return recognition;
 }
 
+function voiceText(text){
+  var ss = new SpeechSynthesisUtterance(text);
+  window.speechSynthesis.speak(ss);
+}
+
 module.exports = {
-  speechInit
+  speechInit,
+  voiceText
 }
