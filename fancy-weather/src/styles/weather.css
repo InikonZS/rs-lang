@@ -9,11 +9,15 @@
 }
 
 .weather_ico{
-  width: 100px;
+  width: 14vw;
+}
+
+.weather_line{
+  font-size: 2vw;
 }
 
 .weather_temp{
-  font-size: 150px;
+  font-size: 20vw;
 }
 
 .weather_future{
@@ -24,6 +28,7 @@
 .weather_date{
   display: flex;
   justify-content: center;
+  font-size:2vw;
 }
 
 .weather_today_wrapper{
@@ -34,10 +39,10 @@
 }
 
 .weather_city{
-  font-size: 30px;
+  font-size: 4vw;
 }
 .weather_future_block{
-
+  font-size: 2vw; 
 }
 
 .weather_date_min{
@@ -46,9 +51,35 @@
 }
 
 .weather_ico_min{
-  width: 50px;
+  width: 5.5vw;
 }
 
 .weather_temp_min{
-  font-size: 50px;
+  font-size: 5.5vw;
+}
+
+@media screen and (max-width: 768px){
+  .weather_ico{
+    width: 13vw;
+  }
+  
+  .weather_line{
+    font-size: 3vw;
+  }
+  
+  .weather_temp{
+    font-size: 25vw;
+  }
+
+  .weather_city{
+    font-size: 5vw;
+  }
+
+  .weather_ico_min{
+    width: 7vw;
+  }
+  
+  .weather_temp_min{
+    font-size: 7vw;
+  }
 }

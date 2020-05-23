@@ -9,8 +9,9 @@
   background-position: 5px center;
   padding: 10px;
   padding-left: 28px;
-  background-size: contain;
+  background-size: 20px;
 }
+
 
 .search_im{
   background-image: url("icons/search.png");

@@ -66,7 +66,8 @@ class App {
           getLocation(lng, lat).then((res) => {
             console.log(res);
             if (res && res.results && res.results[0]) {
-              this.backBuffer.location = res.results[0].formatted;
+              //this.backBuffer.location = res.results[0].formatted;
+              this.backBuffer.location = (data.results[0].components.suburb||res.results[0].components.city||res.results[0].components.county)+', '+res.results[0].components.country;
             }
           },
           (message) => {
@@ -163,7 +164,9 @@ function procLocationData(data, backBuffer) {
   if (data && data.results && data.results[0]) {
     const { lng } = data.results[0].geometry;
     const { lat } = data.results[0].geometry;
-    const location = data.results[0].formatted;
+    //const location = data.results[0].formatted;
+    console.log(data);
+    const location = (data.results[0].components.suburb||data.results[0].components.city||data.results[0].components.county)+', '+data.results[0].components.country;
     backBuffer.lng = lng;
     backBuffer.lat = lat;
     backBuffer.location = location;

@@ -3,12 +3,12 @@ const Button = require('./button.component.js');
 const RadioGroup = require('./radio-group.component.js');
 const Select = require('./select.component.js');
 
+const langs = ['eng', 'ru', 'bel'];
+const units = ['C', 'F'];
+
 class Menu extends Control {
   constructor(parentNode) {
     super(parentNode, 'div', 'menu_wrapper');
-
-    const langs = ['eng', 'ru', 'bel'];
-    const units = ['C', 'F', 'K'];
 
     this.state = initOptions();
 
@@ -26,7 +26,7 @@ class Menu extends Control {
     });
     this.langSelect.highlight(this.state.langIndex); */
 
-    this.langSelect = new Select(this.node, 'select_wrapper', 'drop_menu', 'basic_button', 'basic_button');
+    this.langSelect = new Select(this.node, 'select_wrapper', 'drop_menu', 'left_ico arrow_down_im ico_button', 'ico_button');
     langs.forEach((it, i) => {
       this.langSelect.selectList.addButton(it, () => {
         this.state.lang = it;

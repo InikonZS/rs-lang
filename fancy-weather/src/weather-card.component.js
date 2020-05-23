@@ -37,14 +37,14 @@ class WeatherCard extends Control {
 
     const header = new Control(this.node, 'div');
     this.city = new Control(header.node, 'div', 'weather_city');
-    this.clock = new Clock(header.node);
+    this.clock = new Clock(header.node, 'weather_line');
     const result = new Control(this.node, 'div', 'weather_result');
     const colomn1 = new Control(result.node, 'div', 'weather_colomn');
     this.temperatureControl = new Control(colomn1.node, 'div', 'weather_temp');
     const colomn2 = new Control(result.node, 'div', 'weather_colomn');
     this.iconControl = new Control(colomn2.node, 'img', 'weather_ico');
     // this.iconControl.node.style = 'width:100px;';
-    this.codeControl = new Control(colomn2.node, 'div');
+    this.codeControl = new Control(colomn2.node, 'div','weather_line');
     this.feelsControl = new Control(colomn2.node, 'div', 'weather_line');
     this.windControl = new Control(colomn2.node, 'div', 'weather_line');
     this.humidityControl = new Control(colomn2.node, 'div', 'weather_line');
@@ -100,7 +100,7 @@ class WeatherSubCard extends Control {
     super(parentNode, 'div', 'weather_today_wrapper');
 
     const header = new Control(this.node, 'div');
-    this.dayControl = new Control(header.node, 'div');
+    this.dayControl = new Control(header.node, 'div', 'weather_line');
     const result = new Control(this.node, 'div', 'weather_result');
     const colomn1 = new Control(result.node, 'div', 'weather_colomn');
     this.temperatureControl = new Control(colomn1.node, 'div', 'weather_temp_min');

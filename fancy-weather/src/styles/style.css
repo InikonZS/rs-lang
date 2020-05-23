@@ -13,7 +13,7 @@ body{
 
 .radio_group{
   display:flex;
-  margin: 0px 10px;
+  margin: 0px 0px;
 }
 
 .select_wrapper{
@@ -23,7 +23,7 @@ body{
 .drop_menu{
   position: absolute;
   flex-direction: column;
-  margin: 0px;
+  margin: 0px 0px;
   z-index: 100;
   width:100%;
 }
@@ -167,6 +167,16 @@ body{
     width: 100%;
     justify-content: center;
     order:-1;
+  }
+}
+
+@media screen and (max-width: 480px){
+  .weather{
+    padding: 10px;
+  }
+  
+  .map{
+    padding: 10px;
   }
 }
 

@@ -3,8 +3,8 @@ const Button = require('./button.component.js');
 const Utils = require('./utils.js');
 
 class Clock extends Control {
-  constructor(parentNode, options) {
-    super(parentNode, 'div', '');
+  constructor(parentNode, className, options) {
+    super(parentNode, 'div', className);
     this.dateControl = new Control(this.node, 'div');
     this.timeControl = new Control(this.node, 'div');
     this.options = options;

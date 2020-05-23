@@ -13,8 +13,8 @@ class Mapbox extends Control {
     this.mapContainer = new Control(this.node, 'div', 'map_container');
     this.mapContainer.node.id = 'map-render-container';
 
-    this.lonControl = new Control(this.node, 'div');
-    this.latControl = new Control(this.node, 'div');
+    this.lonControl = new Control(this.node, 'div', 'weather_line');
+    this.latControl = new Control(this.node, 'div', 'weather_line');
 
     const onExternalLoad = () => {
       const lon = 12;
