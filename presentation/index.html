@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<p>Canvas</p>
+				</section>
+				<section>
+					<p>Canvas axis example:</p>
+					<canvas id="cnv1" width="400px" height="300px"></canvas>
+				</section>
+
+				<section>
+					<pre><code data-trim data-noescape>
+						function cnv1_demo(){
+							let canvas = document.getElementById('cnv1');
+							let ctx = canvas.getContext('2d');
+							let top = 0;
+							let bottom = canvas.clientHeight;
+							let left = 0;
+							let right = canvas.clientWidth;
+							ctx.fillStyle = '#434';
+							ctx.fillRect(left, top, right, bottom)
+							ctx.beginPath();
+							for (let i = -right; i&lt;right; i+=50){
+								ctx.strokeStyle = &quot;rgba(255, 255, 255, 1)&quot;;
+								ctx.strokeText(i, i, top + 10);
+								ctx.moveTo(i, -bottom);
+								ctx.lineTo(i, bottom);
+							}
+							for (let i = -bottom; i&lt;bottom; i+=50){
+								ctx.strokeStyle = &quot;rgba(255, 255, 255, 1)&quot;;
+								ctx.strokeText(i, left, i);
+								ctx.moveTo(-right, i);
+								ctx.lineTo(right, i);
+							}
+							ctx.strokeStyle = &quot;rgba(0, 255, 0, 1)&quot;;
+							ctx.stroke();
+						}
+						cnv1_demo();
+					</code></pre>
+				</section>
+
+				<section>
+					<p>Canvas transform demo:</p>
+					<p>Tanslate zero point to center and draw</p>
+					<p>Rotate image and draw:</p>
+					<pre><code data-trim data-noescape>
+							ctx2.translate(canvas.clientWidth/2, canvas.clientHeight/2);
+							cnv1_demo(ctx2, canvas2);
+							ctx2.rotate(Math.PI/4);
+							cnv1_demo(ctx2, canvas2);
+					</code></pre>
+					<canvas id="cnv2" width="400px" height="300px"></canvas>
+				</section>
+
+				<section>
+					<p>Animations:</p>
+					<canvas id="cnv3" width="400px" height="300px"></canvas>
+				</section>
+
+				<section>
+					<p>Converting canvas to image:</p>
+					<img id="img1">
+					<p><a id="lnk1" href="" download="can.png">download canvas image</a></p>
+				</section>
+
+				<section>
+					<p>Drawing image to canvas:</p>
+					<canvas id="cnv4" width="400px" height="300px"></canvas>
+				</section>
+
+				<section>
+					<p>Drawing by mouse:</p>
+					<canvas id="cnv5" width="400px" height="300px"></canvas>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+		<script src="my-scripts/canvas.demo.js"></script>
+	</body>
+</html>
